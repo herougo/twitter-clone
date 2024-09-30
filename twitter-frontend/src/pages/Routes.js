@@ -10,6 +10,7 @@ const Routes = () => {
             <Route exact path="/store"></Route>
             <Route exact path="/notifications"></Route>
             <Route exact path="/messages"></Route>
+            <Route exact path="/messages/new"></Route>
             <Route exact path="/messages/:id"></Route>
             <Route exact path="/login"></Route>
             <Route exact path="/"></Route>
