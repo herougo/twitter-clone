@@ -1,0 +1,11 @@
+POST http://localhost:3001/login
+content-type: application/json
+
+{
+    "username": "username",
+    "passwordHash": "aghfhawefhawef"
+}
+
+###
+
+POST http://localhost:3001/login?username=username&passwordHash=ashdk

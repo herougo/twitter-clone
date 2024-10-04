@@ -3,7 +3,9 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
     // TODO
-    res.status(200).json({"username": "hello"});
+    const username = req.body.username;
+    const passwordHash = req.body.passwordHash;
+    res.status(200).json({username, passwordHash});
 });
 
 module.exports = router;
