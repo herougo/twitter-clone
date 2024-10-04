@@ -1,12 +1,13 @@
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import Routes from './pages/Routes';
+import RouteCollection from './pages/RouteCollection';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Routes />
+        <RouteCollection />
       </div>
     </BrowserRouter>
   );

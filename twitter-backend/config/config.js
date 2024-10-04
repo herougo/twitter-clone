@@ -1,5 +1,11 @@
+const dotenv = require("dotenv");
+
+dotenv.config({path: ".env"});
+
 const CONFIG = {
-    port: process.env.PORT || 3001
+    serverPort: process.env.SERVER_PORT,
+    clientUrl: process.env.CLIENT_URL,
+    corsOrigin: process.env.CLIENT_URL
 };
 
 module.exports = CONFIG;

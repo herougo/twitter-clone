@@ -7,6 +7,6 @@ const app = express();
 applyMiddleware(app);
 applyRoutes(app);
 
-app.listen(CONFIG.port, () => {
-    console.log(`Server listening on ${CONFIG.port}`);
+app.listen(CONFIG.serverPort, () => {
+    console.log(`Server listening on ${CONFIG.serverPort}`);
 });

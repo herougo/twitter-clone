@@ -1,9 +1,9 @@
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import React from 'react';
 
-const Routes = () => {
+const RouteCollection = () => {
     return (
-        <Switch>
+        <Routes>
             <Route exact path="/post/:id"></Route>
             <Route exact path="/profile/:username"></Route>
             <Route exact path="/search"></Route>
@@ -14,8 +14,8 @@ const Routes = () => {
             <Route exact path="/messages/:id"></Route>
             <Route exact path="/login"></Route>
             <Route exact path="/"></Route>
-        </Switch>
+        </Routes>
     );
 }
 
-export default Routes;
+export default RouteCollection;
