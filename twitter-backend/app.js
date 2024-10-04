@@ -1,5 +1,5 @@
 const express = require("express");
-const CONFIG = require("./config")
+const CONFIG = require("./config/config")
 const applyRoutes = require("./routes");
 const applyMiddleware = require("./middleware");
 
