@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require('morgan');
-const CONFIG = require("../config/config");
+const CONFIG = require("../../config");
 
 const applyMiddleware = (app) => {
     // populates req.body if json data is passed and
