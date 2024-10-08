@@ -3,6 +3,7 @@ const CONFIG = require("./config")
 const applyRoutes = require("./server/routes");
 const applyMiddleware = require("./server/middleware");
 const initAllLoaders = require("./loaders");
+const applyAllHandlers = require("./server/handlers");
 
 const startApp = async () => {
     await initAllLoaders();
@@ -10,6 +11,7 @@ const startApp = async () => {
     const app = express();
     applyMiddleware(app);
     applyRoutes(app);
+    applyAllHandlers(app);
 
     app.listen(CONFIG.serverPort, () => {
         console.log(`Server listening on ${CONFIG.serverPort}`);

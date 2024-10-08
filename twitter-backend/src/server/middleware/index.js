@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const CONFIG = require("../../config");
 
 const applyMiddleware = (app) => {
-    // populates req.body if json data is passed and
+    // transforms req.body from string to json if json data is passed and
     // content-type is application/json
     app.use(express.json());
     
