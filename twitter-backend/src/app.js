@@ -1,7 +1,7 @@
 const express = require("express");
-const CONFIG = require("./config/config")
-const applyRoutes = require("./routes");
-const applyMiddleware = require("./middleware");
+const CONFIG = require("./config")
+const applyRoutes = require("./server/routes");
+const applyMiddleware = require("./server/middleware");
 const initAllLoaders = require("./loaders");
 
 const startApp = async () => {

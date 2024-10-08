@@ -4,7 +4,7 @@
   "description": "Backend for the twitter clone.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node src/app.js"
   },
   "author": "",
   "license": "ISC",
