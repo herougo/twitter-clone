@@ -11,7 +11,7 @@ MONGOOSE_ERROR_TYPES = {
 }
 
 const isMongooseError = (e) => {
-    return e instanceof mongoose.MongooseError;
+    return e instanceof mongoose.MongooseError || e instanceof mongodb.MongoError;
 }
 
 const classifyMongooseError = (e) => {

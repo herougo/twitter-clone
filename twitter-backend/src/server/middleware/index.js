@@ -3,7 +3,7 @@ const cors = require("cors");
 const morgan = require('morgan');
 const CONFIG = require("../../config");
 
-const applyMiddleware = (app) => {
+const applyMiddleware = (app, diContainer) => {
     // transforms req.body from string to json if json data is passed and
     // content-type is application/json
     app.use(express.json());

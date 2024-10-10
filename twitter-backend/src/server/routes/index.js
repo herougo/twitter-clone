@@ -1,9 +1,9 @@
-const loginRoute = require("./login");
-const signUpRoute = require("./signUp");
+const applyLogInRouter = require("./login");
+const applySignUpRouter = require("./signUp");
 
-const applyRoutes = (app) => {
-    app.use("/login", loginRoute);
-    app.use("/signup", signUpRoute);
+const applyRoutes = (app, diContainer) => {
+    applyLogInRouter(app, diContainer);
+    applySignUpRouter(app, diContainer);
 }
 
 module.exports = applyRoutes;

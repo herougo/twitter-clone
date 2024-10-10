@@ -1,17 +1,20 @@
 const express = require('express');
-const { signUp } = require('../../services/user');
-const { ExpressError } = require('../../utils/errors/expressErrors');
-const { hashPassword } = require('../../utils/utils');
-const router = express.Router();
 
-router.post('/', async (req, res, next) => {
-    try {
-        const user = req.body.user;
-        const loginResult = await signUp(user);
-        res.status(201).json(loginResult);
-    } catch (e) {
-        return next(e);
-    }
-});
+const applySignUpRouter = (app, diContainer) => {
+    const router = express.Router();
+    const userService = diContainer.resolve(DI_NAMES.userService);
 
-module.exports = router;
+    router.post('/', async (req, res, next) => {
+        try {
+            const user = req.body.user;
+            const loginResult = await userService.signUp(user);
+            res.status(201).json(loginResult);
+        } catch (e) {
+            return next(e);
+        }
+    });
+
+    app.use("/signup", router);
+}
+
+module.exports = applySignUpRouter;

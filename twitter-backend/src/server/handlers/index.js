@@ -1,9 +1,9 @@
-const errorHandler = require("./errorHandler");
-const notFoundHandler = require("./notFoundHandler");
+const applyErrorHandler = require("./errorHandler");
+const applyNotFoundHandler = require("./notFoundHandler");
 
-const applyAllHandlers = (app) => {
-    app.use(notFoundHandler);
-    app.use(errorHandler);
+const applyAllHandlers = (app, diContainer) => {
+    applyErrorHandler(app, diContainer);
+    applyNotFoundHandler(app, diContainer);
 }
 
 module.exports = applyAllHandlers

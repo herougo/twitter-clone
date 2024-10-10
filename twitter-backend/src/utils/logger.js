@@ -16,6 +16,4 @@ class Logger {
     }
 }
 
-logger = new Logger();
-
-module.exports = logger;
+module.exports = Logger;
