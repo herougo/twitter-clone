@@ -3,9 +3,24 @@ content-type: application/json
 
 {
     "username": "username",
-    "passwordHash": "aghfhawefhawef"
+    "password": "aghfhawefhawef"
 }
 
 ###
 
 POST http://localhost:3001/login?username=username&passwordHash=ashdk
+
+###
+
+POST http://localhost:3001/signup
+content-type: application/json
+
+{
+    "user" : {
+        "username": "username",
+        "password": "aghfhawefhawef",
+        "firstName": "hi",
+        "lastName": "there",
+        "email": "example@example.com"
+    }
+}
