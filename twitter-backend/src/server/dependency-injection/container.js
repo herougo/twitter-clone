@@ -1,8 +1,8 @@
 const { MissingDependencyError } = require("../../utils/errors/internalErrors");
 
 class DependencyInjectionContainer {
-    constructor(mockedDependenciesMap) {
-        this.dependencies = mockedDependenciesMap || {};
+    constructor(customDependenciesMap) {
+        this.dependencies = customDependenciesMap || {};
     }
 
     register(name, dependency) {

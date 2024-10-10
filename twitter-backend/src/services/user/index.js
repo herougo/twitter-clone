@@ -62,6 +62,9 @@ class UserService {
 
         } catch (e) {
             this.logger.error(e);
+            if (e instanceof ExpressError) {
+                throw e;
+            }
             if (isMongooseError(e)) {
                 const errorType = classifyMongooseError(e);
                 switch (errorType) {

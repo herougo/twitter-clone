@@ -4,10 +4,12 @@ const applyMiddleware = require("./middleware");
 const initAllLoaders = require("../loaders");
 const applyAllHandlers = require("./handlers");
 const buildDIContainer = require("./dependency-injection/buildDIContainer");
+const DI_NAMES = require("./dependency-injection/names");
 
-const createApp = async (mockedDependenciesMap = null) => {
-    const diContainer = buildDIContainer(mockedDependenciesMap);
-    await initAllLoaders();
+const createApp = async (customDependenciesMap = null) => {
+    const diContainer = buildDIContainer(customDependenciesMap);
+    const logger = diContainer.resolve(DI_NAMES.logger);
+    await initAllLoaders(logger);
 
     const app = express();
     applyMiddleware(app, diContainer);

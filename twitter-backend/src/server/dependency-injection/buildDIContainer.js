@@ -5,8 +5,8 @@ const DependencyInjectionContainer = require("./container");
 const DI_NAMES = require("./names");
 
 
-const buildDIContainer = (mockedDependenciesMap) => {
-    const container = new DependencyInjectionContainer(mockedDependenciesMap);
+const buildDIContainer = (customDependenciesMap) => {
+    const container = new DependencyInjectionContainer(customDependenciesMap);
 
     const logger = container.register(DI_NAMES.logger, new Logger());
     const userRepository = container.register(DI_NAMES.userRepository, new UserRepository());
