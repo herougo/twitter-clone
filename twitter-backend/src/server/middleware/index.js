@@ -24,7 +24,8 @@ const applyMiddleware = (app, diContainer) => {
     // equivalent to
     // app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
     // prints e.g. "GET / 404 139 - 7.136 ms
-    app.use(morgan('tiny'));
+    // commented out to avoid spamming in tests
+    // app.use(morgan('tiny'));
 }
 
 module.exports = applyMiddleware;

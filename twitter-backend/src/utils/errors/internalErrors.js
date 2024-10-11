@@ -5,6 +5,13 @@ class MissingDependencyError extends Error {
     }
 }
 
+class UnexpectedDatabaseChangeError extends Error {
+    constructor(message = "Tried to change the database outside a test environment!") {
+        super();
+        this.message = message;
+    }
+}
+
 module.exports = {
     MissingDependencyError
 }

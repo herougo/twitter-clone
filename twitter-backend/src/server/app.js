@@ -16,7 +16,7 @@ const createApp = async (customDependenciesMap = null) => {
     applyRoutes(app, diContainer);
     applyAllHandlers(app, diContainer);
 
-    return app;
+    return { app, diContainer };
 };
 
 module.exports = createApp;
