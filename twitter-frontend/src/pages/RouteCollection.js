@@ -1,20 +1,55 @@
 import { Route, Routes } from 'react-router-dom';
 import React from 'react';
-import LoginRestrictedRoute from '../components/utility/LoginRestrictedRoute';
+import LoginRestricted from '../components/utility/LoginRestricted';
+import WelcomePage from './welcome/WelcomePage';
 
 const RouteCollection = () => {
     return (
         <Routes>
-            <LoginRestrictedRoute exact path="/post/:id"></LoginRestrictedRoute>
-            <LoginRestrictedRoute exact path="/profile/:username"></LoginRestrictedRoute>
-            <LoginRestrictedRoute exact path="/search"></LoginRestrictedRoute>
-            <LoginRestrictedRoute exact path="/store"></LoginRestrictedRoute>
-            <LoginRestrictedRoute exact path="/notifications"></LoginRestrictedRoute>
-            <LoginRestrictedRoute exact path="/messages"></LoginRestrictedRoute>
-            <LoginRestrictedRoute exact path="/messages/new"></LoginRestrictedRoute>
-            <LoginRestrictedRoute exact path="/messages/:id"></LoginRestrictedRoute>
-            <LoginRestrictedRoute exact path="/"></LoginRestrictedRoute>
-            <Route exact path="/welcome"></Route>
+            <Route exact path="/post/:id"></Route>
+            <Route exact path="/profile/:username" element={
+                <LoginRestricted>
+
+                </LoginRestricted>
+            }></Route>
+            <Route exact path="/search" element={
+                <LoginRestricted>
+
+                </LoginRestricted>
+            }></Route>
+            <Route exact path="/store" element={
+                <LoginRestricted>
+
+                </LoginRestricted>
+            }></Route>
+            <Route exact path="/notifications" element={
+                <LoginRestricted>
+
+                </LoginRestricted>
+            }></Route>
+            <Route exact path="/messages" element={
+                <LoginRestricted>
+
+                </LoginRestricted>
+            }></Route>
+            <Route exact path="/messages/new" element={
+                <LoginRestricted>
+
+                </LoginRestricted>
+            }></Route>
+            <Route exact path="/messages/:id" element={
+                <LoginRestricted>
+
+                </LoginRestricted>
+            }></Route>
+            <Route exact path="/" element={
+                <LoginRestricted>
+
+                </LoginRestricted>
+            }></Route>
+            <Route exact path="/welcome" element={
+                <WelcomePage></WelcomePage>
+            }></Route>
         </Routes>
     );
 }
