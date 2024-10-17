@@ -16,38 +16,42 @@ const WelcomePage = () => {
     */
 
     return (
-        <div className='welcome container two-column-md'>
-            <div className='welcome__col-1 flex-col-centre'>
-                <div className='welcome__logo-img'>
-                    <img src={largeLogo} alt="Twitter Clone Logo" />
+        <div className='welcome'>
+            <div className='container two-column-md'>
+                <div className='welcome__col-1 flex-col-centre'>
+                    <div className='welcome__logo-img'>
+                        <img src={largeLogo} alt="Twitter Clone Logo" />
+                    </div>
+                    <div className='welcome__logo-text'>
+                        Twitter
+                    </div>
                 </div>
-                <div className='welcome__logo-text'>
-                    Twitter
+                <div className='welcome__col-2'>
+                    <h2 className='welcome__slogan'>Log In Now</h2>
+                    <div className='welcome__col-2-form'>
+                        <input
+                            className="welcome__form-input form-input"
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                        <input
+                            className="welcome__form-input form-input"
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <button className='welcome__login-btn btn' onClick={validateAndLogin}>
+                            Log In
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div className='welcome__col-2'>
-                <h2 className='welcome__slogan'>Happening Now</h2>
-                <input
-                    className="form-input"
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <input
-                    className="form-input"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button className='btn' onClick={validateAndLogin}>
-                    Log In
-                </button>
             </div>
         </div>
     );

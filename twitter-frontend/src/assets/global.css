@@ -115,11 +115,13 @@ h3 {
     margin-right: auto;
 }
 
-/*
 .form-input {
-    
+    height: 2rem;
+    border-radius: 1rem;
+    padding: 0.6rem;  /* Moves placeholder text away from rounded edges */
+    border-width: 0px;
+    font-size: 1rem;
 }
-*/
 
 .two-column-md {
     display: grid;
@@ -144,6 +146,6 @@ h3 {
     color: var(--clr-btn-background);
     font-size: 1rem;
     border-width: 0px;
-    height: 30px;
-    border-radius: 15px;
+    height: 2rem;
+    border-radius: 1rem;
 }

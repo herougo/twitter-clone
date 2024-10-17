@@ -1,5 +1,9 @@
 .welcome {
     background-color: var(--clr-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 .welcome__col-1 {
@@ -7,6 +11,14 @@
 }
 
 .welcome__col-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome__col-2-form {
+    width: calc(min(100%, 300px));
     display: flex;
     flex-direction: column;
 }
@@ -18,4 +30,13 @@
 .welcome__slogan {
     font-size: 3rem;
     text-align: center;
+    margin-bottom: 2rem;
+}
+
+.welcome__form-input {
+    margin-top: 0.8rem;
+}
+
+.welcome__login-btn {
+    margin-top: 0.8rem;
 }
