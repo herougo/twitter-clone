@@ -3,11 +3,16 @@ import React from 'react';
 import LoginRestricted from '../components/utility/LoginRestricted';
 import WelcomePage from './welcome/WelcomePage';
 import SignupPage from './signup/SignupPage';
+import HomePage from './home/HomePage';
 
 const RouteCollection = () => {
     return (
         <Routes>
-            <Route exact path="/post/:id"></Route>
+            <Route exact path="/post/:id" element={
+                <LoginRestricted>
+
+                </LoginRestricted>
+            }></Route>
             <Route exact path="/profile/:username" element={
                 <LoginRestricted>
 
@@ -45,7 +50,7 @@ const RouteCollection = () => {
             }></Route>
             <Route exact path="/" element={
                 <LoginRestricted>
-
+                    <HomePage></HomePage>
                 </LoginRestricted>
             }></Route>
             <Route exact path="/welcome" element={

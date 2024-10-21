@@ -1,8 +1,7 @@
 import './SignupPage.css';
 import React, { useContext, useState } from 'react';
-import signUp from '../../features/authentication/services/signUp';
+import { signUp, logIn } from '../../features/authentication';
 import { Navigate, useNavigate } from 'react-router-dom';
-import logIn from '../../features/authentication/services/logIn';
 import UserContext from '../../context/UserContext';
 import { validateSignUp } from '../../lib/validation';
 

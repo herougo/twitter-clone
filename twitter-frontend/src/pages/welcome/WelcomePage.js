@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import './WelcomePage.css';
 import largeLogo  from '../../assets/images/twitter-logo-300x300.png';
 import { validateLogin } from '../../lib/validation';
-import logIn from '../../features/authentication/services/logIn';
+import { logIn } from '../../features/authentication';
 import UserContext from '../../context/UserContext';
 import { Navigate, useNavigate } from 'react-router-dom';
 
