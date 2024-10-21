@@ -4,12 +4,14 @@ import largeLogo  from '../../assets/images/twitter-logo-300x300.png';
 import { validateLogin } from '../../lib/validation';
 import logIn from '../../features/authentication/services/logIn';
 import UserContext from '../../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const WelcomePage = () => {
     const {user, setUser} = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
+    const navigate = useNavigate();
 
     const validateAndLogin = (e) => {
         const errorMessages = validateLogin({username, password});
@@ -22,6 +24,10 @@ const WelcomePage = () => {
                 setErrors([`${errorMessage}`]);
             });
         }
+    }
+
+    const goToSignUpPage = (e) => {
+        navigate('/signup');
     }
 
     /* TIPS:
@@ -72,6 +78,9 @@ const WelcomePage = () => {
                         />
                         <button className='welcome__login-btn btn' onClick={validateAndLogin}>
                             Log In
+                        </button>
+                        <button className='welcome__signup-btn btn' onClick={goToSignUpPage}>
+                            Sign Up
                         </button>
                         {validationErrorContent}
                     </div>

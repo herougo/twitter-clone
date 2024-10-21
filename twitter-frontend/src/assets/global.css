@@ -89,6 +89,7 @@ h3 {
     /* Colours */
 
     --clr-primary-200: hsl(196, 98%, 20%);
+    --clr-primary-300: hsl(196, 98%, 30%);
     --clr-primary-500: hsl(196, 98%, 50%);
     --clr-primary-600: hsl(196, 98%, 60%);
     --clr-primary-800: hsl(196, 98%, 80%);
@@ -105,9 +106,11 @@ h3 {
     --clr-background: var(--clr-neutral-900);
     --clr-primary: var(--clr-primary-500);
     --clr-danger: var(--clr-danger-500);
-    --clr-btn-background: var(--clr-neutral-100);
+    --clr-btn-background: var(--clr-primary);
+    --clr-btn2-background: var(--clr-primary-200);
     --clr-color: var(--clr-neutral-100);
-    --clr-primary-hover: var(--clr-primary-600);
+    --clr-btn-hover: var(--clr-primary-600);
+    --clr-btn2-hover: var(--clr-primary-300);
 }
 
 /*******************************
@@ -147,8 +150,8 @@ h3 {
 }
 
 .btn {
-    background-color: var(--clr-primary);
-    color: var(--clr-btn-background);
+    background-color: var(--clr-btn-background);
+    color: var(--clr-color);
     font-size: 1rem;
     border-width: 0px;
     height: 2rem;
@@ -156,7 +159,7 @@ h3 {
 }
 
 .btn:hover {
-    background-color: var(--clr-primary-hover);
+    background-color: var(--clr-btn-hover);
 }
 
 .btn:active {

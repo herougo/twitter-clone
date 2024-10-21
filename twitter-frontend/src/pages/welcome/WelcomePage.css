@@ -37,5 +37,14 @@
 
 .welcome__login-btn {
     margin-top: 0.8rem;
+}
+
+.welcome__signup-btn {
+    margin-top: 0.8rem;
     margin-bottom: 0.8rem;
+    background-color: var(--clr-btn2-background);
+}
+
+.welcome__signup-btn:hover {
+    background-color: var(--clr-btn2-hover);
 }
