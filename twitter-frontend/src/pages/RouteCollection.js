@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import React from 'react';
 import LoginRestricted from '../components/utility/LoginRestricted';
 import WelcomePage from './welcome/WelcomePage';
+import SignupPage from './signup/SignupPage';
 
 const RouteCollection = () => {
     return (
@@ -49,6 +50,9 @@ const RouteCollection = () => {
             }></Route>
             <Route exact path="/welcome" element={
                 <WelcomePage></WelcomePage>
+            }></Route>
+            <Route exact path="/signup" element={
+                <SignupPage></SignupPage>
             }></Route>
         </Routes>
     );

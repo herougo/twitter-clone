@@ -12,6 +12,13 @@ const validatePassword = (text) => {
     return []
 }
 
+const validatePasswordConfirmation = (password, confirmation) => {
+    if (password !== confirmation) {
+        return ['Passwords do not match'];
+    }
+    return []
+}
+
 const validateEmail = (text) => {
     if (text === '') {
         return ['Email is empty'];
@@ -29,17 +36,20 @@ const validateName = (text, kind='First') => {
     return []
 }
 
-const validateLogin = (username, password) => {
+const validateLogin = ({username, password}) => {
     let errorMessages = [];
     errorMessages = errorMessages.concat(validateUsername(username));
     errorMessages = errorMessages.concat(validatePassword(password));
     return errorMessages;
 }
 
-const validateSignUp = (username, password, email, firstName, lastName) => {
+const validateSignUp = ({username, password, passwordConfirmation, email, firstName, lastName}) => {
     let errorMessages = [];
     errorMessages = errorMessages.concat(validateUsername(username));
     errorMessages = errorMessages.concat(validatePassword(password));
+    errorMessages = errorMessages.concat(
+        validatePasswordConfirmation(password, passwordConfirmation)
+    );
     errorMessages = errorMessages.concat(validateEmail(email));
     errorMessages = errorMessages.concat(validateName(firstName, 'First'));
     errorMessages = errorMessages.concat(validateName(lastName, 'Last'));

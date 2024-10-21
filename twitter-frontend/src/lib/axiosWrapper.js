@@ -8,16 +8,16 @@ const axiosWrapper = (method, data, urlSuffix, extraParams) => {
 
     console.log(`${method.toUpperCase()} ${urlSuffix}`);
     
-    let payload = {
+    let axiosData = {
         method: method,
         data: data,
         url: `${CONFIG.backendBaseURL}${urlSuffix}`
     };
     if (extraParams) {
-        payload = {...payload, ...extraParams};
+        axiosData = {...axiosData, ...extraParams};
     }
 
-    return axios(payload);
+    return axios(axiosData);
 }
 
 export default axiosWrapper;

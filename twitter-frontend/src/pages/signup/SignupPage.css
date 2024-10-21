@@ -1,0 +1,34 @@
+.signup {
+    display: flex;
+    justify-content: center;
+}
+
+.signup__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.signup__heading {
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.signup__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(min(100%, 300px));
+}
+
+.signup__form-input {
+    margin-top: 0.8rem;
+}
+
+.signup__sign-up-btn {
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+

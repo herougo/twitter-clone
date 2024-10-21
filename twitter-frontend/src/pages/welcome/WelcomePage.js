@@ -12,11 +12,10 @@ const WelcomePage = () => {
     const [errors, setErrors] = useState([]);
 
     const validateAndLogin = (e) => {
-        const errorMessages = validateLogin(username, password);
+        const errorMessages = validateLogin({username, password});
         setErrors(errorMessages);
         if (errorMessages.length === 0) {
             logIn(username, password).then((res) => {
-                console.log(`then ${res}`);
                 setUser({token: res.data.token});
             }).catch((err) => {
                 const errorMessage = err.response.data.errors.message;
@@ -33,7 +32,7 @@ const WelcomePage = () => {
     let validationErrorContent = null;
     if (errors.length !== 0) {
         validationErrorContent = errors.map(error => 
-            <div className='welcome__validation-error' key={error}>
+            <div className='validation-error' key={error}>
                 <p>Error: {error}</p>
             </div>
         )

@@ -1,5 +1,4 @@
 .welcome {
-    background-color: var(--clr-background);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,16 +38,4 @@
 .welcome__login-btn {
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
-}
-
-.welcome__validation-error {
-    margin-top: 0.8rem;
-    background-color: var(--clr-danger);
-    border-radius: 1rem;
-    height: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    display: flex;
-    align-items: center;
-    text-wrap: nowrap;
 }
