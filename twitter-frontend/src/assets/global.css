@@ -178,3 +178,26 @@ h3 {
     text-wrap: nowrap;
     overflow: hidden;
 }
+
+.holy-grail-content {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (width >= 576px) {
+    .holy-grail-content {
+        flex-direction: row;
+    }
+
+    .holy-grail-left {
+        flex: 1 1 5rem;
+    }
+    
+    .holy-grail-middle {
+        flex: 3 3;
+    }
+    
+    .holy-grail-right {
+        flex: 1 1 5rem;
+    }
+}
