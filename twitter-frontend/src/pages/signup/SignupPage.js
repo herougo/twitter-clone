@@ -37,11 +37,13 @@ const SignupPage = () => {
     }
 
     const logInUsingSignup = () => {
-        logIn(username, password).then((res) => {
+        logIn({username, password}).then((res) => {
             setUser({token: res.data.token});
             navigate('/');
         }).catch((err) => {
-            navigate('/login');
+            const errorMessage = err.response.data.errors.message;
+            console.error(errorMessage);
+            navigate('/welcome');
         });
     }
 

@@ -46,7 +46,7 @@ class UserService {
     async signUp(userData) {
         try {
             if (!userData) {
-                throw new BadRequestError("Missing user");
+                throw new BadRequestError("Missing user in request");
             }
 
             const passwordHash = await hashPassword(userData.password);
