@@ -4,7 +4,7 @@ import largeLogo  from '../../assets/images/twitter-logo-300x300.png';
 import { validateLogin } from '../../lib/validation';
 import logIn from '../../features/authentication/services/logIn';
 import UserContext from '../../context/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const WelcomePage = () => {
     const {user, setUser} = useContext(UserContext);
@@ -13,12 +13,17 @@ const WelcomePage = () => {
     const [errors, setErrors] = useState([]);
     const navigate = useNavigate();
 
+    if (user) {
+        return <Navigate to='/'></Navigate>
+    }
+
     const validateAndLogin = (e) => {
         const errorMessages = validateLogin({username, password});
         setErrors(errorMessages);
         if (errorMessages.length === 0) {
-            logIn(username, password).then((res) => {
+            logIn({username, password}).then((res) => {
                 setUser({token: res.data.token});
+                navigate('/');
             }).catch((err) => {
                 const errorMessage = err.response.data.errors.message;
                 setErrors([`${errorMessage}`]);

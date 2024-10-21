@@ -1,7 +1,7 @@
 import './SignupPage.css';
 import React, { useContext, useState } from 'react';
 import signUp from '../../features/authentication/services/signUp';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import logIn from '../../features/authentication/services/logIn';
 import UserContext from '../../context/UserContext';
 import { validateSignUp } from '../../lib/validation';
@@ -17,6 +17,10 @@ const SignupPage = () => {
     
     const {user, setUser} = useContext(UserContext);
     const navigate = useNavigate();
+
+    if (user) {
+        return <Navigate to='/'></Navigate>
+    }
 
     const validateAndSignUp = (e) => {
         const inputValues = {

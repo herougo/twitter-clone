@@ -63,4 +63,4 @@ export {
     validateName,
     validateLogin,
     validateSignUp
-}
+};

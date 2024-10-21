@@ -16,7 +16,7 @@
 }
 
 .welcome__col-2-form {
-    width: calc(min(100%, 300px));
+    width: calc(min(100%, 400px));
     display: flex;
     flex-direction: column;
 }
