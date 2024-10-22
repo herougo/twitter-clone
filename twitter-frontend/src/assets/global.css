@@ -96,6 +96,7 @@ h3 {
 
     --clr-danger-500: hsl(1, 100%, 50%);
 
+    --clr-neutral-1000: hsl(212, 21%, 5%);
     --clr-neutral-900: hsl(212, 21%, 14%);
     --clr-neutral-800: hsl(212, 21%, 25%);
     --clr-neutral-400: hsl(228, 12%, 48%);
@@ -111,6 +112,12 @@ h3 {
     --clr-color: var(--clr-neutral-100);
     --clr-btn-hover: var(--clr-primary-600);
     --clr-btn2-hover: var(--clr-primary-300);
+    
+    --clr-left-nav-btn-hover: var(--clr-primary);
+    --clr-left-nav-background: var(--clr-neutral-1000);
+
+    /* Font sizes */
+    --fs-left-nav-text: 1.5rem;
 }
 
 /*******************************

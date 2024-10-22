@@ -1,4 +1,27 @@
 .left-nav {
     display: flex;
     flex-direction: column;
+    background-color: var(--clr-left-nav-background);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.left-nav__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: var(--fs-left-nav-text);
+}
+
+.left-nav__btn:hover {
+    color: var(--clr-left-nav-btn-hover);
+}
+
+.left-nav__icon-container {
+    flex: 0 0 var(--fs-left-nav-text);
+}
+
+.left-nav__btn-text {
+    flex: 1 0;
 }
