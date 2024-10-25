@@ -5,7 +5,7 @@ import MainContent from '../../layouts/main-content/MainContent';
 
 const HomePage = () => {
     return (
-        <div className='home container2'>
+        <div className='home'>
             <LeftNav></LeftNav>
             <MainContent></MainContent>
         </div>

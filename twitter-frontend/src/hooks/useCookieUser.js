@@ -7,7 +7,11 @@ const useCookieUser = () => {
     const [user, setUser] = useState(getCookie(COOKIE_NAME) || null);
     
     const newSetUser = (val) => {
-        setCookie(COOKIE_NAME, val.token);
+        if (val === null) {
+            setCookie(COOKIE_NAME, null);
+        } else {
+            setCookie(COOKIE_NAME, val.token);
+        }
         setUser(val);
     }
     
