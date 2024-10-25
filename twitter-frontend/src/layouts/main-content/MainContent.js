@@ -3,7 +3,7 @@ import './MainContent.css';
 
 const MainContent = () => {
     return (
-        <div className='main-content holy-grail-left'>
+        <div className='main-content'>
             Hi
         </div>
     );

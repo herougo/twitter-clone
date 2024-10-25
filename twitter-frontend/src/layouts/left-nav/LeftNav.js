@@ -5,7 +5,7 @@ import './LeftNav.css';
 
 const LeftNav = () => {
     return (
-        <div className='left-nav holy-grail-left'>
+        <div className='left-nav'>
             <div className='left-nav__btn'>
                 <div className='left-nav__icon-container'>
                     <BiHomeAlt></BiHomeAlt>
