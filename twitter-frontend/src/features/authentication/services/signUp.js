@@ -1,8 +1,8 @@
 import axiosWrapper from "../../../lib/axiosWrapper";
 
 
-const signUp = ({username, password, email, firstName, lastName}) => {
-    return axiosWrapper(
+const signUp = async ({username, password, email, firstName, lastName}) => {
+    return await axiosWrapper(
         'post',
         {
             user : {username, password, email, firstName, lastName}

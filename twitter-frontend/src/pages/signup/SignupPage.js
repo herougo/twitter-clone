@@ -17,11 +17,11 @@ const SignupPage = () => {
     const {user, setUser} = useContext(UserContext);
     const navigate = useNavigate();
 
-    if (user) {
+    if (user !== null) {
         return <Navigate to='/'></Navigate>
     }
 
-    const validateAndSignUp = (e) => {
+    const validateAndSignUp = async (e) => {
         const inputValues = {
             username, password, email, firstName, lastName
         };
@@ -30,24 +30,30 @@ const SignupPage = () => {
         );
         setErrors(errorMessages);
         if (errorMessages.length === 0) {
-            signUp(inputValues).then((res) => {
-                logInUsingSignup();
-            }).catch((err) => {
-                const errorMessage = err.response.data.errors.message;
-                setErrors([`${errorMessage}`]);
-            })
+            let res = null;
+            try {
+                res = await signUp(inputValues);
+            } catch (err) {
+                setErrors([`${err.message}`]);
+                return;
+            };
+
+            await logInUsingSignup();
         }
     }
 
-    const logInUsingSignup = () => {
-        logIn({username, password}).then((res) => {
-            setUser({token: res.data.token});
-            navigate('/');
-        }).catch((err) => {
-            const errorMessage = err.response.data.errors.message;
-            console.error(errorMessage);
+    const logInUsingSignup = async () => {
+        let res = null;
+        try {
+            res = await logIn({username, password});
+        } catch (err) {
+            setErrors([`${err.message}`]);
             navigate('/welcome');
-        });
+            return;
+        };
+
+        setUser({token: res.data.token});
+        navigate('/');
     }
 
     let validationErrorContent = null;

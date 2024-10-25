@@ -13,21 +13,24 @@ const WelcomePage = () => {
     const [errors, setErrors] = useState([]);
     const navigate = useNavigate();
 
-    if (user) {
+    if (user !== null) {
         return <Navigate to='/'></Navigate>
     }
 
-    const validateAndLogin = (e) => {
+    const validateAndLogin = async (e) => {
         const errorMessages = validateLogin({username, password});
         setErrors(errorMessages);
         if (errorMessages.length === 0) {
-            logIn({username, password}).then((res) => {
-                setUser({token: res.data.token});
-                navigate('/');
-            }).catch((err) => {
-                const errorMessage = err.response.data.errors.message;
-                setErrors([`${errorMessage}`]);
-            });
+            let res = null;
+            try {
+                res = await logIn({username, password});
+            } catch (err) {
+                setErrors([`${err.message}`]);
+                return;
+            };
+
+            setUser({token: res.data.token});
+            navigate('/');
         }
     }
 
