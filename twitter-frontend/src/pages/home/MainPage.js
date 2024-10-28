@@ -1,9 +1,9 @@
 import React from 'react';
-import './HomePage.css';
+import './MainPage.css';
 import LeftNav from '../../layouts/left-nav/LeftNav';
 import MainContent from '../../layouts/main-content/MainContent';
 
-const HomePage = () => {
+const MainPage = () => {
     return (
         <div className='home'>
             <LeftNav></LeftNav>
@@ -12,4 +12,4 @@ const HomePage = () => {
     );
 }
 
-export default HomePage;
+export default MainPage;

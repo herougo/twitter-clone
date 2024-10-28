@@ -3,7 +3,8 @@ import React from 'react';
 import LoginRestricted from '../components/utility/LoginRestricted';
 import WelcomePage from './welcome/WelcomePage';
 import SignupPage from './signup/SignupPage';
-import HomePage from './home/HomePage';
+import HomePage from './home/MainPage';
+import MainPage from './home/MainPage';
 
 const RouteCollection = () => {
     return (
@@ -50,15 +51,13 @@ const RouteCollection = () => {
             }></Route>
             <Route exact path="/" element={
                 <LoginRestricted>
-                    <HomePage></HomePage>
+                    <MainPage></MainPage>
                 </LoginRestricted>
             }></Route>
-            <Route exact path="/welcome" element={
-                <WelcomePage></WelcomePage>
-            }></Route>
-            <Route exact path="/signup" element={
-                <SignupPage></SignupPage>
-            }></Route>
+            <Route exact path="/welcome" element={<WelcomePage />}>
+            </Route>
+            <Route exact path="/signup" element={<SignupPage />}>
+            </Route>
         </Routes>
     );
 }
