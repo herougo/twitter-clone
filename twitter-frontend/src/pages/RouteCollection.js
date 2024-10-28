@@ -8,7 +8,7 @@ import {
     HomePageContent, MessagePageContent, MessagesPageContent, 
     NewMessagePageContent, NotificationsPageContent, PostPageContent, 
     ProfilePageContent, SearchPageContent, StorePageContent, MainPage
-} from './home';
+} from './main';
 
 const RouteCollection = () => {
     return (
