@@ -1,10 +1,10 @@
 import React from 'react';
 import './MainContent.css';
 
-const MainContent = () => {
+const MainContent = ({children}) => {
     return (
         <div className='main-content'>
-            Hi
+            {children}
         </div>
     );
 }
