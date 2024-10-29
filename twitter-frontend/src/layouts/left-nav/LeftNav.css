@@ -21,6 +21,10 @@
     color: var(--clr-left-nav-btn-hover);
 }
 
+.left-nav__btn__active {
+    color: var(--clr-left-nav-btn-active);
+}
+
 .left-nav__icon-container {
     flex: 0 0 var(--fs-left-nav-text);
 }

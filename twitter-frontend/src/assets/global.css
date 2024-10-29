@@ -114,6 +114,7 @@ h3 {
     --clr-btn2-hover: var(--clr-primary-300);
     
     --clr-left-nav-btn-hover: var(--clr-primary);
+    --clr-left-nav-btn-active: var(--clr-primary);
     --clr-left-nav-background: var(--clr-neutral-1000);
 
     /* Font sizes */
