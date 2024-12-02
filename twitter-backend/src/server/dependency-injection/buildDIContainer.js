@@ -13,6 +13,13 @@ const buildDIContainer = (customDependenciesMap) => {
     const userService = container.register(DI_NAMES.userService, new UserService(
         {logger, userRepository}
     ));
+    const channelRepository = container.register(DI_NAMES.channelRepository, new ChannelRepository());
+    const messageRepository = container.register(
+        DI_NAMES.channelRepository,
+        new MessageRepository(channelRepository)
+    );
+    const notificationRepository = container.register(DI_NAMES.notificationRepository, new NotificationRepository());
+    const postRepository = container.register(DI_NAMES.postRepository, new PostRepository());
 
     return container;
 }
