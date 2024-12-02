@@ -12,6 +12,20 @@ class UserRepository {
     async deleteAll() {
         return await User.deleteMany({});
     }
+
+    async addFollower(user, follower) {
+        user.followers.push(follower);
+        follower.following.push(user);
+        await user.save();
+        await follower.save();
+    }
+
+    async removeFollower(user, follower) {
+        user.followers.remove(follower);
+        follower.following.remove(user);
+        await user.save();
+        await follower.save();
+    }
 }
 
 module.exports = UserRepository;
