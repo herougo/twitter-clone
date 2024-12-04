@@ -1,8 +1,10 @@
-const mockLogger = {
-    error: jest.fn(),
-    log: jest.fn(),
-    warn: jest.fn(),
-    debug: jest.fn()
+const createMockLogger = () => {
+    return {
+        error: jest.fn(),
+        log: jest.fn(),
+        warn: jest.fn(),
+        debug: jest.fn()
+    }
 }
 
-module.exports = mockLogger;
+module.exports = createMockLogger;

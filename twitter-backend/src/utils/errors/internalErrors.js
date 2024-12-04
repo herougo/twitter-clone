@@ -5,6 +5,13 @@ class MissingDependencyError extends Error {
     }
 }
 
+class ExistingDependencyError extends Error {
+    constructor(dependencyName) {
+        super();
+        this.message = `Existing dependency ${dependencyName}`;
+    }
+}
+
 class UnexpectedDatabaseChangeError extends Error {
     constructor(message = "Tried to change the database outside a test environment!") {
         super();
@@ -13,5 +20,7 @@ class UnexpectedDatabaseChangeError extends Error {
 }
 
 module.exports = {
-    MissingDependencyError
+    MissingDependencyError,
+    ExistingDependencyError,
+    UnexpectedDatabaseChangeError
 }

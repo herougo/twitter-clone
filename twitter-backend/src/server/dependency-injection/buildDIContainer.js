@@ -19,7 +19,7 @@ const buildDIContainer = (customDependenciesMap) => {
     const logger = container.register(DI_NAMES.logger, new Logger());
 
     const notificationRepository = container.register(DI_NAMES.notificationRepository, new NotificationRepository());
-    const notificationService = container.register(DI_NAMES.userService, new NotificationService(
+    const notificationService = container.register(DI_NAMES.notificationService, new NotificationService(
         {logger, notificationRepository}
     ));
     const userRepository = container.register(DI_NAMES.userRepository, new UserRepository());
@@ -27,18 +27,18 @@ const buildDIContainer = (customDependenciesMap) => {
         {logger, notificationService, userRepository}
     ));
     const channelRepository = container.register(DI_NAMES.channelRepository, new ChannelRepository());
-    const channelService = container.register(DI_NAMES.userService, new ChannelService(
+    const channelService = container.register(DI_NAMES.channelService, new ChannelService(
         {logger, channelRepository}
     ));
     const messageRepository = container.register(
-        DI_NAMES.channelRepository,
+        DI_NAMES.messageRepository,
         new MessageRepository(channelRepository)
     );
-    const messageService = container.register(DI_NAMES.userService, new MessageService(
+    const messageService = container.register(DI_NAMES.messageService, new MessageService(
         {logger, channelRepository, messageRepository}
     ));
     const postRepository = container.register(DI_NAMES.postRepository, new PostRepository());
-    const postService = container.register(DI_NAMES.userService, new PostService(
+    const postService = container.register(DI_NAMES.postService, new PostService(
         {logger, notificationRepository, postRepository}
     ));
 

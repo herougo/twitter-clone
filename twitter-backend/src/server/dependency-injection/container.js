@@ -1,13 +1,18 @@
-const { MissingDependencyError } = require("../../utils/errors/internalErrors");
+const { MissingDependencyError, ExistingDependencyError } = require("../../utils/errors/internalErrors");
 
 class DependencyInjectionContainer {
     constructor(customDependenciesMap) {
-        this.dependencies = customDependenciesMap || {};
+        this.customDependenciesMap = customDependenciesMap;
+        this.dependencies = {...customDependenciesMap} || {};
     }
 
     register(name, dependency) {
         if (name in this.dependencies) {
-            return this.resolve(name);
+            if (name in this.customDependenciesMap) {
+                return this.resolve(name);
+            }
+
+            throw new ExistingDependencyError(name);
         }
         this.dependencies[name] = dependency;
         return dependency;

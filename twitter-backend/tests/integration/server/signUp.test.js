@@ -1,7 +1,7 @@
 const createApp = require("../../../src/server/app");
 const DI_NAMES = require("../../../src/server/dependency-injection/names");
 const request = require('supertest');
-const mockLogger = require("../../utils/mocks/mockLogger");
+const createMockLogger = require("../../utils/mocks/mockLogger");
 const mongoose = require("mongoose");
 const CONFIG = require("../../../src/config");
 const { clearDatabase, populateDatabase } = require("../../utils/database/changeContents");
@@ -11,7 +11,7 @@ let diContainer;
 
 beforeAll(async () => {
     const appData = await createApp({
-        [DI_NAMES.logger]: mockLogger
+        [DI_NAMES.logger]: createMockLogger()
     });
     app = appData.app;
     diContainer = appData.diContainer;

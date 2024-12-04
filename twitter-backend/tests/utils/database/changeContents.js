@@ -1,6 +1,7 @@
 const CONFIG = require("../../../src/config");
 const DI_NAMES = require("../../../src/server/dependency-injection/names");
 const { ENVIRONMENTS } = require("../../../src/utils/enums");
+const { UnexpectedDatabaseChangeError } = require("../../../src/utils/errors/internalErrors");
 
 const populateDatabase = async (diContainer) => {
     // In case CONFIG.nodeEnv is not properly set when running tests
