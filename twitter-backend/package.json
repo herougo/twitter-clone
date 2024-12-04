@@ -7,7 +7,8 @@
     "start": "node src/server.js",
     "test": "jest --testPathPattern=tests",
     "test:unit": "jest --testPathPattern=tests/unit",
-    "test:integration": "jest  --testPathPattern=tests/integration"
+    "test:integration": "jest --testPathPattern=tests/integration",
+    "test:one": "jest tests/integration/server/login.test.js -t Success"
   },
   "author": "",
   "license": "ISC",

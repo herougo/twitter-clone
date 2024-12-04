@@ -7,8 +7,9 @@ const { NOTIFICATION_TYPES } = require("../../utils/enums");
 const { catchAndTransformMongooseError } = require("../../server/handlers");
 
 class UserService {
-    constructor({logger, userRepository}) {
+    constructor({logger, notificationService, userRepository}) {
         this.logger = logger;
+        this.notificationService = notificationService;
         this.userRepository = userRepository;
     }
 

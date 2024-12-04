@@ -48,7 +48,7 @@ describe("POST /signup endpoint", () => {
             }
         });
         expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("Invalid user details");
+        expect(response.body.errors.message).toEqual("Validation failed for user");
     });
 
     test("Invalid email", async () => {
@@ -62,7 +62,7 @@ describe("POST /signup endpoint", () => {
             }
         });
         expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("Invalid user details");
+        expect(response.body.errors.message).toEqual("Validation failed for user");
     });
 
     test("Duplicate username", async () => {

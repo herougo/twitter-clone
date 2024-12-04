@@ -3,9 +3,10 @@ const { NOTIFICATION_TYPES } = require("../../utils/enums");
 const { BadRequestError } = require("../../utils/errors/expressErrors");
 
 class PostService {
-    constructor({logger, postRepository, notificationService}) {
+    constructor({logger, notificationService, postRepository}) {
         this.logger = logger;
-        this.postRepository = postRepository, notificationService;
+        this.notificationService = notificationService;
+        this.postRepository = postRepository;
     }
 
     async createPost({authorId, content, replyToId}) {

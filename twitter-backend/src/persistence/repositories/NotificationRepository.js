@@ -1,4 +1,4 @@
-const User = require("../models/Notifications");
+const Notification = require("../models/Notification");
 
 class  NotificationRepository {
     async findOneById(id) {
