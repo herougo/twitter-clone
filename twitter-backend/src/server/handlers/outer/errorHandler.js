@@ -1,13 +1,13 @@
-const { ExpressError } = require("../../utils/errors/expressErrors");
-const DI_NAMES = require("../dependency-injection/names");
+const { ExpressError } = require("../../../utils/errors/expressErrors");
+const DI_NAMES = require("../../dependency-injection/names");
 
 const applyErrorHandler = (app, diContainer) => {
     const logger = diContainer.resolve(DI_NAMES.logger);
 
     const errorHandler = (err, req, res, next) => {
+        logger.error(err);
+
         if (!(err instanceof ExpressError)) {
-            // another kind of error slipped through somehow
-            // (probably in the route file)
             logger.error(`error handler saw a non-express error: ${err}`);
             return res.status(500).send();
         }

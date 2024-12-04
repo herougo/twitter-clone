@@ -5,6 +5,10 @@ class UserRepository {
         return await User.findOne({username});
     }
 
+    async findOneById(id) {
+        return await User.findOneById(id);
+    }
+
     async create(userData) {
         return await User.create(userData);
     }

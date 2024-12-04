@@ -76,6 +76,6 @@ describe("POST /signup endpoint", () => {
             }
         });
         expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("User exists already");
+        expect(response.body.errors.message).toEqual("This user exists already");
     });
 });

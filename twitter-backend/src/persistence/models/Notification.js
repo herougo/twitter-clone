@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { NOTIFICATION_TYPES } = require("../../utils/enums");
 
 const NotificationSchema = new mongoose.Schema(
     {
@@ -6,7 +7,11 @@ const NotificationSchema = new mongoose.Schema(
         userFrom: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         type: {
             type: String,
-            enum : ['like','dislike', 'follow'],
+            enum : [
+                NOTIFICATION_TYPES.like,
+                NOTIFICATION_TYPES.dislike,
+                NOTIFICATION_TYPES.follow
+            ],
         },
         read: {
             type: Boolean,

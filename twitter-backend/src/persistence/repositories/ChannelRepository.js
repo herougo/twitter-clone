@@ -5,8 +5,8 @@ class ChannelRepository {
         return await Channel.findOneById(id);
     }
 
-    async create({name, isGroupChat, users}) {
-        return await Channel.create({name, isGroupChat, users});
+    async create({name, isGroupChat, userIds}) {
+        return await Channel.create({name, isGroupChat, users: userIds});
     }
 
     async deleteAll() {

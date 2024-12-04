@@ -3,4 +3,10 @@ const ENVIRONMENTS = {
     test: "test"
 }
 
-module.exports = {ENVIRONMENTS};
+const NOTIFICATION_TYPES = {
+    like: "like",
+    dislike: "dislike",
+    follow: "follow"
+}
+
+module.exports = {ENVIRONMENTS, NOTIFICATION_TYPES};

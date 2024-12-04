@@ -2,7 +2,7 @@ const express = require("express");
 const applyRoutes = require("./routes");
 const applyMiddleware = require("./middleware");
 const initAllLoaders = require("../loaders");
-const applyAllHandlers = require("./handlers");
+const { applyAllHandlers } = require("./handlers");
 const buildDIContainer = require("./dependency-injection/buildDIContainer");
 const DI_NAMES = require("./dependency-injection/names");
 

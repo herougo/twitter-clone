@@ -22,8 +22,10 @@ class  PostRepository {
 
     async fullCreate({authorId, content, replyTo}) {
         const newPost = await this._create({authorId, content, replyTo});
-        replyTo.replies.push(newPost);
-        replyTo.save();
+        if (replyTo) {
+            replyTo.replies.push(newPost);
+            replyTo.save();
+        }
     }
 
     async addLike(post, userId) {
