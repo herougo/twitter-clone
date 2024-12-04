@@ -43,7 +43,7 @@ describe("POST /signup endpoint", () => {
     test("Missing data", async () => {
         const response = await request(app).post('/signup').send({
             user: {
-                username: "username",
+                username: "username2",
                 password: "aghfhawefhawef"
             }
         });
@@ -54,7 +54,7 @@ describe("POST /signup endpoint", () => {
     test("Invalid email", async () => {
         const response = await request(app).post('/signup').send({
             user : {
-                username: "username",
+                username: "username2",
                 password: "aghfhawefhawef",
                 firstName: "hi",
                 lastName: "there",
