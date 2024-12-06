@@ -1,5 +1,4 @@
-const applyLogInRouter = require("./login");
-const applySignUpRouter = require("./signUp");
+const { applyLogInRouter, applySignUpRouter } = require("./user");
 
 const applyRoutes = (app, diContainer) => {
     applyLogInRouter(app, diContainer);
