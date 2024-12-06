@@ -1,9 +1,9 @@
-const createApp = require("../../../src/server/app");
-const DI_NAMES = require("../../../src/server/dependency-injection/names");
+const createApp = require("../../../../src/server/app");
+const DI_NAMES = require("../../../../src/server/dependency-injection/names");
 const request = require('supertest');
-const createMockLogger = require("../../utils/mocks/mockLogger");
+const createMockLogger = require("../../../utils/mocks/mockLogger");
 const mongoose = require("mongoose");
-const { populateDatabase, clearDatabase } = require("../../utils/database/changeContents");
+const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 
 let app;
 let diContainer;

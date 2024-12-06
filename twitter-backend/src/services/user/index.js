@@ -61,7 +61,7 @@ class UserService {
         );
     }
 
-    async follow(userId, followerId) {
+    async follow(followerId, userId) {
         let user = null;
         let follower = null;
 
@@ -94,6 +94,35 @@ class UserService {
             userFromId: followerId,
             type: NOTIFICATION_TYPES.follow
         });
+    }
+
+    async unfollow(followerId, userId) {
+        let user = null;
+        let follower = null;
+
+        user = await catchAndTransformMongooseError(
+            this.userRepository.findOneById(userId),
+            this.logger,
+            "user"
+        );
+        if (!user) {
+            throw BadRequestError("Follow: Invalid user");
+        }
+
+        follower = await catchAndTransformMongooseError(
+            this.userRepository.findOneById(followerId),
+            this.logger,
+            "user"
+        );
+        if (!follower) {
+            throw BadRequestError("Follow: Invalid follower");
+        }
+        
+        await catchAndTransformMongooseError(
+            this.userRepository.removeFollower(user, follower),
+            this.logger,
+            "user"
+        );
     }
 }
 

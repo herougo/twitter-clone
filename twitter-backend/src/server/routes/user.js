@@ -25,8 +25,8 @@ const applySignUpRouter = (app, diContainer) => {
 
     router.post('/', async (req, res, next) => {
         try {
-            const user = req.body.user;
-            const loginResult = await userService.signUp(user);
+            const userData = req.body.user;
+            const loginResult = await userService.signUp(userData);
             res.status(201).json(loginResult);
         } catch (e) {
             return next(e);
@@ -36,4 +36,45 @@ const applySignUpRouter = (app, diContainer) => {
     app.use("/signup", router);
 }
 
-module.exports = { applySignUpRouter,  applyLogInRouter };
+const applyFollowRouter = (app, diContainer) => {
+    const router = express.Router();
+    const userService = diContainer.resolve(DI_NAMES.userService);
+
+    router.post('/', async (req, res, next) => {
+        try {
+            const userId = req.body.userId;
+            const followerId = req.body.followerId;
+            await userService.follow(followerId, userId);
+            res.status(200);
+        } catch (e) {
+            return next(e);
+        }
+    });
+
+    app.use("/follow", router);
+}
+
+const applyUnfollowRouter = (app, diContainer) => {
+    const router = express.Router();
+    const userService = diContainer.resolve(DI_NAMES.userService);
+
+    router.post('/', async (req, res, next) => {
+        try {
+            const userId = req.body.userId;
+            const followerId = req.body.followerId;
+            await userService.unfollow(followerId, userId);
+            res.status(200);
+        } catch (e) {
+            return next(e);
+        }
+    });
+
+    app.use("/unfollow", router);
+}
+
+module.exports = {
+    applySignUpRouter,
+    applyLogInRouter,
+    applyFollowRouter,
+    applyUnfollowRouter
+};
