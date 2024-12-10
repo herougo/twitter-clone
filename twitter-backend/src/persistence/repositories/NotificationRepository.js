@@ -1,8 +1,8 @@
 const Notification = require("../models/Notification");
 
 class  NotificationRepository {
-    async findOneById(id) {
-        return await Notification.findOneById(id);
+    async findById(id) {
+        return await Notification.findById(id);
     }
 
     async create({userToId, userFromId, type}) {

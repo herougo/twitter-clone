@@ -13,13 +13,13 @@ class PostService {
         let replyTo = null;
         if (replyTo) {
             replyTo = await catchAndTransformMongooseError(
-                postRepository.findOneById(replyToId),
+                postRepository.findById(replyToId),
                 this.logger,
                 "post"
             );
 
             if (!replyTo) {
-                throw BadRequestError("Invalid parent post");
+                throw new BadRequestError("Invalid parent post");
             }
         }
 
@@ -32,13 +32,13 @@ class PostService {
 
     async _performAction(userFromId, postId, type) {
         const post = await catchAndTransformMongooseError(
-            postRepository.findOneById(postId),
+            postRepository.findById(postId),
             this.logger,
             "post"
         );
 
         if (!post) {
-            throw BadRequestError("invalid postId");
+            throw new BadRequestError("invalid postId");
         }
 
         await this.notificationService.createNotification({

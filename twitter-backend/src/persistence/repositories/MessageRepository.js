@@ -5,8 +5,8 @@ class MessageRepository {
         this.channelRepository = channelRepository;
     }
 
-    async findOneById(id) {
-        return await Message.findOneById(id);
+    async findById(id) {
+        return await Message.findById(id);
     }
 
     async _create({content, authorId, channel}) {

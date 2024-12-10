@@ -10,13 +10,13 @@ class MessageService {
 
     async sendMessage({content, authorId, channelId}) {
         const channel = await catchAndTransformMongooseError(
-            this.channelRepository.findOneById(channelId),
+            this.channelRepository.findById(channelId),
             this.logger,
             "channel"
         );
 
         if (!channel) {
-            throw BadRequestError("Invalid channelId");
+            throw new BadRequestError("Invalid channelId");
         }
 
         const message = await catchAndTransformMongooseError(

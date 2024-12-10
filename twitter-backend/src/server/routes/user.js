@@ -45,7 +45,7 @@ const applyFollowRouter = (app, diContainer) => {
             const userId = req.body.userId;
             const followerId = req.body.followerId;
             await userService.follow(followerId, userId);
-            res.status(200);
+            res.status(200).send();
         } catch (e) {
             return next(e);
         }
@@ -63,7 +63,7 @@ const applyUnfollowRouter = (app, diContainer) => {
             const userId = req.body.userId;
             const followerId = req.body.followerId;
             await userService.unfollow(followerId, userId);
-            res.status(200);
+            res.status(200).send();
         } catch (e) {
             return next(e);
         }

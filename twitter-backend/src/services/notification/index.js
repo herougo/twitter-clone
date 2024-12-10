@@ -8,7 +8,7 @@ class NotificationService {
 
     async createNotification({userToId, userFromId, type}) {
         const notification = await catchAndTransformMongooseError(
-            this.notificationRepository.fullCreate({userToId, userFromId, type}),
+            this.notificationRepository.create({userToId, userFromId, type}),
             this.logger,
             "notification"
         );

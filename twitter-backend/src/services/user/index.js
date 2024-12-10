@@ -66,21 +66,25 @@ class UserService {
         let follower = null;
 
         user = await catchAndTransformMongooseError(
-            this.userRepository.findOneById(userId),
+            this.userRepository.findById(userId),
             this.logger,
             "user"
         );
         if (!user) {
-            throw BadRequestError("Follow: Invalid user");
+            throw new BadRequestError("Follow: Invalid user");
         }
 
         follower = await catchAndTransformMongooseError(
-            this.userRepository.findOneById(followerId),
+            this.userRepository.findById(followerId),
             this.logger,
             "user"
         );
         if (!follower) {
-            throw BadRequestError("Follow: Invalid follower");
+            throw new BadRequestError("Follow: Invalid follower");
+        }
+
+        if (user.followers.includes(follower._id)) {
+            throw new BadRequestError("Follow: Already following");
         }
         
         await catchAndTransformMongooseError(
@@ -89,7 +93,7 @@ class UserService {
             "user"
         );
 
-        this.notificationService.createNotification({
+        await this.notificationService.createNotification({
             userToId: userId,
             userFromId: followerId,
             type: NOTIFICATION_TYPES.follow
@@ -101,21 +105,25 @@ class UserService {
         let follower = null;
 
         user = await catchAndTransformMongooseError(
-            this.userRepository.findOneById(userId),
+            this.userRepository.findById(userId),
             this.logger,
             "user"
         );
         if (!user) {
-            throw BadRequestError("Follow: Invalid user");
+            throw new BadRequestError("Unfollow: Invalid user");
         }
 
         follower = await catchAndTransformMongooseError(
-            this.userRepository.findOneById(followerId),
+            this.userRepository.findById(followerId),
             this.logger,
             "user"
         );
         if (!follower) {
-            throw BadRequestError("Follow: Invalid follower");
+            throw new BadRequestError("Unfollow: Invalid follower");
+        }
+
+        if (!user.followers.includes(follower._id)) {
+            throw new BadRequestError("Unfollow: Not already following");
         }
         
         await catchAndTransformMongooseError(

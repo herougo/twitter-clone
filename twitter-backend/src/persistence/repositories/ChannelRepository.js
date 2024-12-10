@@ -1,8 +1,8 @@
 const Channel = require("../models/Channel");
 
 class ChannelRepository {
-    async findOneById(id) {
-        return await Channel.findOneById(id);
+    async findById(id) {
+        return await Channel.findById(id);
     }
 
     async create({name, isGroupChat, userIds}) {

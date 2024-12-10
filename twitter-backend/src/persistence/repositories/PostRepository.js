@@ -2,8 +2,8 @@ const User = require("../models/Post");
 
 
 class  PostRepository {
-    async findOneById(id) {
-        return await Post.findOneById(id);
+    async findById(id) {
+        return await Post.findById(id);
     }
 
     async _create({authorId, content, replyTo}) {
