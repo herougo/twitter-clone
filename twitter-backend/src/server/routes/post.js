@@ -1,3 +1,6 @@
+const express = require('express');
+const DI_NAMES = require("../dependency-injection/names");
+
 const applyPostRouter = (app, diContainer) => {
     const router = express.Router();
     const postService = diContainer.resolve(DI_NAMES.postService);
