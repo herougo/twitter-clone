@@ -9,4 +9,9 @@ const NOTIFICATION_TYPES = {
     follow: "follow"
 }
 
-module.exports = {ENVIRONMENTS, NOTIFICATION_TYPES};
+const POST_ENGAGEMENT_TYPES = {
+    like: "like",
+    dislike: "dislike"
+}
+
+module.exports = {ENVIRONMENTS, NOTIFICATION_TYPES, POST_ENGAGEMENT_TYPES};

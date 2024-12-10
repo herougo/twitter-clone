@@ -19,8 +19,29 @@ class UnexpectedDatabaseChangeError extends Error {
     }
 }
 
+class PostEngagementError extends Error {
+
+}
+
+class ExistingPostEngagementError extends Error {
+    constructor(type) {
+        super();
+        this.message = `Tried to ${type} a post which is already ${type}d.`;
+    }
+}
+
+class MissingPostEngagementError extends Error {
+    constructor(type) {
+        super();
+        this.message = `Tried to ${type} a post which is not ${type}d.`;
+    }
+}
+
 module.exports = {
     MissingDependencyError,
     ExistingDependencyError,
-    UnexpectedDatabaseChangeError
+    UnexpectedDatabaseChangeError,
+    PostEngagementError,
+    ExistingPostEngagementError,
+    MissingPostEngagementError
 }

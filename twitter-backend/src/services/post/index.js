@@ -1,4 +1,5 @@
 const { catchAndTransformMongooseError } = require("../../server/handlers");
+const { catchAndTransformPostEngagementError } = require("../../server/handlers/inner");
 const { NOTIFICATION_TYPES } = require("../../utils/enums");
 const { BadRequestError } = require("../../utils/errors/expressErrors");
 
@@ -30,7 +31,7 @@ class PostService {
         );
     }
 
-    async _performAction(userFromId, postId, type) {
+    async _getPost(postId) {
         const post = await catchAndTransformMongooseError(
             postRepository.findById(postId),
             this.logger,
@@ -41,19 +42,52 @@ class PostService {
             throw new BadRequestError("invalid postId");
         }
 
-        await this.notificationService.createNotification({
-            userToId: post.author,
-            userFromId,
-            type
-        });
+        return post;
     }
 
     async like(userFromId, postId) {
-        await this._performAction(userFromId, postId, NOTIFICATION_TYPES.like);
+        const post = await this._getPost(postId);
+
+        catchAndTransformPostEngagementError(
+            this.postRepository.addLike(post, userFromId)
+        );
+
+        await this.notificationService.createNotification({
+            userToId: post.author,
+            userFromId,
+            type: NOTIFICATION_TYPES.like
+        });
     }
 
     async dislike(userFromId, postId) {
-        await this._performAction(userFromId, postId, NOTIFICATION_TYPES.dislike);
+        const post = await this._getPost(postId);
+
+        catchAndTransformPostEngagementError(
+            this.postRepository.addDislike(post, userFromId)
+        );
+
+        await this.notificationService.createNotification({
+            userToId: post.author,
+            userFromId,
+            type: NOTIFICATION_TYPES.dislike
+        });
+    }
+
+    async unlike(userFromId, postId) {
+        const post = await this._getPost(postId);
+
+        catchAndTransformPostEngagementError(
+            this.postRepository.removeLike(post, userFromId)
+        );
+        
+    }
+
+    async undislike(userFromId, postId) {
+        const post = await this._getPost(postId);
+
+        catchAndTransformPostEngagementError(
+            this.postRepository.removeDislike(post, userFromId)
+        );
     }
 }
 
