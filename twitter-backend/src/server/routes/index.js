@@ -1,15 +1,9 @@
-const {
-    applyLogInRouter,
-    applySignUpRouter,
-    applyFollowRouter,
-    applyUnfollowRouter
-} = require("./user");
+const { applyPostRouter } = require("./post");
+const { applyUserRouters } = require("./user");
 
 const applyRoutes = (app, diContainer) => {
-    applyLogInRouter(app, diContainer);
-    applySignUpRouter(app, diContainer);
-    applyFollowRouter(app, diContainer);
-    applyUnfollowRouter(app, diContainer);
+    applyUserRouters(app, diContainer);
+    applyPostRouter(app, diContainer);
 }
 
 module.exports = applyRoutes;

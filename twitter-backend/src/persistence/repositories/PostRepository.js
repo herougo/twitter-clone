@@ -26,7 +26,7 @@ class  PostRepository {
         const newPost = await this._create({authorId, content, replyTo});
         if (replyTo) {
             replyTo.replies.push(newPost);
-            replyTo.save();
+            await replyTo.save();
         }
     }
 

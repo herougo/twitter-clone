@@ -29,6 +29,7 @@ class PostService {
             this.logger,
             "post"
         );
+        return { id: post._id };
     }
 
     async _getPost(postId) {

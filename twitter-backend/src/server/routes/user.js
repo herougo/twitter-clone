@@ -72,9 +72,13 @@ const applyUnfollowRouter = (app, diContainer) => {
     app.use("/unfollow", router);
 }
 
+const applyUserRouters = (app, diContainer) => {
+    applyLogInRouter(app, diContainer);
+    applySignUpRouter(app, diContainer);
+    applyFollowRouter(app, diContainer);
+    applyUnfollowRouter(app, diContainer);
+}
+
 module.exports = {
-    applySignUpRouter,
-    applyLogInRouter,
-    applyFollowRouter,
-    applyUnfollowRouter
+    applyUserRouters
 };
