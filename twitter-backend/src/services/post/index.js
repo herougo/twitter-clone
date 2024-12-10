@@ -49,7 +49,7 @@ class PostService {
     async like(userFromId, postId) {
         const post = await this._getPost(postId);
 
-        catchAndTransformPostEngagementError(
+        await catchAndTransformPostEngagementError(
             this.postRepository.addLike(post, userFromId)
         );
 
@@ -63,7 +63,7 @@ class PostService {
     async dislike(userFromId, postId) {
         const post = await this._getPost(postId);
 
-        catchAndTransformPostEngagementError(
+        await catchAndTransformPostEngagementError(
             this.postRepository.addDislike(post, userFromId)
         );
 
@@ -77,7 +77,7 @@ class PostService {
     async unlike(userFromId, postId) {
         const post = await this._getPost(postId);
 
-        catchAndTransformPostEngagementError(
+        await catchAndTransformPostEngagementError(
             this.postRepository.removeLike(post, userFromId)
         );
         
@@ -86,7 +86,7 @@ class PostService {
     async undislike(userFromId, postId) {
         const post = await this._getPost(postId);
 
-        catchAndTransformPostEngagementError(
+        await catchAndTransformPostEngagementError(
             this.postRepository.removeDislike(post, userFromId)
         );
     }
