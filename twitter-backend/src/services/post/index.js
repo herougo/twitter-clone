@@ -46,7 +46,7 @@ class PostService {
 
     async _getPost(postId) {
         const post = await catchAndTransformMongooseError(
-            postRepository.findById(postId),
+            this.postRepository.findById(postId),
             this.logger,
             "post"
         );
@@ -58,13 +58,28 @@ class PostService {
         return post;
     }
 
+    async _verifyEngagementArgs(userFromId, postId) {
+        if (!userFromId) {
+            throw new BadRequestError("Missing userFromId");
+        }
+        if (!postId) {
+            throw new BadRequestError("Missing postId");
+        }
+
+        const user = await this.userRepository.findById(userFromId);
+        if (!user) {
+            throw new BadRequestError("Invalid userFromId");
+        }
+    }
+
     async like(userFromId, postId) {
+        await this._verifyEngagementArgs(userFromId, postId);
         const post = await this._getPost(postId);
 
         await catchAndTransformPostEngagementError(
             this.postRepository.addLike(post, userFromId)
         );
-
+        return
         await this.notificationService.createNotification({
             userToId: post.author,
             userFromId,
@@ -73,12 +88,13 @@ class PostService {
     }
 
     async dislike(userFromId, postId) {
+        await this._verifyEngagementArgs(userFromId, postId);
         const post = await this._getPost(postId);
 
         await catchAndTransformPostEngagementError(
             this.postRepository.addDislike(post, userFromId)
         );
-
+        return
         await this.notificationService.createNotification({
             userToId: post.author,
             userFromId,
@@ -87,6 +103,7 @@ class PostService {
     }
 
     async unlike(userFromId, postId) {
+        await this._verifyEngagementArgs(userFromId, postId);
         const post = await this._getPost(postId);
 
         await catchAndTransformPostEngagementError(
@@ -96,6 +113,7 @@ class PostService {
     }
 
     async undislike(userFromId, postId) {
+        await this._verifyEngagementArgs(userFromId, postId);
         const post = await this._getPost(postId);
 
         await catchAndTransformPostEngagementError(

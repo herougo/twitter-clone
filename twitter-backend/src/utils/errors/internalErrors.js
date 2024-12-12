@@ -23,14 +23,14 @@ class PostEngagementError extends Error {
 
 }
 
-class ExistingPostEngagementError extends Error {
+class ExistingPostEngagementError extends PostEngagementError {
     constructor(type) {
         super();
         this.message = `Tried to ${type} a post which is already ${type}d.`;
     }
 }
 
-class MissingPostEngagementError extends Error {
+class MissingPostEngagementError extends PostEngagementError {
     constructor(type) {
         super();
         this.message = `Tried to ${type} a post which is not ${type}d.`;
