@@ -8,8 +8,8 @@ const { DB_IDS } = require("../../../utils/database/ids");
 
 let app;
 let diContainer;
-const endPoint = '/post/like';
-const otherEndPoint = '/post/dislike';
+const endPoint = '/post/dislike';
+const otherEndPoint = '/post/like';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -25,7 +25,7 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("POST /post/like endpoint", () => {
+describe("POST /post/dislike endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
@@ -74,7 +74,7 @@ describe("POST /post/like endpoint", () => {
             postId: DB_IDS.mainPost
         });
         expect(response2.statusCode).toBe(400);
-        expect(response2.body.errors.message).toEqual("Tried to like a post which is already liked.");
+        expect(response2.body.errors.message).toEqual("Tried to dislike a post which is already disliked.");
     });
 
     test("Missing userFromId", async () => {
