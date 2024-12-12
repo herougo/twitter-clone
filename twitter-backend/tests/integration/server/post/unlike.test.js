@@ -8,8 +8,8 @@ const { DB_IDS } = require("../../../utils/database/ids");
 
 let app;
 let diContainer;
-const endPoint = '/post/dislike';
-const otherEndPoint = '/post/like';
+const unEndPoint = '/post/unlike'
+const endPoint = '/post/like';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -25,33 +25,34 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("POST /post/dislike endpoint", () => {
+describe("POST /post/unlike endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
         await populateDatabase(diContainer);
     });
 
-    test("Success (no previous engagement)", async () => {
+    test("Success", async () => {
         const response = await request(app).post(endPoint).send({
             userFromId: DB_IDS.mainUser,
             postId: DB_IDS.mainPost
         });
         expect(response.statusCode).toBe(200);
-    });
-
-    test("Success (previous engagement)", async () => {
-        const response = await request(app).post(otherEndPoint).send({
-            userFromId: DB_IDS.mainUser,
-            postId: DB_IDS.mainPost
-        });
-        expect(response.statusCode).toBe(200);
-        const response2 = await request(app).post(endPoint).send({
+        const response2 = await request(app).post(unEndPoint).send({
             userFromId: DB_IDS.mainUser,
             postId: DB_IDS.mainPost
         });
         expect(response2.statusCode).toBe(200);
         // TODO: check database for notifications and correct like/dislike data
+    });
+
+    test("No engagement", async () => {
+        const response = await request(app).post(unEndPoint).send({
+            userFromId: DB_IDS.mainUser,
+            postId: DB_IDS.mainPost
+        });
+        expect(response.statusCode).toBe(400);
+        expect(response.body.errors.message).toEqual("Tried to like a post which is not liked.");
     });
 
     test("Invalid User", async () => {
@@ -61,20 +62,6 @@ describe("POST /post/dislike endpoint", () => {
         });
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Invalid userFromId");
-    });
-
-    test("Already disliked", async () => {
-        const response = await request(app).post(endPoint).send({
-            userFromId: DB_IDS.mainUser,
-            postId: DB_IDS.mainPost
-        });
-        expect(response.statusCode).toBe(200);
-        const response2 = await request(app).post(endPoint).send({
-            userFromId: DB_IDS.mainUser,
-            postId: DB_IDS.mainPost
-        });
-        expect(response2.statusCode).toBe(400);
-        expect(response2.body.errors.message).toEqual("Tried to dislike a post which is already disliked.");
     });
 
     test("Missing userFromId", async () => {
