@@ -23,8 +23,9 @@ const clearDatabase = async (diContainer) => {
 
     const userRepository = diContainer.resolve(DI_NAMES.userRepository);
     const postRepository = diContainer.resolve(DI_NAMES.postRepository);
+    const notificationRepository = diContainer.resolve(DI_NAMES.notificationRepository);
 
-    const repositories = [userRepository, postRepository];
+    const repositories = [userRepository, postRepository, notificationRepository];
     for (const repository of repositories) {
         await repository.deleteAll();
     }
