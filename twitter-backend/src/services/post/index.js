@@ -79,7 +79,7 @@ class PostService {
         await catchAndTransformPostEngagementError(
             this.postRepository.addLike(post, userFromId)
         );
-        return
+        
         await this.notificationService.createNotification({
             userToId: post.author,
             userFromId,
@@ -94,7 +94,7 @@ class PostService {
         await catchAndTransformPostEngagementError(
             this.postRepository.addDislike(post, userFromId)
         );
-        return
+
         await this.notificationService.createNotification({
             userToId: post.author,
             userFromId,

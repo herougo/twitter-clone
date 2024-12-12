@@ -39,7 +39,7 @@ const buildDIContainer = (customDependenciesMap) => {
     ));
     const postRepository = container.register(DI_NAMES.postRepository, new PostRepository());
     const postService = container.register(DI_NAMES.postService, new PostService(
-        {logger, notificationRepository, postRepository, userRepository}
+        {logger, notificationService, postRepository, userRepository}
     ));
 
     return container;
