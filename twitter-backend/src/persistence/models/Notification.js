@@ -22,5 +22,6 @@ const NotificationSchema = new mongoose.Schema(
         timestamps: true
     }
 );
+NotificationSchema.index({"createdAt": -1});
 
 module.exports = mongoose.model("Notification", NotificationSchema);

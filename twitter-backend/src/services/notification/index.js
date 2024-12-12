@@ -1,4 +1,5 @@
 const { catchAndTransformMongooseError } = require("../../server/handlers");
+const { BadRequestError } = require("../../utils/errors/expressErrors");
 
 class NotificationService {
     constructor({logger, notificationRepository}) {
@@ -13,6 +14,14 @@ class NotificationService {
             "notification"
         );
         return notification
+    }
+
+    async markAsRead(notificationId) {
+        const notification = await this.notificationRepository.findById(notificationId);
+        if (!notification) {
+            throw new BadRequestError("Invalid notification");
+        }
+        await this.notificationRepository.markAsRead(notification);
     }
 }
 
