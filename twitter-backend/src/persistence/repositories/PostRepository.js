@@ -1,6 +1,6 @@
 const { POST_ENGAGEMENT_TYPES } = require("../../utils/enums");
 const { ExistingPostEngagementError, MissingPostEngagementError } = require("../../utils/errors/internalErrors");
-const User = require("../models/Post");
+const Post = require("../models/Post");
 
 
 class  PostRepository {
@@ -8,26 +8,29 @@ class  PostRepository {
         return await Post.findById(id);
     }
 
-    async _create({authorId, content, replyTo}) {
-        return await Post.create(
-            {
-                author: authorId,
-                content,
-                replyTo: replyTo._id
-            }
-        );
+    async _create(createData) {
+        return await Post.create(createData);
     }
 
     async deleteAll() {
         return await Post.deleteMany({});
     }
 
-    async fullCreate({authorId, content, replyTo}) {
-        const newPost = await this._create({authorId, content, replyTo});
+    async fullCreate({_id, authorId, content, replyTo}) {
+        const createData = {
+            author: authorId,
+            content,
+            replyTo: replyTo?._id
+        }
+        if (_id) {
+            createData._id = _id
+        }
+        const newPost = await this._create(createData);
         if (replyTo) {
             replyTo.replies.push(newPost);
             await replyTo.save();
         }
+        return newPost;
     }
 
     async addLike(post, userId) {

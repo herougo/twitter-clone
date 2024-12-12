@@ -4,6 +4,7 @@ const DI_NAMES = require("../../../src/server/dependency-injection/names");
 const { ENVIRONMENTS } = require("../../../src/utils/enums");
 const { UnexpectedDatabaseChangeError } = require("../../../src/utils/errors/internalErrors");
 const { populateUsers } = require("./populate/users");
+const { populatePosts } = require("./populate/posts");
 
 const populateDatabase = async (diContainer) => {
     // In case CONFIG.nodeEnv is not properly set when running tests
@@ -12,6 +13,7 @@ const populateDatabase = async (diContainer) => {
     }
 
     await populateUsers(diContainer);
+    await populatePosts(diContainer);
 }
 
 const clearDatabase = async (diContainer) => {
@@ -19,9 +21,10 @@ const clearDatabase = async (diContainer) => {
         throw new UnexpectedDatabaseChangeError();
     }
 
-    const userRepository = diContainer.resolve(DI_NAMES.userRepository)
+    const userRepository = diContainer.resolve(DI_NAMES.userRepository);
+    const postRepository = diContainer.resolve(DI_NAMES.postRepository);
 
-    const repositories = [userRepository];
+    const repositories = [userRepository, postRepository];
     for (const repository of repositories) {
         await repository.deleteAll();
     }

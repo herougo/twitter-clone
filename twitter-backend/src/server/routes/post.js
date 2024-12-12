@@ -10,8 +10,8 @@ const applyPostRouter = (app, diContainer) => {
             const authorId = req.body.authorId;
             const content = req.body.content;
             const replyToId = req.body.replyToId;
-            const createResult = await postService.fullCreate({authorId, content, replyToId});
-            res.status(200).json(createResult);
+            const createResult = await postService.createPost({authorId, content, replyToId});
+            res.status(201).json(createResult);
         } catch (e) {
             return next(e);
         }

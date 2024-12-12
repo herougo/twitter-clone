@@ -4,17 +4,29 @@ const { NOTIFICATION_TYPES } = require("../../utils/enums");
 const { BadRequestError } = require("../../utils/errors/expressErrors");
 
 class PostService {
-    constructor({logger, notificationService, postRepository}) {
+    constructor({logger, notificationService, postRepository, userRepository}) {
         this.logger = logger;
         this.notificationService = notificationService;
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     async createPost({authorId, content, replyToId}) {
+        if (!authorId) {
+            throw new BadRequestError("Missing authorId");
+        }
+        if (!content) {
+            throw new BadRequestError("Missing content");
+        }
+        const author = await this.userRepository.findById(authorId);
+        if (!author) {
+            throw new BadRequestError("Invalid author");
+        }
+
         let replyTo = null;
-        if (replyTo) {
+        if (replyToId) {
             replyTo = await catchAndTransformMongooseError(
-                postRepository.findById(replyToId),
+                this.postRepository.findById(replyToId),
                 this.logger,
                 "post"
             );
