@@ -5,14 +5,18 @@ class  NotificationRepository {
         return await Notification.findById(id);
     }
 
-    async create({userToId, userFromId, type}) {
-        return await Notification.create(
-            {
-                userTo: userToId,
-                userFrom: userFromId,
-                type
-            }
-        );
+    async create({_id, userToId, userFromId, postId, type}) {
+        const createData = {
+            userTo: userToId,
+            userFrom: userFromId,
+            post: postId || null,
+            type
+        };
+        if (_id) {
+            createData._id = _id;
+        }
+
+        return await Notification.create(createData);
     }
 
     async deleteAll() {

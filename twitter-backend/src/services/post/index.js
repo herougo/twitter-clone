@@ -83,6 +83,7 @@ class PostService {
         await this.notificationService.createNotification({
             userToId: post.author,
             userFromId,
+            postId: post._id,
             type: NOTIFICATION_TYPES.like
         });
     }
@@ -98,6 +99,7 @@ class PostService {
         await this.notificationService.createNotification({
             userToId: post.author,
             userFromId,
+            postId: post._id,
             type: NOTIFICATION_TYPES.dislike
         });
     }

@@ -5,6 +5,7 @@ const { ENVIRONMENTS } = require("../../../src/utils/enums");
 const { UnexpectedDatabaseChangeError } = require("../../../src/utils/errors/internalErrors");
 const { populateUsers } = require("./populate/users");
 const { populatePosts } = require("./populate/posts");
+const { populateNotifications } = require("./populate/notification");
 
 const populateDatabase = async (diContainer) => {
     // In case CONFIG.nodeEnv is not properly set when running tests
@@ -14,6 +15,7 @@ const populateDatabase = async (diContainer) => {
 
     await populateUsers(diContainer);
     await populatePosts(diContainer);
+    await populateNotifications(diContainer);
 }
 
 const clearDatabase = async (diContainer) => {

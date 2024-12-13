@@ -13,6 +13,7 @@ const NotificationSchema = new mongoose.Schema(
                 NOTIFICATION_TYPES.follow
             ],
         },
+        post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
         read: {
             type: Boolean,
             default: false

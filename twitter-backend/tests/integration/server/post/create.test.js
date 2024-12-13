@@ -16,9 +16,6 @@ beforeAll(async () => {
     });
     app = appData.app;
     diContainer = appData.diContainer;
-
-    await clearDatabase(diContainer);
-    await populateDatabase(diContainer);
 });
 
 // run once after all suites in the file
@@ -29,7 +26,8 @@ afterAll(async () => {
 describe("POST /post/create endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
-
+        await clearDatabase(diContainer);
+        await populateDatabase(diContainer);
     });
 
     test("Success (no parent)", async () => {
