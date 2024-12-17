@@ -5,7 +5,6 @@ const createMockLogger = require("../../../utils/mocks/mockLogger");
 const mongoose = require("mongoose");
 const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 const { DB_IDS } = require("../../../utils/database/ids");
-const { NOTIFICATION_TYPES } = require("../../../../src/utils/enums");
 
 let app;
 let diContainer;
@@ -69,7 +68,7 @@ describe(`POST ${endpoint} endpoint`, () => {
         );
     });
 
-    test("Invalid notificationId", async () => {
+    test("3 Users", async () => {
         const response = await request(app).post(endpoint).send({
             userIds: [DB_IDS.mainUser, DB_IDS.followerUser, DB_IDS.anotherUser]
         });
