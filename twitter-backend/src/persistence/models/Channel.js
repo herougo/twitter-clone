@@ -2,11 +2,28 @@ const mongoose = require("mongoose");
 
 const ChannelSchema = new mongoose.Schema(
     {
-        name: {type: String, required: true},
-        users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-        isGroupChat: Boolean,
-        lastMessage: { type: mongoose.Schema.Types.ObjectId, ref: 'Message' }
+        users: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'User',
+            required: true,
+            validate: {
+                validator: (users) => { return users.length >= 2 },
+                message: props => `${props.value} is not valid.`
+            }
+        },
+        lastMessage: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Message',
+            default: null
+        }
+    },
+    {
+        timestamps: true
     }
 );
+
+// for retrieving channels quickly
+ChannelSchema.index({users: 1, updatedAt: -1});
+
 
 module.exports = mongoose.model("Channel", ChannelSchema);

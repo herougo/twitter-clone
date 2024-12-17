@@ -5,8 +5,19 @@ class ChannelRepository {
         return await Channel.findById(id);
     }
 
-    async create({name, isGroupChat, userIds}) {
-        return await Channel.create({name, isGroupChat, users: userIds});
+    async findOneByUserIds(userIds) {
+        return await Channel.findOne({users: userIds});
+    }
+
+    async create({ _id, userIds }) {
+        const createData = {
+            users: userIds
+        }
+        if (_id) {
+            createData._id = _id;
+        }
+
+        return await Channel.create(createData);
     }
 
     async deleteAll() {
