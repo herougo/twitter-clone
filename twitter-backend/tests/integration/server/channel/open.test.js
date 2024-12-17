@@ -56,7 +56,7 @@ describe(`POST ${endpoint} endpoint`, () => {
         });
         expect(response.statusCode).toBe(200);
         expect("id" in response.body).toEqual(true);
-        expect(response.body.id).toNotEqual(DB_IDS.mainChannel);
+        expect(response.body.id).not.toEqual(DB_IDS.mainChannel);
     });
 
     test("1 User", async () => {

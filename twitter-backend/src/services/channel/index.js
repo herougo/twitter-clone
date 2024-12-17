@@ -15,8 +15,8 @@ class ChannelService {
         );
     }
 
-    async createChannel({_id, userIds}) {
-        return await this._createChannel({_id, userIds: [...userIds].sort()});
+    async createChannel({userIds}) {
+        return await this._createChannel({userIds: [...userIds].sort()});
     }
 
     async openDirectMessageChannel({userIds}) {
@@ -28,15 +28,15 @@ class ChannelService {
         const sortedUserIds = [...userIds].sort();
 
         const existingChannel = await catchAndTransformMongooseError(
-            this.channelRepository.findOneByUserIds({userIds: sortedUserIds}),
+            this.channelRepository.findOneByUserIds(sortedUserIds),
             this.logger,
             "channel"
         );
         if (existingChannel) {
-            return existingChannel;
+            return { id: existingChannel._id };
         }
 
-        const newChannel = await this._createChannel({userIds: sortedUserIds});
+        const newChannel = await this.createChannel({userIds: sortedUserIds});
 
         return { id: newChannel._id };
     }
