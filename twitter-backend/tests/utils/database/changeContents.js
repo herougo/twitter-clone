@@ -6,6 +6,7 @@ const { UnexpectedDatabaseChangeError } = require("../../../src/utils/errors/int
 const { populateUsers } = require("./populate/users");
 const { populatePosts } = require("./populate/posts");
 const { populateNotifications } = require("./populate/notification");
+const { populateChannels } = require("./populate/channel");
 
 const populateDatabase = async (diContainer) => {
     // In case CONFIG.nodeEnv is not properly set when running tests
@@ -16,6 +17,7 @@ const populateDatabase = async (diContainer) => {
     await populateUsers(diContainer);
     await populatePosts(diContainer);
     await populateNotifications(diContainer);
+    await populateChannels(diContainer);
 }
 
 const clearDatabase = async (diContainer) => {
@@ -26,8 +28,12 @@ const clearDatabase = async (diContainer) => {
     const userRepository = diContainer.resolve(DI_NAMES.userRepository);
     const postRepository = diContainer.resolve(DI_NAMES.postRepository);
     const notificationRepository = diContainer.resolve(DI_NAMES.notificationRepository);
+    const channelRepository = diContainer.resolve(DI_NAMES.channelRepository);
 
-    const repositories = [userRepository, postRepository, notificationRepository];
+    const repositories = [
+        userRepository, postRepository, notificationRepository,
+        channelRepository
+    ];
     for (const repository of repositories) {
         await repository.deleteAll();
     }

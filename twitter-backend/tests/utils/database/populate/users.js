@@ -25,6 +25,16 @@ const populateUsers = async (diContainer) => {
         }
     );
     await userRepository.addFollower(user, follower);
+    const anotherUser = await userRepository.create(
+        {
+            _id: DB_IDS.anotherUser,
+            username: "another",
+            passwordHash: "$2b$10$AbJt1PaeMfPOOuI7lmgiYOMYv2vL/WGtGV1TuMAjjSo0jAZt1hQ2.",
+            firstName: "hiya",
+            lastName: "me",
+            email: "another@example.com"
+        }
+    );
 }
 
 module.exports = {

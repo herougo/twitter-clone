@@ -22,7 +22,7 @@ class ChannelService {
     async openDirectMessageChannel({userIds}) {
         // returns channel, creates if doesn't exist
         if (userIds.length !== 2) {
-            throw new BadRequestError(`Cannot open a DM channel with ${userIds.length} users (must use 2)!`);
+            throw new BadRequestError(`Cannot open a DM channel with ${userIds.length} user(s) (must use 2)!`);
         }
 
         const sortedUserIds = [...userIds].sort();

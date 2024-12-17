@@ -15,6 +15,10 @@ const ChannelSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Message',
             default: null
+        },
+        lastMessageSentAt: {
+            type : Date,
+            default: null
         }
     },
     {
