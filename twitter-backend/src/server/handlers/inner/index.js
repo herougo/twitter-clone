@@ -9,6 +9,8 @@ async function catchAndTransformMongooseError(promise, logger, mongoDataType) {
         if (isMongooseError(e)) {
             const errorType = classifyMongooseError(e);
             switch (errorType) {
+                case MONGOOSE_ERROR_TYPES.typeCast:
+                    throw new BadRequestError(`Type cast failed for ${mongoDataType}`);
                 case MONGOOSE_ERROR_TYPES.validation:
                     throw new BadRequestError(`Validation failed for ${mongoDataType}`);
                 case MONGOOSE_ERROR_TYPES.duplicateKey:

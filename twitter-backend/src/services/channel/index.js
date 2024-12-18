@@ -1,3 +1,4 @@
+const Channel = require("../../persistence/models/Channel");
 const { catchAndTransformMongooseError } = require("../../server/handlers");
 const { BadRequestError } = require("../../utils/errors/expressErrors");
 
@@ -21,6 +22,10 @@ class ChannelService {
 
     async openDirectMessageChannel({userIds}) {
         // returns channel, creates if doesn't exist
+        if(!userIds) {
+            throw new BadRequestError('Missing userIds');
+        }
+
         if (userIds.length !== 2) {
             throw new BadRequestError(`Cannot open a DM channel with ${userIds.length} user(s) (must use 2)!`);
         }
@@ -39,6 +44,32 @@ class ChannelService {
         const newChannel = await this.createChannel({userIds: sortedUserIds});
 
         return { id: newChannel._id };
+    }
+
+    _channelsToObjectArray(channels) {
+        const result = [];
+        for (const channel of channels) {
+            result.push({
+                id: channel._id,
+                userIds: channel.users,
+                lastMessage: channel.lastMessage,
+                lastMessageSentAt: channel.lastMessageSentAt
+            });
+        }
+        return result;
+    }
+
+    async fullFeed(userId) {
+        if (!userId) {
+            throw new BadRequestError('Missing userId');
+        }
+
+        const channels = await catchAndTransformMongooseError(
+            Channel.find({ users: userId }).sort({ lastMessageSentAt: -1 }),
+            this.logger,
+            "channel"
+        );
+        return { channels: this._channelsToObjectArray(channels) };
     }
 }
 

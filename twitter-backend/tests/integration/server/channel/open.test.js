@@ -77,4 +77,12 @@ describe(`POST ${endpoint} endpoint`, () => {
             "Cannot open a DM channel with 3 user(s) (must use 2)!"
         );
     });
+
+    test("Missing userIds", async () => {
+        const response = await request(app).post(endpoint).send({});
+        expect(response.statusCode).toBe(400);
+        expect(response.body.errors.message).toEqual(
+            "Missing userIds"
+        );
+    });
 });
