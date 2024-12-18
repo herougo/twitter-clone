@@ -1,4 +1,3 @@
-const Channel = require("../../persistence/models/Channel");
 const { catchAndTransformMongooseError } = require("../../server/handlers");
 const { BadRequestError } = require("../../utils/errors/expressErrors");
 
@@ -65,7 +64,7 @@ class ChannelService {
         }
 
         const channels = await catchAndTransformMongooseError(
-            Channel.find({ users: userId }).sort({ lastMessageSentAt: -1 }),
+            this.channelRepository.findByOneUserId(userId),
             this.logger,
             "channel"
         );

@@ -9,6 +9,10 @@ class ChannelRepository {
         return await Channel.findOne({users: userIds});
     }
 
+    async findByOneUserId(userId) {
+        return await Channel.find({ users: userId }).sort({ lastMessageSentAt: -1 });
+    }
+
     async create({ _id, userIds }) {
         const createData = {
             users: userIds
@@ -26,6 +30,7 @@ class ChannelRepository {
 
     async addLastMessage(channel, message) {
         channel.lastMessage = message._id;
+        channel.lastMessageSentAt = message.createdAt;
         await channel.save();
     }
 }

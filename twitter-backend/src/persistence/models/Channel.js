@@ -27,7 +27,7 @@ const ChannelSchema = new mongoose.Schema(
 );
 
 // for retrieving channels quickly
-ChannelSchema.index({users: 1, lastMessageSentAt: -1});
+ChannelSchema.index([["users", 1], ["lastMessageSentAt", -1]]);
 
 
 module.exports = mongoose.model("Channel", ChannelSchema);
