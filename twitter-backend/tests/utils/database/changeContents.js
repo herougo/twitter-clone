@@ -7,6 +7,7 @@ const { populateUsers } = require("./populate/users");
 const { populatePosts } = require("./populate/posts");
 const { populateNotifications } = require("./populate/notification");
 const { populateChannels } = require("./populate/channel");
+const { populateMessages } = require("./populate/messages");
 
 const populateDatabase = async (diContainer) => {
     // In case CONFIG.nodeEnv is not properly set when running tests
@@ -18,6 +19,7 @@ const populateDatabase = async (diContainer) => {
     await populatePosts(diContainer);
     await populateNotifications(diContainer);
     await populateChannels(diContainer);
+    await populateMessages(diContainer);
 }
 
 const clearDatabase = async (diContainer) => {
@@ -29,10 +31,11 @@ const clearDatabase = async (diContainer) => {
     const postRepository = diContainer.resolve(DI_NAMES.postRepository);
     const notificationRepository = diContainer.resolve(DI_NAMES.notificationRepository);
     const channelRepository = diContainer.resolve(DI_NAMES.channelRepository);
+    const messageRepository = diContainer.resolve(DI_NAMES.messageRepository);
 
     const repositories = [
         userRepository, postRepository, notificationRepository,
-        channelRepository
+        channelRepository, messageRepository
     ];
     for (const repository of repositories) {
         await repository.deleteAll();

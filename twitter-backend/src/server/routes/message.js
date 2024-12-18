@@ -3,7 +3,7 @@ const DI_NAMES = require("../dependency-injection/names");
 
 const applyMessageRouter = (app, diContainer) => {
     const router = express.Router();
-    const messageService = diContainer.resolve(DI_NAMES.channelService);
+    const messageService = diContainer.resolve(DI_NAMES.messageService);
 
     router.post('/send', async (req, res, next) => {
         try {

@@ -31,7 +31,8 @@ class MessageRepository {
             createData._id = _id;
         }
         const message = await this._create(createData);
-        this.channelRepository.addLastMessage(channel, message);
+        await this.channelRepository.addLastMessage(channel, message);
+        return message;
     }
 }
 

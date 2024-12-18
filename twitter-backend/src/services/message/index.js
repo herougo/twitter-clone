@@ -29,6 +29,10 @@ class MessageService {
             throw new BadRequestError("Invalid channelId");
         }
 
+        if (!channel.users.includes(authorId)) {
+            throw new BadRequestError("Author not in channel");
+        }
+
         const message = await catchAndTransformMongooseError(
             this.messageRepository.fullCreate({content, authorId, channel}),
             this.logger,
@@ -62,7 +66,7 @@ class MessageService {
         );
         return {
             messages: this._messagesToObjectArray(messages),
-            channel: channelId
+            channelId: channelId
         };
     }
 }
