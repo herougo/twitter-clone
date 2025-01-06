@@ -119,6 +119,10 @@ h3 {
 
     /* Font sizes */
     --fs-left-nav-text: 1.5rem;
+
+    /* Heights */
+    --height-profile-bg: 150px;
+    --height-profile-pic: 100px;
 }
 
 /*******************************

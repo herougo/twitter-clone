@@ -1,0 +1,27 @@
+.profile-page-content__background {
+    height: var(--height-profile-bg);
+    background-color: white;
+}
+
+.profile-page-content__profile-pic-parent-div {
+    height: 0;
+}
+
+.profile-page-content__profile-pic {
+    height: var(--height-profile-pic);
+    position: relative;
+    top: calc(-0.5 * var(--height-profile-pic));
+    left: calc(min(
+        0.25 * var(--height-profile-pic),
+        (100% - var(--height-profile-pic)) / 2
+    ));
+    width: var(--height-profile-pic);
+    background-color: blue;
+    border-radius: 50%;
+}
+
+.profile-page-content__name {
+    background-color: red;
+    height: var(--height-profile-pic);
+}
+
