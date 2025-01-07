@@ -120,9 +120,9 @@ h3 {
     /* Font sizes */
     --fs-left-nav-text: 1.5rem;
 
-    /* Heights */
-    --height-profile-bg: 150px;
-    --height-profile-pic: 100px;
+    /* Sizes */
+    --sz-profile-bg-height: 9rem;
+    --sz-profile-pic-height: 6rem;
 }
 
 /*******************************
@@ -168,6 +168,7 @@ h3 {
     border-width: 0px;
     height: 2rem;
     border-radius: 1rem;
+    white-space: nowrap; /* Prevents being shrunk smaller than content */
 }
 
 .btn:hover {

@@ -52,7 +52,7 @@ const SignupPage = () => {
             return;
         };
 
-        setUser({token: res.data.token});
+        setUser({username, token: res.data.token});
         navigate('/');
     }
 

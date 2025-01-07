@@ -1,27 +1,42 @@
 .profile-page-content__background {
-    height: var(--height-profile-bg);
-    background-color: white;
+    height: var(--sz-profile-bg-height);
+    background-color: grey;
 }
 
 .profile-page-content__profile-pic-parent-div {
-    height: 0;
+    height: calc(0.5 * var(--sz-profile-pic-height));
+    background-color: red;
+    width: calc(
+        var(--sz-profile-pic-height) +
+        min(
+            0.25 * var(--sz-profile-pic-height),
+            (100% - var(--sz-profile-pic-height)) / 2
+        )
+    );
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .profile-page-content__profile-pic {
-    height: var(--height-profile-pic);
+    height: var(--sz-profile-pic-height);
     position: relative;
-    top: calc(-0.5 * var(--height-profile-pic));
-    left: calc(min(
-        0.25 * var(--height-profile-pic),
-        (100% - var(--height-profile-pic)) / 2
-    ));
-    width: var(--height-profile-pic);
+    top: calc(-0.5 * var(--sz-profile-pic-height));
+    width: var(--sz-profile-pic-height);
     background-color: blue;
     border-radius: 50%;
 }
 
+.profile-page-content__background-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.profile-page-content__update-profile-btn {
+    margin-top: 0.3rem;
+}
+
 .profile-page-content__name {
-    background-color: red;
-    height: var(--height-profile-pic);
+    
 }
 

@@ -6,6 +6,7 @@
     padding-top: 0.5rem;
     height: 100%;
     padding-left: calc(max(max(100% - 992px, 0px) / 2, 1rem));
+    flex: 0 0 auto;
 }
 
 .left-nav__btn {
