@@ -1,5 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
-import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { useContext } from 'react';
 import LoginRestricted from '../components/utility/LoginRestricted';
 import WelcomePage from './welcome/WelcomePage';
 import SignupPage from './signup/SignupPage';
@@ -9,8 +9,11 @@ import {
     NewMessagePageContent, NotificationsPageContent, PostPageContent, 
     ProfilePageContent, SearchPageContent, StorePageContent, MainPage
 } from './main';
+import UserContext from '../context/UserContext';
 
 const RouteCollection = () => {
+    const {user, setUser} = useContext(UserContext);
+
     return (
         <Routes>
             <Route exact path="/" element={
@@ -25,7 +28,7 @@ const RouteCollection = () => {
                     <PostPageContent />
                 }></Route>
                 <Route exact path="/profile" element={
-                    <ProfilePageContent />
+                    <Navigate to={"/profile/" + user?.username}></Navigate>
                 }></Route>
                 <Route exact path="/profile/:username" element={
                     <ProfilePageContent />

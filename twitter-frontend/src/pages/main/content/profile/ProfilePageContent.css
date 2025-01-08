@@ -37,6 +37,18 @@
 }
 
 .profile-page-content__name {
-    
+    margin-top: 0.3rem;
+    font-size: 1.25rem;
+}
+
+.profile-page-content__username {
+    font-size: 1rem;
+}
+
+.profile-page-content__follow {
+    font-size: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.8rem;
 }
 
