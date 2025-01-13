@@ -20,11 +20,8 @@ const profile = {
             createdDate: '2025-01-08T20:49:06.669+00:00',
             userInteraction: 'dislike',
             replyTo: {
-                id: 5,
                 author: {name: "User Name", username: "u" },
                 contents: "The world says hello!",
-                numLikes: 1,
-                numDislikes: 0,
                 createdDate: '2022-12-18T20:49:06.669+00:00'
             }
         },

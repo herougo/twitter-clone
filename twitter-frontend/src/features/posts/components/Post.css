@@ -22,6 +22,8 @@
 .post__right-column {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    margin-right: 10px;
 }
 
 .post__author-info-and-date {
@@ -62,4 +64,10 @@
 
 .post__btn-div__active {
     color: var(--clr-primary);
+}
+
+.post__reply-to {
+    border-radius: 1rem;
+    padding: 0.5rem;
+    border: 2px solid var(--clr-post-grey-text);
 }

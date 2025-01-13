@@ -6,8 +6,20 @@ import { USER_INTERACTION } from '../../../utils/enums';
 
 const Post = ({post}) => {
     const { id, author, contents, numLikes, numDislikes, userInteraction, createdDate } = post;
+    let replyToSection = null;
     if (post.replyTo) {
-        // ?????
+        const replyTo = post.replyTo;
+        const replyToDateString = humanReadableDate(replyTo.createdDate);
+        replyToSection = (
+            <div className='post__reply-to'>
+                <div className='post__author-info-and-date'>
+                    <div><span className='post__author-name'>{replyTo.author.name}</span></div>
+                    <div><span className='post__author-username'>@{replyTo.author.username}</span></div>
+                    <div><span className='post__created-date'>{replyToDateString}</span></div>
+                </div>
+                <div className='post__contents'>{replyTo.contents}</div>
+            </div>
+        );
     }
     const authorName = author.name;
     const authorUsername = author.username;
@@ -28,6 +40,7 @@ const Post = ({post}) => {
                     <div><span className='post__created-date'>{createdDateString}</span></div>
                 </div>
                 <div className='post__contents'>{contents}</div>
+                {replyToSection}
                 <div className='post__interactions'>
                     <div className={`${isLiked? 'post__btn-div__active' : ''}`}>
                         <button className='post__btn'>
