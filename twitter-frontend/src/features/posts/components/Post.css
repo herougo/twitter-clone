@@ -24,6 +24,12 @@
     flex-direction: column;
 }
 
+.post__author-info-and-date {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .post__author-name {
     color: var(--clr-primary);
     margin-right: 0.5rem;
@@ -36,4 +42,24 @@
 
 .post__created-date {
     color: var(--clr-post-grey-text);
+}
+
+.post__interactions {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1.5rem;
+    flex-wrap: wrap;
+    color: var(--clr-post-grey-text);
+}
+
+.post__btn {
+    background-color: var(--clr-dark-background);
+    border-width: 0px;
+    color: inherit;
+    white-space: nowrap; /* Prevents being shrunk smaller than content */
+    cursor: pointer;
+}
+
+.post__btn-div__active {
+    color: var(--clr-primary);
 }

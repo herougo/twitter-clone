@@ -112,10 +112,11 @@ h3 {
     --clr-color: var(--clr-neutral-100);
     --clr-btn-hover: var(--clr-primary-600);
     --clr-btn2-hover: var(--clr-primary-300);
+    --clr-dark-background: var(--clr-neutral-1000);
     
     --clr-left-nav-btn-hover: var(--clr-primary);
     --clr-left-nav-btn-active: var(--clr-primary);
-    --clr-left-nav-background: var(--clr-neutral-1000);
+    --clr-left-nav-background: var(--clr-dark-background);
 
     --clr-post-grey-text: var(--clr-neutral-400);
 
@@ -171,6 +172,7 @@ h3 {
     height: 2rem;
     border-radius: 1rem;
     white-space: nowrap; /* Prevents being shrunk smaller than content */
+    cursor: pointer;
 }
 
 .btn:hover {
