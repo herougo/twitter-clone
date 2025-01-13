@@ -1,0 +1,39 @@
+.post {
+    background-color: var(--clr-left-nav-background);
+    border: 2px solid gray;
+    display: flex;
+    flex-direction: row;
+}
+
+.post__left-column {
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post__icon {
+    width: 30px;
+    height: 30px;
+    background-color: blueviolet;
+    border-radius: 50%;
+}
+
+.post__right-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.post__author-name {
+    color: var(--clr-primary);
+    margin-right: 0.5rem;
+}
+
+.post__author-username {
+    color: var(--clr-post-grey-text);
+    margin-right: 1rem;
+}
+
+.post__created-date {
+    color: var(--clr-post-grey-text);
+}

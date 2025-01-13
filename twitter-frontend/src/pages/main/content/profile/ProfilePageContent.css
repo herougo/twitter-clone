@@ -52,3 +52,11 @@
     column-gap: 0.8rem;
 }
 
+.profile-page-content__posts-header {
+    margin-top: 1rem;
+    font-size: 1.25rem;
+}
+
+.profile-page-content__posts {
+    margin-top: 0.3rem;
+}

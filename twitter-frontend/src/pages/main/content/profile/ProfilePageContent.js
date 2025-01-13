@@ -1,14 +1,41 @@
 import React, { useContext } from 'react';
 import './ProfilePageContent.css';
 import UserContext from '../../../../context/UserContext';
+import Post from '../../../../features/posts/components/Post';
 
 const profile = {
-    username: 'username',
+    username: 'u',
     name: "User Name",
     numFollowers: 4,
     numFollowing: 5,
     backgroundImageUrl: null,
-    profileImageUrl: null
+    profileImageUrl: null,
+    posts: [
+        {
+            id: 1,
+            author: {name: "User Name", username: "u" },
+            contents: "Hello world",
+            numLikes: 3,
+            numDislikes: 1,
+            createdDate: '2025-01-08T20:49:06.669+00:00',
+            replyTo: {
+                id: 5,
+                author: {name: "User Name", username: "u" },
+                contents: "The world says hello!",
+                numLikes: 1,
+                numDislikes: 0,
+                createdDate: '2022-12-18T20:49:06.669+00:00'
+            }
+        },
+        {
+            id: 5,
+            author: {name: "User Name", username: "u" },
+            contents: "The world says hello!",
+            numLikes: 1,
+            numDislikes: 0,
+            createdDate: '2022-12-18T20:49:06.669+00:00'
+        }
+    ]
 }
 
 const ProfilePageContent = () => {
@@ -48,6 +75,16 @@ const ProfilePageContent = () => {
             <div className='profile-page-content__follow'>
                 <span>{profile.numFollowing} Following</span>
                 <span>{profile.numFollowers} {followerText}</span>
+            </div>
+            <h2 className='profile-page-content__posts-header'>
+                Posts
+            </h2>
+            <div className='profile-page-content__posts'>
+                {
+                    profile.posts.map(
+                        post => <Post post={post}></Post>
+                    )
+                }
             </div>
         </div>
     );
