@@ -132,6 +132,24 @@ class UserService {
             "user"
         );
     }
+
+    async getProfile(username) {
+        const user = await catchAndTransformMongooseError(
+            this.userRepository.findOneByUsername(username),
+            this.logger,
+            "user"
+        );
+        if (!user) {
+            throw new BadRequestError("GetProfile: Invalid user");
+        }
+        
+        return {
+            username: user.username,
+            name: `${user.firstName} ${user.lastName}`,
+            numFollowing: user.following?.length,
+            numFollowers: user.followers?.length
+        };
+    }
 }
 
 module.exports = UserService;

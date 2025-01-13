@@ -72,11 +72,29 @@ const applyUnfollowRouter = (app, diContainer) => {
     app.use("/unfollow", router);
 }
 
+const applyGetProfileRouter = (app, diContainer) => {
+    const router = express.Router();
+    const userService = diContainer.resolve(DI_NAMES.userService);
+
+    router.get('/', async (req, res, next) => {
+        try {
+            const username = req.body.username;
+            const result = await userService.getProfile(username);
+            res.status(200).json(result);
+        } catch (e) {
+            return next(e);
+        }
+    });
+
+    app.use("/profile", router);
+}
+
 const applyUserRouters = (app, diContainer) => {
     applyLogInRouter(app, diContainer);
     applySignUpRouter(app, diContainer);
     applyFollowRouter(app, diContainer);
     applyUnfollowRouter(app, diContainer);
+    applyGetProfileRouter(app, diContainer);
 }
 
 module.exports = {

@@ -9,33 +9,34 @@ const profile = {
     numFollowers: 4,
     numFollowing: 5,
     backgroundImageUrl: null,
-    profileImageUrl: null,
-    posts: [
-        {
-            id: 1,
-            author: {name: "User Name", username: "u" },
-            contents: "Hello world",
-            numLikes: 3,
-            numDislikes: 1,
-            createdDate: '2025-01-08T20:49:06.669+00:00',
-            userInteraction: 'dislike',
-            replyTo: {
-                author: {name: "User Name", username: "u" },
-                contents: "The world says hello!",
-                createdDate: '2022-12-18T20:49:06.669+00:00'
-            }
-        },
-        {
-            id: 5,
+    profileImageUrl: null
+};
+
+const profilePosts = [
+    {
+        id: 1,
+        author: {name: "User Name", username: "u" },
+        contents: "Hello world",
+        numLikes: 3,
+        numDislikes: 1,
+        createdDate: '2025-01-08T20:49:06.669+00:00',
+        userInteraction: 'dislike',
+        replyTo: {
             author: {name: "User Name", username: "u" },
             contents: "The world says hello!",
-            numLikes: 1,
-            numDislikes: 0,
-            userInteraction: 'like',
             createdDate: '2022-12-18T20:49:06.669+00:00'
         }
-    ]
-}
+    },
+    {
+        id: 5,
+        author: {name: "User Name", username: "u" },
+        contents: "The world says hello!",
+        numLikes: 1,
+        numDislikes: 0,
+        userInteraction: 'like',
+        createdDate: '2022-12-18T20:49:06.669+00:00'
+    }
+];
 
 const ProfilePageContent = () => {
     const {user, setUser} = useContext(UserContext);
@@ -80,7 +81,7 @@ const ProfilePageContent = () => {
             </h2>
             <div className='profile-page-content__posts'>
                 {
-                    profile.posts.map(
+                    profilePosts.map(
                         post => <Post post={post}></Post>
                     )
                 }
