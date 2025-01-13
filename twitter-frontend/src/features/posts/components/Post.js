@@ -6,6 +6,13 @@ import { USER_INTERACTION } from '../../../utils/enums';
 
 const Post = ({post}) => {
     const { id, author, contents, numLikes, numDislikes, userInteraction, createdDate } = post;
+    const authorName = author.name;
+    const authorUsername = author.username;
+
+    const createdDateString = humanReadableDate(createdDate);
+    const isLiked = userInteraction === USER_INTERACTION.like;
+    const isDisliked = userInteraction === USER_INTERACTION.dislike;
+    
     let replyToSection = null;
     if (post.replyTo) {
         const replyTo = post.replyTo;
@@ -21,22 +28,28 @@ const Post = ({post}) => {
             </div>
         );
     }
-    const authorName = author.name;
-    const authorUsername = author.username;
-
-    const createdDateString = humanReadableDate(createdDate);
-    const isLiked = userInteraction === USER_INTERACTION.like;
-    const isDisliked = userInteraction === USER_INTERACTION.dislike;
 
     return (
         <div key={id} className='post'>
             <div className='post__left-column'>
-                <div className='post__icon'></div>
+                <div>
+                    <a href={`/profile/${authorUsername}`}>
+                        <div className='post__icon'></div>
+                    </a>
+                </div>
             </div>
             <div className='post__right-column'>
                 <div className='post__author-info-and-date'>
-                    <div><span className='post__author-name'>{authorName}</span></div>
-                    <div><span className='post__author-username'>@{authorUsername}</span></div>
+                    <div>
+                        <a href={`/profile/${authorUsername}`} className='post__author-name underline-on-hover'>
+                            <span>{authorName}</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href={`/profile/${authorUsername}`} className='post__author-username'>
+                            <span>@{authorUsername}</span>
+                        </a>
+                    </div>
                     <div><span className='post__created-date'>{createdDateString}</span></div>
                 </div>
                 <div className='post__contents'>{contents}</div>

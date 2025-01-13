@@ -195,3 +195,7 @@ h3 {
     text-wrap: nowrap;
     overflow: hidden;
 }
+
+.underline-on-hover:hover {
+    text-decoration: underline;
+}

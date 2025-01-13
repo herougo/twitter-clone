@@ -8,7 +8,6 @@
 .post__left-column {
     width: 50px;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
@@ -17,6 +16,7 @@
     height: 30px;
     background-color: blueviolet;
     border-radius: 50%;
+    margin-top: 10px;
 }
 
 .post__right-column {
@@ -35,11 +35,13 @@
 .post__author-name {
     color: var(--clr-primary);
     margin-right: 0.5rem;
+    text-decoration: none;
 }
 
 .post__author-username {
     color: var(--clr-post-grey-text);
     margin-right: 1rem;
+    text-decoration: none;
 }
 
 .post__created-date {
