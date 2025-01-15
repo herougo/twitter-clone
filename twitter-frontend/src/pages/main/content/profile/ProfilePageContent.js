@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useParams } from 'react-router';
 import './ProfilePageContent.css';
 import UserContext from '../../../../context/UserContext';
 import Post from '../../../../features/posts/components/Post';
@@ -41,9 +42,11 @@ const profilePosts = [
 const ProfilePageContent = () => {
     const {user, setUser} = useContext(UserContext);
     const loggedInUsername = user?.username;
+    const params = useParams();
+    const profileUsername = params.username;
 
     let followerText = 'Followers';
-    if (user.numFollowers === 1) {
+    if (profile.numFollowers === 1) {
         followerText = 'Follower';
     }
 
@@ -59,9 +62,14 @@ const ProfilePageContent = () => {
                     </div>
                 </div>
                 <div>
-                    {loggedInUsername === profile.username &&
-                        <button className='btn profile-page-content__update-profile-btn'>
+                    {loggedInUsername === profileUsername &&
+                        <button className='btn profile-page-content__side-btn'>
                             Update Profile
+                        </button>
+                    }
+                    {loggedInUsername !== profileUsername &&
+                        <button className='btn profile-page-content__side-btn'>
+                            Follow
                         </button>
                     }
                 </div>
