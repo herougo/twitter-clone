@@ -37,7 +37,9 @@ const buildDIContainer = (customDependenciesMap) => {
     const messageService = container.register(DI_NAMES.messageService, new MessageService(
         {logger, channelRepository, messageRepository}
     ));
-    const postRepository = container.register(DI_NAMES.postRepository, new PostRepository());
+    const postRepository = container.register(DI_NAMES.postRepository, new PostRepository(
+        { userRepository }
+    ));
     const postService = container.register(DI_NAMES.postService, new PostService(
         {logger, notificationService, postRepository, userRepository}
     ));

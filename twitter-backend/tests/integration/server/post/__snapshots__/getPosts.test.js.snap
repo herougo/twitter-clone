@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GET /post/byUsername/:username endpoint Success (follower) 1`] = `
+[
+  {
+    "author": {
+      "name": "hello you",
+      "username": "follower",
+    },
+    "createdDate": "",
+    "id": "675351d698452e4fadc376c4",
+    "numDislikes": 0,
+    "numLikes": 0,
+    "replyTo": {
+      "author": {
+        "name": "hi there",
+        "username": "username",
+      },
+      "createdDate": "",
+    },
+    "userInteraction": "",
+  },
+]
+`;
+
+exports[`GET /post/byUsername/:username endpoint Success 1`] = `
+[
+  {
+    "author": {
+      "name": "hi there",
+      "username": "username",
+    },
+    "createdDate": "",
+    "id": "675351d698452e4fadc376c3",
+    "numDislikes": 0,
+    "numLikes": 0,
+    "userInteraction": "",
+  },
+]
+`;

@@ -4,8 +4,22 @@ const Post = require("../models/Post");
 
 
 class  PostRepository {
+    constructor({userRepository}) {
+        this.userRepository = userRepository;
+    }
+
     async findById(id) {
         return await Post.findById(id);
+    }
+
+    async findByUserId(authorId) {
+        return await Post.find({author: authorId});
+    }
+
+    async findByUserIdAndPopulateReplyTo(authorId) {
+        let result = await Post.find({author: authorId}).populate('replyTo');
+        result = await this.userRepository.populate(result, { path: 'replyTo.author' });
+        return result;
     }
 
     async _create(createData) {

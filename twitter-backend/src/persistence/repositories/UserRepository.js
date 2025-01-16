@@ -30,6 +30,10 @@ class UserRepository {
         await user.save();
         await follower.save();
     }
+
+    async populate(data, specification) {
+        return await User.populate(data, specification);
+    }
 }
 
 module.exports = UserRepository;

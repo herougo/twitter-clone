@@ -61,6 +61,16 @@ const applyPostRouter = (app, diContainer) => {
         }
     });
 
+    router.get('/byUsername/:username', async (req, res, next) => {
+        try {
+            const username = req.params.username;
+            let result = await postService.getPosts(username);
+            res.status(200).json(result);
+        } catch (e) {
+            return next(e);
+        }
+    });
+
     app.use("/post", router);
 }
 

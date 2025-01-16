@@ -8,7 +8,7 @@
     "test": "jest --runInBand --testPathPattern=tests",
     "test:unit": "jest --runInBand --testPathPattern=tests/unit",
     "test:integration": "jest --runInBand --testPathPattern=tests/integration",
-    "test:one": "jest tests/integration/server/login.test.js --runInBand -t Success"
+    "test:one": "jest tests/integration/server/user/login.test.js --runInBand -t Success"
   },
   "author": "",
   "license": "ISC",

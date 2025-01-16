@@ -1,6 +1,6 @@
 const { catchAndTransformMongooseError } = require("../../server/handlers");
 const { catchAndTransformPostEngagementError } = require("../../server/handlers/inner");
-const { NOTIFICATION_TYPES } = require("../../utils/enums");
+const { NOTIFICATION_TYPES, POST_ENGAGEMENT_TYPES } = require("../../utils/enums");
 const { BadRequestError } = require("../../utils/errors/expressErrors");
 
 class PostService {
@@ -121,6 +121,64 @@ class PostService {
         await catchAndTransformPostEngagementError(
             this.postRepository.removeDislike(post, userFromId)
         );
+    }
+
+    transformAuthor(author) {
+        return {
+            name: `${author.firstName} ${author.lastName}`,
+            username: author.username
+        }
+    }
+
+    transformPost(post, author) {
+        // TODO: performance improvement of userInteraction
+        let userInteraction = '';
+        if (post.likes.includes(author.id)) {
+            userInteraction = POST_ENGAGEMENT_TYPES.like;
+        } else if (post.dislikes.includes(author.id)) {
+            userInteraction = POST_ENGAGEMENT_TYPES.dislike;
+        }
+
+        let result = {
+            id: post.id,
+            author: this.transformAuthor(author),
+            contents: post.contents,
+            numLikes: post.likes?.length || 0,
+            numDislikes: post.dislikes?.length || 0,
+            createdDate: post.createdAt,
+            userInteraction: userInteraction,
+        };
+        if (post.replyTo) {
+            result.replyTo = {
+                author: this.transformAuthor(post.replyTo.author),
+                contents: post.replyTo.contents,
+                createdDate: post.replyTo.createdAt
+            }
+        }
+        return result;
+    }
+
+    async getPosts(username) {
+        if (!username) {
+            throw new BadRequestError("GetPosts: Missing user");
+        }
+
+        const user = await catchAndTransformMongooseError(
+            this.userRepository.findOneByUsername(username),
+            this.logger,
+            "user"
+        );
+        if (!user) {
+            throw new BadRequestError("GetPosts: Invalid user");
+        }
+
+        const posts = await catchAndTransformMongooseError(
+            this.postRepository.findByUserIdAndPopulateReplyTo(user.id),
+            this.logger,
+            "post"
+        );
+
+        return posts.map(post => this.transformPost(post, user));
     }
 }
 
