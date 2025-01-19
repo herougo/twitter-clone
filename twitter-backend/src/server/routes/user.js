@@ -78,7 +78,7 @@ const applyGetProfileRouter = (app, diContainer) => {
 
     router.get('/', async (req, res, next) => {
         try {
-            const username = req.body.username;
+            const username = req.query.username;
             const result = await userService.getProfile(username);
             res.status(200).json(result);
         } catch (e) {

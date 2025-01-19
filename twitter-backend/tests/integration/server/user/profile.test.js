@@ -48,4 +48,10 @@ describe("GET /profile endpoint", () => {
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetProfile: Invalid user");
     });
+
+    test("Missing username", async () => {
+        const response = await request(app).get(endpoint).send({});
+        expect(response.statusCode).toBe(400);
+        expect(response.body.errors.message).toEqual("GetProfile: Missing user");
+    });
 });

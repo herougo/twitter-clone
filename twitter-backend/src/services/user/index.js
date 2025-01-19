@@ -134,6 +134,11 @@ class UserService {
     }
 
     async getProfile(username) {
+        if (!username) {
+            console.log(username);
+            throw new BadRequestError("GetProfile: Missing user");
+        }
+
         const user = await catchAndTransformMongooseError(
             this.userRepository.findOneByUsername(username),
             this.logger,

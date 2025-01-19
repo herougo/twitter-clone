@@ -1,17 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import './ProfilePageContent.css';
-import UserContext from '../../../../context/UserContext';
 import Post from '../../../../features/posts/components/Post';
-
-const profile = {
-    username: 'u',
-    name: "User Name",
-    numFollowers: 4,
-    numFollowing: 5,
-    backgroundImageUrl: null,
-    profileImageUrl: null
-};
+import { useProfileAxios } from './hooks';
+import ProfilePageProfileInfo from './ProfilePageProfileInfo';
 
 const profilePosts = [
     {
@@ -40,50 +32,17 @@ const profilePosts = [
 ];
 
 const ProfilePageContent = () => {
-    const {user, setUser} = useContext(UserContext);
-    const loggedInUsername = user?.username;
     const params = useParams();
     const profileUsername = params.username;
 
-    let followerText = 'Followers';
-    if (profile.numFollowers === 1) {
-        followerText = 'Follower';
-    }
+    const profileData = useProfileAxios(profileUsername);
 
     return (
         <div>
-            <div className='profile-page-content__background'>
-                <img/>
-            </div>
-            <div className='profile-page-content__background-footer'>
-                <div className='profile-page-content__profile-pic-parent-div'>
-                    <div className='profile-page-content__profile-pic'>
-                        <img/>
-                    </div>
-                </div>
-                <div>
-                    {loggedInUsername === profileUsername &&
-                        <button className='btn profile-page-content__side-btn'>
-                            Update Profile
-                        </button>
-                    }
-                    {loggedInUsername !== profileUsername &&
-                        <button className='btn profile-page-content__side-btn'>
-                            Follow
-                        </button>
-                    }
-                </div>
-            </div>
-            <div className='profile-page-content__name'>
-                <span>{profile.name}</span>
-            </div>
-            <div className='profile-page-content__username'>
-                <span>@{profile.username}</span>
-            </div>
-            <div className='profile-page-content__follow'>
-                <span>{profile.numFollowing} Following</span>
-                <span>{profile.numFollowers} {followerText}</span>
-            </div>
+            <ProfilePageProfileInfo
+                username={profileUsername}
+                data={profileData}
+            />
             <h2 className='profile-page-content__posts-header'>
                 Posts
             </h2>
