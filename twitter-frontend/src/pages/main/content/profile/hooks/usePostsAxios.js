@@ -1,8 +1,9 @@
+import React, { useState } from 'react';
 import useAxiosWrapper from '../../../../../hooks/useAxiosWrapper';
 
-const useProfileAxios = (username) => {
+const usePostsAxios = (username) => {
     const { loading, error, value } = useAxiosWrapper(
-        'get', {}, `/profile/${username}`, null, [username]
+        'get', {}, `/post/byUsername/${username}`, null, [username]
     );
 
     return {
@@ -10,4 +11,4 @@ const useProfileAxios = (username) => {
     };
 }
 
-export default useProfileAxios;
+export default usePostsAxios;
