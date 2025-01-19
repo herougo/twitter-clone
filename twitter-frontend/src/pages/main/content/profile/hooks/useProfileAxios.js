@@ -3,7 +3,7 @@ import useAxiosWrapper from '../../../../../hooks/useAxiosWrapper';
 
 const useProfileAxios = (username) => {
     const { loading, error, value } = useAxiosWrapper(
-        'get', {}, `/profile`, { params: { username } }, [username]
+        'get', {}, `/profile/${username}`, null, [username]
     );
 
     return {

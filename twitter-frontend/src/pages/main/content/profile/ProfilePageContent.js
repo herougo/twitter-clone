@@ -49,7 +49,7 @@ const ProfilePageContent = () => {
             <div className='profile-page-content__posts'>
                 {
                     profilePosts.map(
-                        post => <Post post={post}></Post>
+                        post => <Post key={post.id} post={post}></Post>
                     )
                 }
             </div>

@@ -30,7 +30,7 @@ const Post = ({post}) => {
     }
 
     return (
-        <div key={id} className='post'>
+        <div className='post'>
             <div className='post__left-column'>
                 <div>
                     <a href={`/profile/${authorUsername}`}>
