@@ -135,7 +135,6 @@ class UserService {
 
     async getProfile(username) {
         if (!username) {
-            console.log(username);
             throw new BadRequestError("GetProfile: Missing user");
         }
 

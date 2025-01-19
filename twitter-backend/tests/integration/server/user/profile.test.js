@@ -35,22 +35,22 @@ describe("GET /profile endpoint", () => {
     });
 
     test("Success", async () => {
-        const response = await request(app).get(endpoint).send({
-            username: "username"
-        });
+        const response = await request(app).get(
+            `${endpoint}?username=username`
+        ).send();
         expect(response.statusCode).toBe(200);
     });
 
     test("User not in DB", async () => {
-        const response = await request(app).get(endpoint).send({
-            username: "missingUser"
-        });
+        const response = await request(app).get(
+            `${endpoint}?username=missingUser`
+        ).send();
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetProfile: Invalid user");
     });
 
     test("Missing username", async () => {
-        const response = await request(app).get(endpoint).send({});
+        const response = await request(app).get(endpoint).send();
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetProfile: Missing user");
     });
