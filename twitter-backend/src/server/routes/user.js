@@ -76,9 +76,9 @@ const applyGetProfileRouter = (app, diContainer) => {
     const router = express.Router();
     const userService = diContainer.resolve(DI_NAMES.userService);
 
-    router.get('/', async (req, res, next) => {
+    router.get('/:username', async (req, res, next) => {
         try {
-            const username = req.query.username;
+            const username = req.params.username;
             const result = await userService.getProfile(username);
             res.status(200).json(result);
         } catch (e) {

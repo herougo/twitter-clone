@@ -24,17 +24,19 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe(`GET ${endpoint} endpoint`, () => {
+describe(`GET ${endpoint}/:userId endpoint`, () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
         await populateDatabase(diContainer);
     });
 
+    const sendToEndpoint = async (param) => {
+        return await request(app).get(`${endpoint}/${param}`).send();
+    };
+
     test("Success (1 main channel)", async () => {
-        const response = await request(app).get(endpoint).send({
-            userId: DB_IDS.mainUser
-        });
+        const response = await sendToEndpoint(DB_IDS.mainUser);
         expect(response.statusCode).toBe(200);
         expect("channels" in response.body).toEqual(true);
         expect(response.body.channels.length).toEqual(1);
@@ -42,9 +44,7 @@ describe(`GET ${endpoint} endpoint`, () => {
     });
 
     test("Success (1 follower channel)", async () => {
-        const response = await request(app).get(endpoint).send({
-            userId: DB_IDS.followerUser
-        });
+        const response = await sendToEndpoint(DB_IDS.followerUser);
         expect(response.statusCode).toBe(200);
         expect("channels" in response.body).toEqual(true);
         expect(response.body.channels.length).toEqual(1);
@@ -52,27 +52,20 @@ describe(`GET ${endpoint} endpoint`, () => {
     });
 
     test("Success (empty)", async () => {
-        const response = await request(app).get(endpoint).send({
-            userId: DB_IDS.anotherUser
-        });
+        const response = await sendToEndpoint(DB_IDS.anotherUser);
         expect(response.statusCode).toBe(200);
         expect("channels" in response.body).toEqual(true);
         expect(response.body.channels.length).toEqual(0);
     });
 
     test("Invalid User", async () => {
-        const response = await request(app).get(endpoint).send({
-            userId: "invalid_user"
-        });
+        const response = await sendToEndpoint("invalid_user");
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Type cast failed for channel");
     });
 
     test("Missing userId", async () => {
-        const response = await request(app).get(endpoint).send({});
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual(
-            "Missing userId"
-        );
+        const response = await sendToEndpoint('');
+        expect(response.statusCode).toBe(404);
     });
 });

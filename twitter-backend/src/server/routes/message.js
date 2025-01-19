@@ -19,9 +19,9 @@ const applyMessageRouter = (app, diContainer) => {
         }
     });
 
-    router.get('/fullFeed', async (req, res, next) => {
+    router.get('/fullFeed/:channelId', async (req, res, next) => {
         try {
-            const channelId = req.body.channelId;
+            const channelId = req.params.channelId;
             const fullFeedResult = await messageService.fullFeed(channelId);
             res.status(200).json(fullFeedResult);
         } catch (e) {

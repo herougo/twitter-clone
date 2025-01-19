@@ -24,17 +24,19 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe(`GET ${endpoint} endpoint`, () => {
+describe(`GET ${endpoint}/:channelId endpoint`, () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
         await populateDatabase(diContainer);
     });
 
+    const sendToEndpoint = async (param) => {
+        return await request(app).get(`${endpoint}/${param}`).send();
+    };
+
     test("Success", async () => {
-        const response = await request(app).get(endpoint).send({
-            channelId: DB_IDS.mainChannel
-        });
+        const response = await sendToEndpoint(DB_IDS.mainChannel);
         expect(response.statusCode).toBe(200);
         expect("messages" in response.body).toEqual(true);
         expect(response.body.messages.length).toEqual(1);
@@ -43,18 +45,13 @@ describe(`GET ${endpoint} endpoint`, () => {
     });
 
     test("Invalid channelId", async () => {
-        const response = await request(app).get(endpoint).send({
-            channelId: "invalid_user"
-        });
+        const response = await sendToEndpoint("invalid_user");
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Type cast failed for message");
     });
 
     test("Missing channelId", async () => {
-        const response = await request(app).get(endpoint).send({});
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual(
-            "Missing channelId"
-        );
+        const response = await sendToEndpoint('');
+        expect(response.statusCode).toBe(404);
     });
 });

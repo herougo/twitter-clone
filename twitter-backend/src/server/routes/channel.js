@@ -15,9 +15,9 @@ const applyChannelRouter = (app, diContainer) => {
         }
     });
 
-    router.get('/fullFeed', async (req, res, next) => {
+    router.get('/fullFeed/:userId', async (req, res, next) => {
         try {
-            const userId = req.body.userId;
+            const userId = req.params.userId;
             const fullFeedResult = await channelService.fullFeed(userId);
             res.status(200).json(fullFeedResult);
         } catch (e) {

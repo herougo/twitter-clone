@@ -9,6 +9,7 @@ const { sanitizePaths } = require("../../../utils/sanitization");
 
 let app;
 let diContainer;
+const endpoint = '/post/byUsername';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -31,8 +32,12 @@ describe("GET /post/byUsername/:username endpoint", () => {
         await populateDatabase(diContainer);
     });
 
+    const sendToEndpoint = async (param) => {
+        return await request(app).get(`${endpoint}/${param}`).send();
+    };
+
     test("Success", async () => {
-        const response = await request(app).get('/post/byUsername/username').send();
+        const response = await sendToEndpoint('username');
         expect(response.statusCode).toBe(200);
         const sanitizedBody = response.body.map(
             post => sanitizePaths(post, ['createdDate', 'replyTo.createdDate'], '')
@@ -41,7 +46,7 @@ describe("GET /post/byUsername/:username endpoint", () => {
     });
 
     test("Success (follower)", async () => {
-        const response = await request(app).get('/post/byUsername/follower').send();
+        const response = await sendToEndpoint('follower');
         expect(response.statusCode).toBe(200);
         const sanitizedBody = response.body.map(
             post => sanitizePaths(post, ['createdDate', 'replyTo.createdDate'], '')
@@ -50,13 +55,13 @@ describe("GET /post/byUsername/:username endpoint", () => {
     });
 
     test("Invalid User", async () => {
-        const response = await request(app).get('/post/byUsername/missingUser').send();
+        const response = await sendToEndpoint('missingUser');
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetPosts: Invalid user");
     });
 
     test("Missing User", async () => {
-        const response = await request(app).get('/post/byUsername/').send();
-        expect(response.statusCode).toBe(500);
+        const response = await sendToEndpoint('');
+        expect(response.statusCode).toBe(404);
     });
 });

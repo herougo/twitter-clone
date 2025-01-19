@@ -27,31 +27,30 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("GET /profile endpoint", () => {
+describe("GET /profile/:username endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
         await populateDatabase(diContainer);
     });
 
+    const sendToEndpoint = async (param) => {
+        return await request(app).get(`${endpoint}/${param}`).send();
+    };
+
     test("Success", async () => {
-        const response = await request(app).get(
-            `${endpoint}?username=username`
-        ).send();
+        const response = await sendToEndpoint('username');
         expect(response.statusCode).toBe(200);
     });
 
     test("User not in DB", async () => {
-        const response = await request(app).get(
-            `${endpoint}?username=missingUser`
-        ).send();
+        const response = await sendToEndpoint('missingUser');
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetProfile: Invalid user");
     });
 
     test("Missing username", async () => {
-        const response = await request(app).get(endpoint).send();
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("GetProfile: Missing user");
+        const response = await sendToEndpoint('');
+        expect(response.statusCode).toBe(404);
     });
 });
