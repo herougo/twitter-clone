@@ -7,7 +7,7 @@ const ProfilePagePosts = ({postsData}) => {
     }
 
     if (postsData.error) {
-        return <div>{postsData.error}</div>;
+        return <div>{postsData.error.toString()}</div>;
     }
 
     return (

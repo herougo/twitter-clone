@@ -17,6 +17,10 @@ const ProfilePageProfileInfo = ({username, data}) => {
         followerText = 'Follower';
     }
 
+    const followOnClick = () => {
+
+    }
+
     return (
         <div>
             <div className='profile-page-content__background'>
@@ -35,7 +39,10 @@ const ProfilePageProfileInfo = ({username, data}) => {
                         </button>
                     }
                     {loggedInUsername !== username &&
-                        <button className='btn profile-page-content__side-btn'>
+                        <button
+                            className='btn profile-page-content__side-btn'
+                            onClick={followOnClick}
+                        >
                             Follow
                         </button>
                     }
