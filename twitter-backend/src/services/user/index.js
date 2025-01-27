@@ -133,9 +133,13 @@ class UserService {
         );
     }
 
-    async getProfile(username) {
+    async getProfile(username, loggedInUserId) {
         if (!username) {
             throw new BadRequestError("GetProfile: Missing user");
+        }
+
+        if (!loggedInUserId) {
+            throw new BadRequestError("GetProfile: Missing loggedInUserId");
         }
 
         const user = await catchAndTransformMongooseError(
@@ -146,12 +150,18 @@ class UserService {
         if (!user) {
             throw new BadRequestError("GetProfile: Invalid user");
         }
+
+        let isFollowing = false;
+        if (user.followers) {
+            isFollowing = user.followers.includes(loggedInUserId);
+        }
         
         return {
             username: user.username,
             name: `${user.firstName} ${user.lastName}`,
             numFollowing: user.following?.length,
-            numFollowers: user.followers?.length
+            numFollowers: user.followers?.length,
+            isFollowing
         };
     }
 }

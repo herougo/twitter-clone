@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GET /profile/:username endpoint Success 1`] = `
+{
+  "isFollowing": false,
+  "name": "hi there",
+  "numFollowers": 1,
+  "numFollowing": 0,
+  "username": "username",
+}
+`;
+
+exports[`GET /profile/:username endpoint Success isFollowing 1`] = `
+{
+  "isFollowing": true,
+  "name": "hi there",
+  "numFollowers": 1,
+  "numFollowing": 0,
+  "username": "username",
+}
+`;

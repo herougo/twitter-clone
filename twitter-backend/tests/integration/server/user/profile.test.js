@@ -34,19 +34,36 @@ describe("GET /profile/:username endpoint", () => {
         await populateDatabase(diContainer);
     });
 
-    const sendToEndpoint = async (param) => {
-        return await request(app).get(`${endpoint}/${param}`).send();
+    const sendToEndpoint = async (param, query) => {
+        let fullEndpoint = `${endpoint}/${param}`;
+        if (query) {
+            fullEndpoint = `${fullEndpoint}?loggedInUserId=${query}`;
+        }
+        return await request(app).get(fullEndpoint).send();
     };
 
     test("Success", async () => {
-        const response = await sendToEndpoint('username');
+        const response = await sendToEndpoint('username', DB_IDS.anotherUser);
         expect(response.statusCode).toBe(200);
+        expect(response.body).toMatchSnapshot();
+    });
+
+    test("Success isFollowing", async () => {
+        const response = await sendToEndpoint('username', DB_IDS.followerUser);
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toMatchSnapshot();
     });
 
     test("User not in DB", async () => {
-        const response = await sendToEndpoint('missingUser');
+        const response = await sendToEndpoint('missingUser', DB_IDS.followerUser);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetProfile: Invalid user");
+    });
+
+    test("Missing loggedInUserId", async () => {
+        const response = await sendToEndpoint('username');
+        expect(response.statusCode).toBe(400);
+        expect(response.body.errors.message).toEqual("GetProfile: Missing loggedInUserId");
     });
 
     test("Missing username", async () => {
