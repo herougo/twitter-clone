@@ -2,6 +2,7 @@
 
 exports[`GET /profile/:username endpoint Success 1`] = `
 {
+  "id": "675351d698452e4fadc376be",
   "isFollowing": false,
   "name": "hi there",
   "numFollowers": 1,
@@ -12,6 +13,7 @@ exports[`GET /profile/:username endpoint Success 1`] = `
 
 exports[`GET /profile/:username endpoint Success isFollowing 1`] = `
 {
+  "id": "675351d698452e4fadc376be",
   "isFollowing": true,
   "name": "hi there",
   "numFollowers": 1,

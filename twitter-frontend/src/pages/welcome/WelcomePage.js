@@ -29,7 +29,7 @@ const WelcomePage = () => {
                 return;
             };
 
-            setUser({username, token: res.data.token});
+            setUser({id: res.data.userId, username, token: res.data.token});
             navigate('/');
         }
     }

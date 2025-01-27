@@ -37,7 +37,7 @@ class UserService {
         const secretKey = CONFIG.jwtSecretKey;
         const token = jwt.sign(tokenPayload, secretKey);
         
-        return {token};
+        return {userId: user.id, token};
     }
 
     async signUp(userData) {
@@ -157,10 +157,11 @@ class UserService {
         }
         
         return {
+            id: user.id,
             username: user.username,
             name: `${user.firstName} ${user.lastName}`,
-            numFollowing: user.following?.length,
-            numFollowers: user.followers?.length,
+            numFollowing: user.following?.length || 0,
+            numFollowers: user.followers?.length || 0,
             isFollowing
         };
     }

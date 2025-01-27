@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import UserContext from '../../../../context/UserContext';
+import ProfilePageFollowButton from './ProfilePageFollowButton';
 
 const ProfilePageProfileInfo = ({username, data}) => {
     const {user, setUser} = useContext(UserContext);
@@ -15,10 +16,6 @@ const ProfilePageProfileInfo = ({username, data}) => {
     let followerText = 'Followers';
     if (data.value.numFollowers === 1) {
         followerText = 'Follower';
-    }
-
-    const followOnClick = () => {
-
     }
 
     return (
@@ -39,12 +36,7 @@ const ProfilePageProfileInfo = ({username, data}) => {
                         </button>
                     }
                     {loggedInUsername !== username &&
-                        <button
-                            className='btn profile-page-content__side-btn'
-                            onClick={followOnClick}
-                        >
-                            Follow
-                        </button>
+                        <ProfilePageFollowButton profileData={data.value} />
                     }
                 </div>
             </div>
