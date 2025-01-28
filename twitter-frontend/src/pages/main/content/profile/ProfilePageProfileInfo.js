@@ -36,7 +36,7 @@ const ProfilePageProfileInfo = ({username, data}) => {
                         </button>
                     }
                     {loggedInUsername !== username &&
-                        <ProfilePageFollowButton profileData={data.value} />
+                        <ProfilePageFollowButton profileData={data} />
                     }
                 </div>
             </div>

@@ -1,20 +1,35 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import UserContext from '../../../../context/UserContext';
-import follow from '../../../../features/user/services/follow';
+import { follow, unfollow } from '../../../../features/user';
 
 const ProfilePageFollowButton = ({profileData}) => {
     const { user } = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
 
-    let btnText = 'Following';
-    let onClick = null;
-    if (!profileData.isFollowing) {
-        btnText = 'Follow';
-        onClick = async () => {
-            await follow({followerId: user.id, userId: profileData.id});
-    
-            // TODO: do something
-        };
-    }
+    const btnText = profileData.value.isFollowing ? 'Following' : 'Follow';
+    const onClick = useCallback(
+        async () => {
+            if (loading) {
+                return;
+            }
+            try {
+                setLoading(true);
+                const newValue = JSON.parse(JSON.stringify(profileData.value));
+                if (profileData.value.isFollowing) {
+                    await unfollow({followerId: user.id, userId: profileData.value.id});
+                    newValue.numFollowers -= 1;
+                } else {
+                    await follow({followerId: user.id, userId: profileData.value.id});
+                    newValue.numFollowers += 1;
+                }
+                newValue.isFollowing = !newValue.isFollowing;
+                profileData.setValue(newValue);
+            } catch (ex) {
+
+            }
+            setLoading(false);
+        }
+    );
 
     return (
         <button

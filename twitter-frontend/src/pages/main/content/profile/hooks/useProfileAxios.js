@@ -4,12 +4,12 @@ import UserContext from '../../../../../context/UserContext';
 
 const useProfileAxios = (username) => {
     const {user} = useContext(UserContext);
-    const { loading, error, value } = useAxiosWrapper(
+    const { loading, error, value, setValue } = useAxiosWrapper(
         'get', {}, `/profile/${username}?loggedInUserId=${user.id}`, null, [username]
     );
 
     return {
-        loading, error, value
+        loading, error, value, setValue
     };
 }
 

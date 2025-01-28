@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import './ProfilePageContent.css';
 import { usePostsAxios, useProfileAxios } from './hooks';
