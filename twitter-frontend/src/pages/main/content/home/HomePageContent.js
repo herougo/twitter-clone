@@ -1,9 +1,10 @@
 import React from 'react';
+import { CreatePost } from '../../../../features/posts';
 
 const HomePageContent = () => {
     return (
-        <div>
-            Home
+        <div className='home'>
+            <CreatePost />
         </div>
     );
 }

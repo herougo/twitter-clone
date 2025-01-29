@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from '../../../../features/posts/components/Post';
+import { Post } from '../../../../features/posts';
 
 const ProfilePagePosts = ({postsData}) => {
     if (postsData.loading) {
