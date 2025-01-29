@@ -21,16 +21,22 @@
 
 .create-post__middle-column {
     flex: 1 0;
+    display: flex;
+    align-items: center;
 }
 
 .create-post__content {
     width: 100%;
-    word-wrap: break-word;
-    word-break: break-all;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    overflow-y: auto;
-    max-height: calc(10rem - 10px);
+}
+
+.create-post__textarea {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    resize: none;
+    background-color: transparent;
+    color: var(--clr-color);
+    border: none;
+    width: 100%;
 }
 
 .create-post__right-column {

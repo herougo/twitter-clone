@@ -142,7 +142,7 @@ class PostService {
         let result = {
             id: post.id,
             author: this.transformAuthor(author),
-            contents: post.contents,
+            content: post.content,
             numLikes: post.likes?.length || 0,
             numDislikes: post.dislikes?.length || 0,
             createdDate: post.createdAt,
@@ -151,7 +151,7 @@ class PostService {
         if (post.replyTo) {
             result.replyTo = {
                 author: this.transformAuthor(post.replyTo.author),
-                contents: post.replyTo.contents,
+                content: post.replyTo.content,
                 createdDate: post.replyTo.createdAt
             }
         }

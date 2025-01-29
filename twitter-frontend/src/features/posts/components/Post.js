@@ -5,7 +5,7 @@ import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
 import { USER_INTERACTION } from '../../../utils/enums';
 
 const Post = ({post}) => {
-    const { id, author, contents, numLikes, numDislikes, userInteraction, createdDate } = post;
+    const { id, author, content, numLikes, numDislikes, userInteraction, createdDate } = post;
     const authorName = author.name;
     const authorUsername = author.username;
 
@@ -24,7 +24,7 @@ const Post = ({post}) => {
                     <div><span className='post__author-username'>@{replyTo.author.username}</span></div>
                     <div><span className='post__created-date'>{replyToDateString}</span></div>
                 </div>
-                <div className='post__contents'>{replyTo.contents}</div>
+                <div className='post__contents'>{replyTo.content}</div>
             </div>
         );
     }
@@ -52,7 +52,7 @@ const Post = ({post}) => {
                     </div>
                     <div><span className='post__created-date'>{createdDateString}</span></div>
                 </div>
-                <div className='post__contents'>{contents}</div>
+                <div className='post__contents'>{content}</div>
                 {replyToSection}
                 <div className='post__interactions'>
                     <div className={`${isLiked? 'post__btn-div__active' : ''}`}>
