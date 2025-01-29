@@ -5,15 +5,15 @@ import UserContext from '../../../context/UserContext';
 
 const CreatePost = ({replyToId}) => {
     const [content, setContent] = useState('');
-    const {user, setUser} = useContext(UserContext);
+    const {user} = useContext(UserContext);
 
-    const submitPost = useCallback(async () => {
+    const submitPost = async () => {
         await createPost({
             authorId: user.id,
             content,
             replyToId: replyToId || null
         })
-    }, [replyToId]);
+    };
 
     return (
         <div className='create-post'>

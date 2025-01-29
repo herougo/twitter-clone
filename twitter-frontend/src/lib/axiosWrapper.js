@@ -6,7 +6,7 @@ const axiosWrapper = async (method, data, urlSuffix, extraParams) => {
         throw new Error('urlSuffix must start with a slash');
     }
     const url = `${CONFIG.backendBaseURL}${urlSuffix}`;
-    console.log(`${method.toUpperCase()} ${url}`);
+    console.log(`${method.toUpperCase()} ${url} ${JSON.stringify(data)}`);
     
     let axiosData = {
         method: method,
