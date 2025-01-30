@@ -17,13 +17,13 @@ class  PostRepository {
     }
 
     async findByUserIdAndPopulateReplyTo(authorId) {
-        let result = await Post.find({author: authorId}).populate('replyTo');
+        let result = await Post.find({author: authorId}).populate('replyTo').sort({createdAt: -1});
         result = await this.userRepository.populate(result, { path: 'replyTo.author' });
         return result;
     }
 
-    async findAndPopulateAuthorsAndReplyTo(id) {
-        let result = await Post.findById(id).populate('replyTo').populate('replies');
+    async findAndPopulateAuthorsAndReplies(id) {
+        let result = await Post.findById(id).populate('replyTo').populate({ path: 'replies', options: { sort: { 'createdAt': -1 } } });
         result = await this.userRepository.populate(result, { path: 'author' });
         result = await this.userRepository.populate(result, { path: 'replyTo.author' });
         result = await this.userRepository.populate(result, { path: 'replies.author' });

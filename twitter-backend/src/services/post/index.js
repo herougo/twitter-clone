@@ -148,7 +148,7 @@ class PostService {
             createdDate: post.createdAt,
             userInteraction: userInteraction,
         };
-        if (post.replyTo) {
+        if (post.replyTo?.content) { // if replyTo populated
             result.replyTo = {
                 author: this.transformAuthor(post.replyTo.author),
                 content: post.replyTo.content,
@@ -195,7 +195,7 @@ class PostService {
         }
 
         const post = await catchAndTransformMongooseError(
-            this.postRepository.findAndPopulateAuthorsAndReplyTo(postId),
+            this.postRepository.findAndPopulateAuthorsAndReplies(postId),
             this.logger,
             "post"
         );
@@ -206,9 +206,9 @@ class PostService {
 
         return {
             post: this.transformPost(post, post.author, loggedInUserId),
-            replies: post.replies.map(reply => {
+            replies: post.replies.map(reply => 
                 this.transformPost(reply, reply.author, loggedInUserId)
-            })
+            )
         };
     }
 }

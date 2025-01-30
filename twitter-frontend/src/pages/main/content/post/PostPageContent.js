@@ -1,7 +1,7 @@
 import React from 'react';
 import './PostPageContent.css';
 import { useParams } from 'react-router-dom';
-import { Post } from '../../../../features/posts';
+import { CreatePost, Post } from '../../../../features/posts';
 import usePostAxios from './hooks/usePostAxios';
 
 const PostPageContent = () => {
@@ -16,6 +16,8 @@ const PostPageContent = () => {
         return <div>{postData.error.toString()}</div>;
     }
 
+    console.log(postData.value.replies);
+
     return (
         <div>
             <div>
@@ -25,12 +27,15 @@ const PostPageContent = () => {
                 Replies
             </div>
             <div>
+                <CreatePost replyToId={postId}></CreatePost>
+            </div>
+            <div>
                 {
                     postData.value.replies.map(
-                        (post, ix) => (
+                        (reply, ix) => (
                             <Post
-                                key={post.id}
-                                post={post}
+                                key={reply.id}
+                                post={reply}
                                 setPost={postData.setReplyBuilder(ix)}
                             >
                             </Post>
