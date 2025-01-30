@@ -64,7 +64,8 @@ const applyPostRouter = (app, diContainer) => {
     router.get('/byUsername/:username', async (req, res, next) => {
         try {
             const username = req.params.username;
-            let result = await postService.getPosts(username);
+            const loggedInUserId = req.query.loggedInUserId;
+            let result = await postService.getPosts(username, loggedInUserId);
             res.status(200).json(result);
         } catch (e) {
             return next(e);

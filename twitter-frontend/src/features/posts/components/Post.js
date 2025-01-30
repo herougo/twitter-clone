@@ -3,8 +3,9 @@ import './Post.css';
 import humanReadableDate from '../../../utils/humanReadableDate';
 import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
 import { USER_INTERACTION } from '../../../utils/enums';
+import useUserInteractionAxios from '../hooks/useUserInteractionAxios';
 
-const Post = ({post}) => {
+const Post = ({post, setPost}) => {
     const { id, author, content, numLikes, numDislikes, userInteraction, createdDate } = post;
     const authorName = author.name;
     const authorUsername = author.username;
@@ -12,6 +13,8 @@ const Post = ({post}) => {
     const createdDateString = humanReadableDate(createdDate);
     const isLiked = userInteraction === USER_INTERACTION.like;
     const isDisliked = userInteraction === USER_INTERACTION.dislike;
+
+    const {onLikeClicked, onDislikeClicked} = useUserInteractionAxios({post, setPost});
     
     let replyToSection = null;
     if (post.replyTo) {
@@ -56,13 +59,13 @@ const Post = ({post}) => {
                 {replyToSection}
                 <div className='post__interactions'>
                     <div className={`${isLiked? 'post__btn-div__active' : ''}`}>
-                        <button className='post__btn'>
+                        <button className='post__btn' onClick={onLikeClicked}>
                             <AiOutlineLike/>
                         </button>
                         <span className='post__num-likes'>{numLikes || ''}</span>
                     </div>
                     <div className={`${isDisliked? 'post__btn-div__active' : ''}`}>
-                        <button className='post__btn'>
+                        <button className='post__btn' onClick={onDislikeClicked}>
                             <AiOutlineDislike/>
                         </button>
                         <span className='post__num-dislikes'>{numDislikes || ''}</span>

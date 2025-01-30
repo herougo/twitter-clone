@@ -32,12 +32,16 @@ describe("GET /post/byUsername/:username endpoint", () => {
         await populateDatabase(diContainer);
     });
 
-    const sendToEndpoint = async (param) => {
-        return await request(app).get(`${endpoint}/${param}`).send();
+    const sendToEndpoint = async (param, loggedInUserId) => {
+        let fullEndpoint = `${endpoint}/${param}`;
+        if (loggedInUserId) {
+            fullEndpoint += `?loggedInUserId=${loggedInUserId}`;
+        }
+        return await request(app).get(fullEndpoint).send();
     };
 
     test("Success", async () => {
-        const response = await sendToEndpoint('username');
+        const response = await sendToEndpoint('username', DB_IDS.mainUser);
         expect(response.statusCode).toBe(200);
         const sanitizedBody = response.body.map(
             post => sanitizePaths(post, ['createdDate', 'replyTo.createdDate'], '')
@@ -46,7 +50,7 @@ describe("GET /post/byUsername/:username endpoint", () => {
     });
 
     test("Success (follower)", async () => {
-        const response = await sendToEndpoint('follower');
+        const response = await sendToEndpoint('follower', DB_IDS.mainUser);
         expect(response.statusCode).toBe(200);
         const sanitizedBody = response.body.map(
             post => sanitizePaths(post, ['createdDate', 'replyTo.createdDate'], '')
@@ -55,9 +59,15 @@ describe("GET /post/byUsername/:username endpoint", () => {
     });
 
     test("Invalid User", async () => {
-        const response = await sendToEndpoint('missingUser');
+        const response = await sendToEndpoint('missingUser', DB_IDS.mainUser);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetPosts: Invalid user");
+    });
+
+    test("Missing loggedInUserId", async () => {
+        const response = await sendToEndpoint('username');
+        expect(response.statusCode).toBe(400);
+        expect(response.body.errors.message).toEqual("GetPosts: Missing loggedInUserId");
     });
 
     test("Missing User", async () => {

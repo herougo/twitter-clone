@@ -130,12 +130,12 @@ class PostService {
         }
     }
 
-    transformPost(post, author) {
+    transformPost(post, author, loggedInUserId) {
         // TODO: performance improvement of userInteraction
         let userInteraction = '';
-        if (post.likes.includes(author.id)) {
+        if (post.likes.includes(loggedInUserId)) {
             userInteraction = POST_ENGAGEMENT_TYPES.like;
-        } else if (post.dislikes.includes(author.id)) {
+        } else if (post.dislikes.includes(loggedInUserId)) {
             userInteraction = POST_ENGAGEMENT_TYPES.dislike;
         }
 
@@ -158,9 +158,13 @@ class PostService {
         return result;
     }
 
-    async getPosts(username) {
+    async getPosts(username, loggedInUserId) {
         if (!username) {
             throw new BadRequestError("GetPosts: Missing user");
+        }
+
+        if (!loggedInUserId) {
+            throw new BadRequestError("GetPosts: Missing loggedInUserId");
         }
 
         const user = await catchAndTransformMongooseError(
@@ -178,7 +182,7 @@ class PostService {
             "post"
         );
 
-        return posts.map(post => this.transformPost(post, user));
+        return posts.map(post => this.transformPost(post, user, loggedInUserId));
     }
 }
 
