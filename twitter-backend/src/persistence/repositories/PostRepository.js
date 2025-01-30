@@ -22,6 +22,14 @@ class  PostRepository {
         return result;
     }
 
+    async findAndPopulateAuthorsAndReplyTo(id) {
+        let result = await Post.findById(id).populate('replyTo').populate('replies');
+        result = await this.userRepository.populate(result, { path: 'author' });
+        result = await this.userRepository.populate(result, { path: 'replyTo.author' });
+        result = await this.userRepository.populate(result, { path: 'replies.author' });
+        return result;
+    }
+
     async _create(createData) {
         return await Post.create(createData);
     }

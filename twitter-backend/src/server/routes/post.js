@@ -72,6 +72,17 @@ const applyPostRouter = (app, diContainer) => {
         }
     });
 
+    router.get('/:postId', async (req, res, next) => {
+        try {
+            const postId = req.params.postId;
+            const loggedInUserId = req.query.loggedInUserId;
+            let result = await postService.getPost(postId, loggedInUserId);
+            res.status(200).json(result);
+        } catch (e) {
+            return next(e);
+        }
+    });
+
     app.use("/post", router);
 }
 

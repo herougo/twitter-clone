@@ -184,6 +184,33 @@ class PostService {
 
         return posts.map(post => this.transformPost(post, user, loggedInUserId));
     }
+
+    async getPost(postId, loggedInUserId) {
+        if (!postId) {
+            throw new BadRequestError("GetPost: Missing postId");
+        }
+
+        if (!loggedInUserId) {
+            throw new BadRequestError("GetPost: Missing loggedInUserId");
+        }
+
+        const post = await catchAndTransformMongooseError(
+            this.postRepository.findAndPopulateAuthorsAndReplyTo(postId),
+            this.logger,
+            "post"
+        );
+
+        if (!post) {
+            throw new BadRequestError("GetPost: Invalid postId");
+        }
+
+        return {
+            post: this.transformPost(post, post.author, loggedInUserId),
+            replies: post.replies.map(reply => {
+                this.transformPost(reply, reply.author, loggedInUserId)
+            })
+        };
+    }
 }
 
 module.exports = PostService
