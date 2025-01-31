@@ -25,7 +25,7 @@ const PostPageContent = () => {
                 Replies
             </h2>
             <div>
-                <CreatePost replyToId={postId}></CreatePost>
+                <CreatePost replyToId={postId} onPostSuccess={postData.pushReply}></CreatePost>
             </div>
             <div>
                 {

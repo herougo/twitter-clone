@@ -3,16 +3,20 @@ import './CreatePost.css';
 import createPost from '../services/createPost';
 import UserContext from '../../../context/UserContext';
 
-const CreatePost = ({replyToId}) => {
+const CreatePost = ({replyToId, onPostSuccess}) => {
     const [content, setContent] = useState('');
     const {user} = useContext(UserContext);
 
     const submitPost = async () => {
-        await createPost({
+        const response = await createPost({
             authorId: user.id,
             content,
             replyToId: replyToId || null
-        })
+        });
+        const newPost = response.data;
+        if (onPostSuccess) {
+            onPostSuccess(newPost);
+        }
     };
 
     return (

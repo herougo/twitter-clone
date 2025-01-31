@@ -27,8 +27,14 @@ const usePostAxios = (postId) => {
         };
     }
 
+    const pushReply = (reply) => {
+        const newValue = JSON.parse(JSON.stringify(value));
+        newValue.replies.unshift(reply);
+        setValue(newValue);
+    }
+
     return {
-        loading, error, value, setPost, setReplyBuilder
+        loading, error, value, setPost, setReplyBuilder, pushReply
     };
 }
 

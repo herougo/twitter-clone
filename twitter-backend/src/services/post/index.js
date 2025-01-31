@@ -41,7 +41,7 @@ class PostService {
             this.logger,
             "post"
         );
-        return { id: post._id };
+        return this.transformPost(post, author, author.id);
     }
 
     async _getPost(postId) {

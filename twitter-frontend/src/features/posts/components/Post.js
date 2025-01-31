@@ -19,8 +19,8 @@ const Post = ({post, setPost}) => {
     const navigate = useNavigate();
     
     let replyToSection = null;
-    if (post.replyTo) {
-        const replyTo = post.replyTo;
+    const replyTo = post.replyTo;
+    if (replyTo) {
         const replyToDateString = humanReadableDate(replyTo.createdDate);
         replyToSection = (
             <div className='post__reply-to'>
