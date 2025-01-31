@@ -4,6 +4,7 @@ import humanReadableDate from '../../../utils/humanReadableDate';
 import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
 import { USER_INTERACTION } from '../../../utils/enums';
 import useUserInteractionAxios from '../hooks/useUserInteractionAxios';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({post, setPost}) => {
     const { id, author, content, numLikes, numDislikes, userInteraction, createdDate } = post;
@@ -15,6 +16,7 @@ const Post = ({post, setPost}) => {
     const isDisliked = userInteraction === USER_INTERACTION.dislike;
 
     const {onLikeClicked, onDislikeClicked} = useUserInteractionAxios({post, setPost});
+    const navigate = useNavigate();
     
     let replyToSection = null;
     if (post.replyTo) {
@@ -23,8 +25,16 @@ const Post = ({post, setPost}) => {
         replyToSection = (
             <div className='post__reply-to'>
                 <div className='post__author-info-and-date'>
-                    <div><span className='post__author-name'>{replyTo.author.name}</span></div>
-                    <div><span className='post__author-username'>@{replyTo.author.username}</span></div>
+                    <div>
+                        <a href={`/profile/${replyTo.author.username}`} className='post__author-name underline-on-hover'>
+                            <span className='post__author-name'>{replyTo.author.name}</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href={`/profile/${replyTo.author.username}`} className='post__author-username'>
+                            <span className='post__author-username'>@{replyTo.author.username}</span>
+                        </a>
+                    </div>
                     <div><span className='post__created-date'>{replyToDateString}</span></div>
                 </div>
                 <div className='post__contents'>{replyTo.content}</div>
@@ -33,7 +43,7 @@ const Post = ({post, setPost}) => {
     }
 
     return (
-        <div className='post'>
+        <div className='post' onClick={() => navigate(`/post/${id}`)}>
             <div className='post__left-column'>
                 <div>
                     <a href={`/profile/${authorUsername}`}>
