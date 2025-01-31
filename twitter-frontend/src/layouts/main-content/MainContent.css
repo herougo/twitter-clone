@@ -2,5 +2,7 @@
     padding-left: 0.5rem;
     padding-top: 0.5rem;
     padding-right: calc(max(max(100% - 992px, 0px) / 2, 1rem));
+    padding-bottom: 0.5rem;
     flex: 1 0;
+    overflow-y: auto;
 }
