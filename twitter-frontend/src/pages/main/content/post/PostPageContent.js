@@ -16,16 +16,14 @@ const PostPageContent = () => {
         return <div>{postData.error.toString()}</div>;
     }
 
-    console.log(postData.value.replies);
-
     return (
         <div>
             <div>
                 <Post post={postData.value.post} setPost={postData.setPost}></Post>
             </div>
-            <div>
+            <h2 className='post-page-content__replies-header'>
                 Replies
-            </div>
+            </h2>
             <div>
                 <CreatePost replyToId={postId}></CreatePost>
             </div>
