@@ -9,7 +9,7 @@ const { sanitizePaths } = require("../../../utils/sanitization");
 
 let app;
 let diContainer;
-const endpoint = '/post/byUsername';
+const endpoint = '/post';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -25,7 +25,7 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("GET /post/byUsername/:username endpoint", () => {
+describe("GET /post/:postId endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
@@ -40,39 +40,49 @@ describe("GET /post/byUsername/:username endpoint", () => {
         return await request(app).get(fullEndpoint).send();
     };
 
-    test("Success", async () => {
-        const response = await sendToEndpoint('username', DB_IDS.mainUser);
-        expect(response.statusCode).toBe(200);
-        const sanitizedBody = response.body.map(
-            post => sanitizePaths(post, ['createdDate', 'replyTo.createdDate'], '')
+    const sanitizePost = (post) => {
+        return sanitizePaths(
+            post,
+            ['createdDate', 'replyTo.createdDate'],
+            ''
         );
+    }
+
+    const sanitizeBody = (body) => {
+        return {
+            post: sanitizePost(body.post),
+            replies: body.replies.map(sanitizePost)
+        }
+    };
+
+    test("Success (with reply)", async () => {
+        const response = await sendToEndpoint(DB_IDS.mainPost, DB_IDS.mainUser);
+        expect(response.statusCode).toBe(200);
+        const sanitizedBody = sanitizeBody(response.body);
         expect(sanitizedBody).toMatchSnapshot();
     });
 
-    test("Success (follower)", async () => {
-        const response = await sendToEndpoint('follower', DB_IDS.mainUser);
+    test("Success (without reply)", async () => {
+        const response = await sendToEndpoint(DB_IDS.mainReply, DB_IDS.mainUser);
         expect(response.statusCode).toBe(200);
-        const sanitizedBody = response.body.map(
-            post => sanitizePaths(post, ['createdDate', 'replyTo.createdDate'], '')
-        );
+        const sanitizedBody = sanitizeBody(response.body);
         expect(sanitizedBody).toMatchSnapshot();
     });
 
-    test("Invalid User", async () => {
-        const response = await sendToEndpoint('missingUser', DB_IDS.mainUser);
+    test("Invalid PostId", async () => {
+        const response = await sendToEndpoint(DB_IDS.missingPost, DB_IDS.mainUser);
         expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("GetPosts: Invalid user");
+        expect(response.body.errors.message).toEqual("GetPost: Invalid postId");
     });
 
     test("Missing loggedInUserId", async () => {
-        const response = await sendToEndpoint('username');
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("GetPosts: Missing loggedInUserId");
-    });
-
-    test("Missing User", async () => {
-        const response = await sendToEndpoint('');
+        const response = await sendToEndpoint(DB_IDS.mainPost);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetPost: Missing loggedInUserId");
+    });
+
+    test("Missing postId", async () => {
+        const response = await sendToEndpoint('');
+        expect(response.statusCode).toBe(404);
     });
 });

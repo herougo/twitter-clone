@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GET /post/:postId endpoint Success (with reply) 1`] = `
+{
+  "post": {
+    "author": {
+      "name": "hi there",
+      "username": "username",
+    },
+    "content": "I like dogs.",
+    "createdDate": "",
+    "id": "675351d698452e4fadc376c3",
+    "numDislikes": 0,
+    "numLikes": 0,
+    "userInteraction": "",
+  },
+  "replies": [
+    {
+      "author": {
+        "name": "hello you",
+        "username": "follower",
+      },
+      "content": "Me too!",
+      "createdDate": "",
+      "id": "675351d698452e4fadc376c4",
+      "numDislikes": 0,
+      "numLikes": 0,
+      "userInteraction": "",
+    },
+  ],
+}
+`;
+
+exports[`GET /post/:postId endpoint Success (without reply) 1`] = `
+{
+  "post": {
+    "author": {
+      "name": "hello you",
+      "username": "follower",
+    },
+    "content": "Me too!",
+    "createdDate": "",
+    "id": "675351d698452e4fadc376c4",
+    "numDislikes": 0,
+    "numLikes": 0,
+    "replyTo": {
+      "author": {
+        "name": "hi there",
+        "username": "username",
+      },
+      "content": "I like dogs.",
+      "createdDate": "",
+    },
+    "userInteraction": "",
+  },
+  "replies": [],
+}
+`;
