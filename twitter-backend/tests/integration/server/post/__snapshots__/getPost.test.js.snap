@@ -50,6 +50,7 @@ exports[`GET /post/:postId endpoint Success (without reply) 1`] = `
       },
       "content": "I like dogs.",
       "createdDate": "",
+      "id": "675351d698452e4fadc376c3",
     },
     "userInteraction": "",
   },

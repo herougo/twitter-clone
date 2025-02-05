@@ -150,6 +150,7 @@ class PostService {
         };
         if (post.replyTo?.content) { // if replyTo populated
             result.replyTo = {
+                id: post.replyTo.id,
                 author: this.transformAuthor(post.replyTo.author),
                 content: post.replyTo.content,
                 createdDate: post.replyTo.createdAt

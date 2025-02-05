@@ -199,3 +199,7 @@ h3 {
 .underline-on-hover:hover {
     text-decoration: underline;
 }
+
+.clickable {
+    cursor: pointer;
+}

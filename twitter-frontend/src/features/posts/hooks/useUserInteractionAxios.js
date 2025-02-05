@@ -90,7 +90,8 @@ const useUserInteractionAxios = ({ post, setPost }) => {
     const {user, setUser} = useContext(UserContext);
     const [loading, setLoading] = useState(false);
 
-    const onLikeClicked = useCallback(async () => {
+    const onLikeClicked = useCallback(async (e) => {
+        e.stopPropagation();
         if (loading) {
             return;
         }
@@ -110,7 +111,8 @@ const useUserInteractionAxios = ({ post, setPost }) => {
         setLoading(false);
     }, [user, post]);
 
-    const onDislikeClicked = useCallback(async () => {
+    const onDislikeClicked = useCallback(async (e) => {
+        e.stopPropagation();
         if (loading) {
             return;
         }

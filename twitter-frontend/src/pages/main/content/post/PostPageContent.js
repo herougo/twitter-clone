@@ -19,7 +19,7 @@ const PostPageContent = () => {
     return (
         <div>
             <div>
-                <Post post={postData.value.post} setPost={postData.setPost}></Post>
+                <Post post={postData.value.post} setPost={postData.setPost} clickable={false}></Post>
             </div>
             <h2 className='post-page-content__replies-header'>
                 Replies
@@ -35,6 +35,7 @@ const PostPageContent = () => {
                                 key={reply.id}
                                 post={reply}
                                 setPost={postData.setReplyBuilder(ix)}
+                                clickable={true}
                             >
                             </Post>
                         )

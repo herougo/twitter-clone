@@ -14,7 +14,7 @@ const ProfilePagePosts = ({postsData}) => {
         <div className='profile-page-content__posts'>
             {
                 postsData.value.map(
-                    (post, ix) => <Post key={post.id} post={post} setPost={postsData.setPostBuilder(ix)}></Post>
+                    (post, ix) => <Post key={post.id} post={post} setPost={postsData.setPostBuilder(ix)} clickable={true}></Post>
                 )
             }
         </div>

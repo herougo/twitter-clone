@@ -6,7 +6,7 @@ import { USER_INTERACTION } from '../../../utils/enums';
 import useUserInteractionAxios from '../hooks/useUserInteractionAxios';
 import { useNavigate } from 'react-router-dom';
 
-const Post = ({post, setPost}) => {
+const Post = ({post, setPost, clickable}) => {
     const { id, author, content, numLikes, numDislikes, userInteraction, createdDate } = post;
     const authorName = author.name;
     const authorUsername = author.username;
@@ -22,16 +22,28 @@ const Post = ({post, setPost}) => {
     const replyTo = post.replyTo;
     if (replyTo) {
         const replyToDateString = humanReadableDate(replyTo.createdDate);
+        const replyToOnClick = (e) => {
+            e.stopPropagation();
+            navigate(`/post/${replyTo.id}`);
+        };
         replyToSection = (
-            <div className='post__reply-to'>
+            <div className='post__reply-to clickable' onClick={replyToOnClick}>
                 <div className='post__author-info-and-date'>
                     <div>
-                        <a href={`/profile/${replyTo.author.username}`} className='post__author-name underline-on-hover'>
+                        <a 
+                            href={`/profile/${replyTo.author.username}`}
+                            className='post__author-name underline-on-hover'
+                            onClick={(e) => e.stopPropagation()}
+                        >
                             <span className='post__author-name'>{replyTo.author.name}</span>
                         </a>
                     </div>
                     <div>
-                        <a href={`/profile/${replyTo.author.username}`} className='post__author-username'>
+                        <a
+                            href={`/profile/${replyTo.author.username}`}
+                            className='post__author-username'
+                            onClick={(e) => e.stopPropagation()}
+                        >
                             <span className='post__author-username'>@{replyTo.author.username}</span>
                         </a>
                     </div>
@@ -42,11 +54,18 @@ const Post = ({post, setPost}) => {
         );
     }
 
+    let postOnClick = null;
+    let postClass = 'post';
+    if (clickable) {
+        postClass = `${postClass} clickable`;
+        postOnClick = () => navigate(`/post/${id}`);
+    }
+
     return (
-        <div className='post' onClick={() => navigate(`/post/${id}`)}>
+        <div className={postClass} onClick={postOnClick}>
             <div className='post__left-column'>
                 <div>
-                    <a href={`/profile/${authorUsername}`}>
+                    <a href={`/profile/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
                         <div className='post__icon'></div>
                     </a>
                 </div>
@@ -54,12 +73,20 @@ const Post = ({post, setPost}) => {
             <div className='post__right-column'>
                 <div className='post__author-info-and-date'>
                     <div>
-                        <a href={`/profile/${authorUsername}`} className='post__author-name underline-on-hover'>
+                        <a
+                            href={`/profile/${authorUsername}`}
+                            className='post__author-name underline-on-hover'
+                            onClick={(e) => e.stopPropagation()}
+                        >
                             <span>{authorName}</span>
                         </a>
                     </div>
                     <div>
-                        <a href={`/profile/${authorUsername}`} className='post__author-username'>
+                        <a
+                            href={`/profile/${authorUsername}`}
+                            className='post__author-username'
+                            onClick={(e) => e.stopPropagation()}
+                        >
                             <span>@{authorUsername}</span>
                         </a>
                     </div>

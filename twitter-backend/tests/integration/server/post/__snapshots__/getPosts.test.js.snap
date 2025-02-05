@@ -19,6 +19,7 @@ exports[`GET /post/byUsername/:username endpoint Success (follower) 1`] = `
       },
       "content": "I like dogs.",
       "createdDate": "",
+      "id": "675351d698452e4fadc376c3",
     },
     "userInteraction": "",
   },
