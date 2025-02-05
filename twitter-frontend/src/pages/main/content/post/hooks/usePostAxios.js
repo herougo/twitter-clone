@@ -1,9 +1,9 @@
-import React, { useCallback, useContext, useState } from 'react';
+import { useContext } from 'react';
 import useAxiosWrapper from '../../../../../hooks/useAxiosWrapper';
 import UserContext from '../../../../../context/UserContext';
 
 const usePostAxios = (postId) => {
-    const {user, setUser} = useContext(UserContext);
+    const {user} = useContext(UserContext);
 
     const { loading, error, value, setValue } = useAxiosWrapper(
         'get',

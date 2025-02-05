@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './CreatePost.css';
 import createPost from '../services/createPost';
 import UserContext from '../../../context/UserContext';
