@@ -55,14 +55,14 @@ const Post = ({post, setPost, clickable}) => {
     }
 
     let postOnClick = null;
-    let postClass = 'post';
+    let postClasses = 'post';
     if (clickable) {
-        postClass = `${postClass} clickable`;
+        postClasses = `${postClasses} clickable`;
         postOnClick = () => navigate(`/post/${id}`);
     }
 
     return (
-        <div className={postClass} onClick={postOnClick}>
+        <div className={postClasses} onClick={postOnClick}>
             <div className='post__left-column'>
                 <div>
                     <a href={`/profile/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
