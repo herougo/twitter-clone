@@ -2,16 +2,21 @@ import React, { useContext, useState } from 'react';
 import './CreatePost.css';
 import createPost from '../services/createPost';
 import UserContext from '../../../context/UserContext';
+import useAxiosWrapper from '../../../hooks/useAxiosWrapper';
 
 const CreatePost = ({replyToId, onPostSuccess}) => {
     const [content, setContent] = useState('');
+    const {axiosWithHeader} = useAxiosWrapper();
     const {user} = useContext(UserContext);
 
     const submitPost = async () => {
         const response = await createPost({
-            authorId: user.id,
-            content,
-            replyToId: replyToId || null
+            axiosFunction: axiosWithHeader,
+            payload: {
+                authorId: user.id,
+                content,
+                replyToId: replyToId || null
+            }
         });
         const newPost = response.data;
         if (onPostSuccess) {

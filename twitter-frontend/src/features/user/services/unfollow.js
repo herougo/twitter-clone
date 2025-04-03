@@ -1,8 +1,6 @@
-import axiosWrapper from "../../../lib/axiosWrapper";
-
-
-const unfollow = async ({followerId, userId}) => {
-    return await axiosWrapper('post', {followerId, userId}, '/unfollow');
+const unfollow = async ({axiosFunction, payload}) => {
+    const {followerId, userId} = payload;
+    return await axiosFunction('post', {followerId, userId}, '/unfollow');
 }
 
 export default unfollow;

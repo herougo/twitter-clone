@@ -1,8 +1,6 @@
-import axiosWrapper from "../../../lib/axiosWrapper";
-
-
-const follow = async ({followerId, userId}) => {
-    return await axiosWrapper('post', {followerId, userId}, '/follow');
+const follow = async ({axiosFunction, payload}) => {
+    const {followerId, userId} = payload;
+    return await axiosFunction('post', {followerId, userId}, '/follow');
 }
 
 export default follow;

@@ -5,12 +5,14 @@ import { validateLogin } from '../../lib/validation';
 import { logIn } from '../../features/authentication';
 import UserContext from '../../context/UserContext';
 import { Navigate, useNavigate } from 'react-router-dom';
+import useAxiosWrapper from '../../hooks/useAxiosWrapper';
 
 const WelcomePage = () => {
     const {user, setUser} = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
+    const {axiosWithHeader} = useAxiosWrapper();
     const navigate = useNavigate();
 
     if (user !== null) {
@@ -23,7 +25,10 @@ const WelcomePage = () => {
         if (errorMessages.length === 0) {
             let res = null;
             try {
-                res = await logIn({username, password});
+                res = await logIn({
+                    axiosFunction: axiosWithHeader,
+                    payload: {username, password}
+                });
             } catch (err) {
                 setErrors([`${err.message}`]);
                 return;

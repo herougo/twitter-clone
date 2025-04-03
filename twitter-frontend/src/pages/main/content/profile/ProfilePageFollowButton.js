@@ -1,10 +1,12 @@
 import React, { useCallback, useContext, useState } from 'react';
 import UserContext from '../../../../context/UserContext';
 import { follow, unfollow } from '../../../../features/user';
+import useAxiosWrapper from '../../../../hooks/useAxiosWrapper';
 
 const ProfilePageFollowButton = ({profileData}) => {
     const { user } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
+    const {axiosWithHeader} = useAxiosWrapper();
 
     const btnText = profileData.value.isFollowing ? 'Following' : 'Follow';
     const onClick = useCallback(
@@ -16,10 +18,16 @@ const ProfilePageFollowButton = ({profileData}) => {
                 setLoading(true);
                 const newValue = JSON.parse(JSON.stringify(profileData.value));
                 if (profileData.value.isFollowing) {
-                    await unfollow({followerId: user.id, userId: profileData.value.id});
+                    await unfollow({
+                        axiosFunction: axiosWithHeader,
+                        payload: {followerId: user.id, userId: profileData.value.id}
+                    });
                     newValue.numFollowers -= 1;
                 } else {
-                    await follow({followerId: user.id, userId: profileData.value.id});
+                    await follow({
+                        axiosFunction: axiosWithHeader,
+                        payload: {followerId: user.id, userId: profileData.value.id}
+                    });
                     newValue.numFollowers += 1;
                 }
                 newValue.isFollowing = !newValue.isFollowing;

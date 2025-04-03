@@ -1,8 +1,6 @@
-import axiosWrapper from "../../../lib/axiosWrapper";
-
-
-const dislike = async ({userFromId, postId}) => {
-    return await axiosWrapper('post', {userFromId, postId}, '/post/dislike');
+const dislike = async ({axiosFunction, payload}) => {
+    const {userFromId, postId} = payload;
+    return await axiosFunction('post', {userFromId, postId}, '/post/dislike');
 }
 
 export default dislike;

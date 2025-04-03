@@ -4,6 +4,7 @@ import { signUp, logIn } from '../../features/authentication';
 import { Navigate, useNavigate } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import { validateSignUp } from '../../lib/validation';
+import useAxiosWrapper from '../../hooks/useAxiosWrapper';
 
 const SignupPage = () => {
     const [username, setUsername] = useState('');
@@ -16,6 +17,7 @@ const SignupPage = () => {
     
     const {user, setUser} = useContext(UserContext);
     const navigate = useNavigate();
+    const {axiosWithHeader} = useAxiosWrapper();
 
     if (user !== null) {
         return <Navigate to='/'></Navigate>
@@ -32,7 +34,10 @@ const SignupPage = () => {
         if (errorMessages.length === 0) {
             let res = null;
             try {
-                res = await signUp(inputValues);
+                res = await signUp({
+                    axiosFunction: axiosWithHeader,
+                    payload: inputValues
+                });
             } catch (err) {
                 setErrors([`${err.message}`]);
                 return;
@@ -45,7 +50,10 @@ const SignupPage = () => {
     const logInUsingSignup = async () => {
         let res = null;
         try {
-            res = await logIn({username, password});
+            res = await logIn({
+                axiosFunction: axiosWithHeader,
+                payload: {username, password}
+            });
         } catch (err) {
             setErrors([`${err.message}`]);
             navigate('/welcome');

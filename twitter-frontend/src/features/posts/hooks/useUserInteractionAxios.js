@@ -5,6 +5,7 @@ import like from '../services/like';
 import unlike from '../services/unlike';
 import dislike from '../services/dislike';
 import undislike from '../services/undislike';
+import useAxiosWrapper from '../../../hooks/useAxiosWrapper';
 
 
 const routeChangeOnLike = (userInteraction) => {
@@ -38,7 +39,7 @@ const performLike = async ({userFromId, post, setPost}) => {
         userFromId,
         postId: post.id
     }
-    await like(payload);
+    await like({axiosFunction, payload});
 
     const newPost = JSON.parse(JSON.stringify(post));
     newPost.numLikes += 1;
@@ -51,7 +52,7 @@ const performUnlike = async ({userFromId, post, setPost}) => {
         userFromId,
         postId: post.id
     }
-    await unlike(payload);
+    await unlike({axiosFunction, payload});
 
     const newPost = JSON.parse(JSON.stringify(post));
     newPost.numLikes -= 1;
@@ -64,7 +65,7 @@ const performDislike = async ({userFromId, post, setPost}) => {
         userFromId,
         postId: post.id
     }
-    await dislike(payload);
+    await dislike({axiosFunction, payload});
 
     const newPost = JSON.parse(JSON.stringify(post));
     newPost.numDislikes += 1;
@@ -77,7 +78,7 @@ const performUndislike = async ({userFromId, post, setPost}) => {
         userFromId,
         postId: post.id
     }
-    await undislike(payload);
+    await undislike({axiosFunction, payload});
 
     const newPost = JSON.parse(JSON.stringify(post));
     newPost.numDislikes -= 1;
@@ -87,6 +88,7 @@ const performUndislike = async ({userFromId, post, setPost}) => {
 
 
 const useUserInteractionAxios = ({ post, setPost }) => {
+    const {axiosWithHeader} = useAxiosWrapper();
     const {user, setUser} = useContext(UserContext);
     const [loading, setLoading] = useState(false);
 
@@ -100,9 +102,19 @@ const useUserInteractionAxios = ({ post, setPost }) => {
         if (change !== 0) {
             try {
                 if (change === 1) {
-                    await performLike({ userFromId: user.id, post, setPost });
+                    await performLike({
+                        axiosFunction: axiosWithHeader,
+                        userFromId: user.id,
+                        post,
+                        setPost
+                    });
                 } else if (change === -1) {
-                    await performUnlike({ userFromId: user.id, post, setPost });
+                    await performUnlike({
+                        axiosFunction: axiosWithHeader,
+                        userFromId: user.id,
+                        post,
+                        setPost
+                    });
                 }
             } catch (ex) {
 
@@ -121,9 +133,19 @@ const useUserInteractionAxios = ({ post, setPost }) => {
         if (change !== 0) {
             try {
                 if (change === 1) {
-                    await performDislike({ userFromId: user.id, post, setPost });
+                    await performDislike({
+                        axiosFunction: axiosWithHeader,
+                        userFromId: user.id,
+                        post,
+                        setPost
+                    });
                 } else if (change === -1) {
-                    await performUndislike({ userFromId: user.id, post, setPost });
+                    await performUndislike({
+                        axiosFunction: axiosWithHeader,
+                        userFromId: user.id,
+                        post,
+                        setPost
+                    });
                 }
             } catch (ex) {
 

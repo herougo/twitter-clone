@@ -1,8 +1,6 @@
-import axiosWrapper from "../../../lib/axiosWrapper";
-
-
-const logIn = async ({username, password}) => {
-    return await axiosWrapper('post', {username, password}, '/login');
+const logIn = async ({axiosFunction, payload}) => {
+    const {username, password} = payload;
+    return await axiosFunction('post', {username, password}, '/login');
 }
 
 export default logIn;
