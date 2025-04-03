@@ -1,5 +1,6 @@
 const express = require('express');
 const DI_NAMES = require("../dependency-injection/names");
+const requireLoggedIn = require('../middleware/requireLoggedIn');
 
 const applyChannelRouter = (app, diContainer) => {
     const router = express.Router();
@@ -25,7 +26,7 @@ const applyChannelRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/channel", router);
+    app.use("/channel", requireLoggedIn, router);
 }
 
 module.exports = {

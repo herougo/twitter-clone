@@ -1,5 +1,6 @@
 const express = require('express');
 const DI_NAMES = require("../dependency-injection/names");
+const requireLoggedIn = require('../middleware/requireLoggedIn');
 
 const applyPostRouter = (app, diContainer) => {
     const router = express.Router();
@@ -83,7 +84,7 @@ const applyPostRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/post", router);
+    app.use("/post", requireLoggedIn, router);
 }
 
 module.exports = {

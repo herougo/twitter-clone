@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require('morgan');
 const CONFIG = require("../../config");
+const authenticateJWT = require("./authenticateJWT");
 
 const applyMiddleware = (app, diContainer) => {
     // transforms req.body from string to json if json data is passed and
@@ -13,13 +14,15 @@ const applyMiddleware = (app, diContainer) => {
     // instead of the
     // - qs library (allows for nested object query strings)
     // Setting to false seems to make things simpler
-    app.use(express.urlencoded({extended: false}))
+    app.use(express.urlencoded({extended: false}));
 
     // this prevents BROWSER fetch/axios requests from origins outside
     // CONFIG.corsOrigin
     app.use(cors({
         origin: CONFIG.corsOrigin
-    }))
+    }));
+
+    app.use(authenticateJWT);
 
     // equivalent to
     // app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))

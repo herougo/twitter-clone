@@ -1,5 +1,6 @@
 const express = require('express');
 const DI_NAMES = require("../dependency-injection/names");
+const requireLoggedIn = require('../middleware/requireLoggedIn');
 
 const applyNotificationRouter = (app, diContainer) => {
     const router = express.Router();
@@ -15,7 +16,7 @@ const applyNotificationRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/notification", router);
+    app.use("/notification", requireLoggedIn, router);
 }
 
 module.exports = {

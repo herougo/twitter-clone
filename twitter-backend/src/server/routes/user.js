@@ -1,5 +1,6 @@
 const express = require('express');
 const DI_NAMES = require("../dependency-injection/names");
+const requireLoggedIn = require('../middleware/requireLoggedIn');
 
 const applyLogInRouter = (app, diContainer) => {
     const router = express.Router();
@@ -51,7 +52,7 @@ const applyFollowRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/follow", router);
+    app.use("/follow", requireLoggedIn, router);
 }
 
 const applyUnfollowRouter = (app, diContainer) => {
@@ -69,7 +70,7 @@ const applyUnfollowRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/unfollow", router);
+    app.use("/unfollow", requireLoggedIn, router);
 }
 
 const applyGetProfileRouter = (app, diContainer) => {
@@ -87,7 +88,7 @@ const applyGetProfileRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/profile", router);
+    app.use("/profile", requireLoggedIn, router);
 }
 
 const applyUserRouters = (app, diContainer) => {
