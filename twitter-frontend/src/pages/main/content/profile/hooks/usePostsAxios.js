@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useState } from 'react';
-import useAxiosWrapper from '../../../../../hooks/useAxiosWrapper';
+import useAsyncAxiosWrapper from '../../../../../hooks/useAsyncAxiosWrapper';
 import UserContext from '../../../../../context/UserContext';
 
 const usePostsAxios = (username) => {
     const {user, setUser} = useContext(UserContext);
 
-    const { loading, error, value, setValue } = useAxiosWrapper(
+    const { loading, error, value, setValue } = useAsyncAxiosWrapper(
         'get',
         {},
         `/post/byUsername/${username}?loggedInUserId=${user.id}`,

@@ -34,7 +34,7 @@ const routeChangeOnDislike = (userInteraction) => {
     }
 }
 
-const performLike = async ({userFromId, post, setPost}) => {
+const performLike = async ({axiosFunction, userFromId, post, setPost}) => {
     const payload = {
         userFromId,
         postId: post.id
@@ -47,7 +47,7 @@ const performLike = async ({userFromId, post, setPost}) => {
     setPost(newPost);
 }
 
-const performUnlike = async ({userFromId, post, setPost}) => {
+const performUnlike = async ({axiosFunction, userFromId, post, setPost}) => {
     const payload = {
         userFromId,
         postId: post.id
@@ -60,7 +60,7 @@ const performUnlike = async ({userFromId, post, setPost}) => {
     setPost(newPost);
 }
 
-const performDislike = async ({userFromId, post, setPost}) => {
+const performDislike = async ({axiosFunction, userFromId, post, setPost}) => {
     const payload = {
         userFromId,
         postId: post.id
@@ -73,7 +73,7 @@ const performDislike = async ({userFromId, post, setPost}) => {
     setPost(newPost);
 }
 
-const performUndislike = async ({userFromId, post, setPost}) => {
+const performUndislike = async ({axiosFunction, userFromId, post, setPost}) => {
     const payload = {
         userFromId,
         postId: post.id

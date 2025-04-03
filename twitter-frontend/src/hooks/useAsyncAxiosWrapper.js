@@ -7,9 +7,10 @@ import useAxiosWrapper from './useAxiosWrapper';
 const useAsyncAxiosWrapper = (method, data, urlSuffix, extraParams = null, dependencies = []) => {
     const { axiosWithHeader } = useAxiosWrapper();
 
-    return useAsync( async () => {
-        const res = await axiosWithHeader(method, data, urlSuffix, extraParams);
-        return res.data;
+    return useAsync(() => {
+        return axiosWithHeader(method, data, urlSuffix, extraParams).then(res => {
+            return res.data;
+        });
     }, dependencies);
 }
 
