@@ -33,7 +33,7 @@ class UserService {
             throw new UnauthorizedError("Password is invalid");
         }
 
-        const tokenPayload = {username, expectedPasswordHash};
+        const tokenPayload = {username, id: user.id, expectedPasswordHash};
         const secretKey = CONFIG.jwtSecretKey;
         const token = jwt.sign(tokenPayload, secretKey);
         

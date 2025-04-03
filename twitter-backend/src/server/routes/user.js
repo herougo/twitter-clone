@@ -80,7 +80,7 @@ const applyGetProfileRouter = (app, diContainer) => {
     router.get('/:username', async (req, res, next) => {
         try {
             const username = req.params.username;
-            const loggedInUserId = req.query.loggedInUserId;
+            const loggedInUserId = res.locals.user.id;
             const result = await userService.getProfile(username, loggedInUserId);
             res.status(200).json(result);
         } catch (e) {

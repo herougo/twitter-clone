@@ -8,7 +8,7 @@ const usePostAxios = (postId) => {
     const { loading, error, value, setValue } = useAsyncAxiosWrapper(
         'get',
         {},
-        `/post/${postId}?loggedInUserId=${user.id}`,
+        `/post/${postId}`,
         null,
         [postId, user]
     );

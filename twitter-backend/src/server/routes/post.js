@@ -65,7 +65,7 @@ const applyPostRouter = (app, diContainer) => {
     router.get('/byUsername/:username', async (req, res, next) => {
         try {
             const username = req.params.username;
-            const loggedInUserId = req.query.loggedInUserId;
+            const loggedInUserId = res.locals.user.id;
             let result = await postService.getPosts(username, loggedInUserId);
             res.status(200).json(result);
         } catch (e) {
@@ -76,7 +76,7 @@ const applyPostRouter = (app, diContainer) => {
     router.get('/:postId', async (req, res, next) => {
         try {
             const postId = req.params.postId;
-            const loggedInUserId = req.query.loggedInUserId;
+            const loggedInUserId = res.locals.user.id;
             let result = await postService.getPost(postId, loggedInUserId);
             res.status(200).json(result);
         } catch (e) {
