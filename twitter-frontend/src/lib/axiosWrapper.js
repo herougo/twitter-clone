@@ -1,7 +1,7 @@
 import axios from 'axios';
 import CONFIG from './config';
 
-const axiosWrapper = async (method, data, urlSuffix, extraParams) => {
+const axiosWrapper = async (method, data, urlSuffix, headers, extraParams) => {
     if (!urlSuffix.startsWith('/')) {
         throw new Error('urlSuffix must start with a slash');
     }
@@ -13,12 +13,17 @@ const axiosWrapper = async (method, data, urlSuffix, extraParams) => {
         data: data,
         url: url
     };
+    if (headers) {
+        axiosData.headers = headers;
+    }
     if (extraParams) {
         axiosData = {...axiosData, ...extraParams};
     }
 
     try {
         const res = await axios(axiosData);
+        // Note: no need to check for non-2XX because axios automatically
+        // triggers an error
         return res;
     } catch (err) {
         if (!err.response) {
