@@ -27,7 +27,7 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("POST /unfollow endpoint", () => {
+describe("DELETE /user/id/:userId/follow endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);

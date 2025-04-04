@@ -26,7 +26,7 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("GET /profile/:username endpoint", () => {
+describe("GET /user/name/:username/profile/ endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
