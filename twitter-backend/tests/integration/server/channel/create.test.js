@@ -9,7 +9,7 @@ const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
-const endpoint = '/channel/open';
+const endpoint = '/channel';
 
 // run once before all suites in the file
 beforeAll(async () => {

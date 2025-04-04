@@ -6,7 +6,7 @@ const applyChannelRouter = (app, diContainer) => {
     const router = express.Router();
     const channelService = diContainer.resolve(DI_NAMES.channelService);
 
-    router.post('/open', async (req, res, next) => {
+    router.post('/channel', async (req, res, next) => {
         try {
             const userIds = req.body.userIds;
             const openResult = await channelService.openDirectMessageChannel({userIds});
@@ -16,9 +16,9 @@ const applyChannelRouter = (app, diContainer) => {
         }
     });
 
-    router.get('/fullFeed/:userId', async (req, res, next) => {
+    router.get('/channel', async (req, res, next) => {
         try {
-            const userId = req.params.userId;
+            const userId = res.locals.user.id;
             const fullFeedResult = await channelService.fullFeed(userId);
             res.status(200).json(fullFeedResult);
         } catch (e) {
@@ -26,7 +26,7 @@ const applyChannelRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/channel", requireLoggedIn, router);
+    app.use("/", requireLoggedIn, router);
 }
 
 module.exports = {
