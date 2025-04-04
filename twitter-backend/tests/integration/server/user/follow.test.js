@@ -5,6 +5,7 @@ const createMockLogger = require("../../../utils/mocks/mockLogger");
 const mongoose = require("mongoose");
 const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 const { DB_IDS } = require('../../../utils/database/ids');
+const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
@@ -33,37 +34,44 @@ describe("POST /follow endpoint", () => {
         await populateDatabase(diContainer);
     });
 
+    const sendToEndpoint = async (payload, token) => {
+        return await request(app)
+            .post('/follow')
+            .set('Authorization', `Bearer ${token}`)
+            .send(payload);
+    };
+
     test("Success", async () => {
-        const response = await request(app).post('/follow').send({
+        const response = await sendToEndpoint({
             followerId: DB_IDS.mainUser,
             userId: DB_IDS.followerUser
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(200);
     });
 
     test("User not in DB", async () => {
-        const response = await request(app).post('/follow').send({
+        const response = await sendToEndpoint({
             followerId: DB_IDS.mainUser,
-            userId: DB_IDS.missingUser,
-        });
+            userId: DB_IDS.missingUser
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Follow: Invalid user");
     });
 
     test("Follower not in DB", async () => {
-        const response = await request(app).post('/follow').send({
+        const response = await sendToEndpoint({
             followerId: DB_IDS.missingUser,
             userId: DB_IDS.mainUser,
-        });
+        }, USER_JWT_TOKENS.missing);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Follow: Invalid follower");
     });
 
     test("Already following", async () => {
-        const response = await request(app).post('/follow').send({
+        const response = await sendToEndpoint({
             followerId: DB_IDS.followerUser,
             userId: DB_IDS.mainUser
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Follow: Already following");
     });

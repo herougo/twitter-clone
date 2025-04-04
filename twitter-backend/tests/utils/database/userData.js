@@ -16,7 +16,7 @@ function logJWT(data) {
 
 
 const USER_DATA = {
-    user: {
+    main: {
         _id: DB_IDS.mainUser,
         username: "username",
         passwordHash: "$2b$10$AbJt1PaeMfPOOuI7lmgiYOMYv2vL/WGtGV1TuMAjjSo0jAZt1hQ2.",
@@ -32,20 +32,26 @@ const USER_DATA = {
         lastName: "you",
         email: "follower@example.com"
     },
-    anotherUser: {
+    another: {
         _id: DB_IDS.anotherUser,
         username: "another",
         passwordHash: "$2b$10$AbJt1PaeMfPOOuI7lmgiYOMYv2vL/WGtGV1TuMAjjSo0jAZt1hQ2.",
         firstName: "hiya",
         lastName: "me",
         email: "another@example.com"
+    },
+    missing: {
+        _id: DB_IDS.missingUser,
+        username: "missing",
+        passwordHash: "$2b$10$AbJt1PaeMfPOOuI7lmgiYOMYv2vL/WGtGV1TuMAjjSo0jAZt1hQ2."
     }
 };
 
 const USER_JWT_TOKENS = {
-    user: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWQiOiI2NzUzNTFkNjk4NDUyZTRmYWRjMzc2YmUiLCJleHBlY3RlZFBhc3N3b3JkSGFzaCI6IiQyYiQxMCRBYkp0MVBhZU1mUE9PdUk3bG1naVlPTVl2MnZML1dHdEdWMVR1TUFqalNvMGpBWnQxaFEyLiIsImlhdCI6MTc0MzcyMzM4OX0.S-m8EStyU7QWDwn9QRD5DUHPnONrZi-cDNLVby7DVUo',
+    main: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWQiOiI2NzUzNTFkNjk4NDUyZTRmYWRjMzc2YmUiLCJleHBlY3RlZFBhc3N3b3JkSGFzaCI6IiQyYiQxMCRBYkp0MVBhZU1mUE9PdUk3bG1naVlPTVl2MnZML1dHdEdWMVR1TUFqalNvMGpBWnQxaFEyLiIsImlhdCI6MTc0MzcyMzM4OX0.S-m8EStyU7QWDwn9QRD5DUHPnONrZi-cDNLVby7DVUo',
     follower: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZvbGxvd2VyIiwiaWQiOiI2NzUzNTFkNjk4NDUyZTRmYWRjMzc2YzEiLCJleHBlY3RlZFBhc3N3b3JkSGFzaCI6IiQyYiQxMCRBYkp0MVBhZU1mUE9PdUk3bG1naVlPTVl2MnZML1dHdEdWMVR1TUFqalNvMGpBWnQxaFEyLiIsImlhdCI6MTc0MzcyMzM4OX0.3sI__5vTDqNU4cHfdGmnwZq6XdA7_jgfUFs7UVnppr0',
-    anotherUser: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFub3RoZXIiLCJpZCI6IjY3NTM1MWQ2OTg0NTJlNGZhZGMzNzZjMCIsImV4cGVjdGVkUGFzc3dvcmRIYXNoIjoiJDJiJDEwJEFiSnQxUGFlTWZQT091STdsbWdpWU9NWXYydkwvV0d0R1YxVHVNQWpqU28wakFadDFoUTIuIiwiaWF0IjoxNzQzNzIzMzg5fQ.0H3TNbsJl7EOLBss11MgIHtkhOgh1Jwe0Pc_lHiyxOw'
+    another: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFub3RoZXIiLCJpZCI6IjY3NTM1MWQ2OTg0NTJlNGZhZGMzNzZjMCIsImV4cGVjdGVkUGFzc3dvcmRIYXNoIjoiJDJiJDEwJEFiSnQxUGFlTWZQT091STdsbWdpWU9NWXYydkwvV0d0R1YxVHVNQWpqU28wakFadDFoUTIuIiwiaWF0IjoxNzQzNzIzMzg5fQ.0H3TNbsJl7EOLBss11MgIHtkhOgh1Jwe0Pc_lHiyxOw',
+    missing: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDM3ODA1Mjl9.PWTgh-L_xJdPnUe4AIJCnt8Cg56hopV_Ci9pmu0b3zg'
 };
 
 module.exports = {
