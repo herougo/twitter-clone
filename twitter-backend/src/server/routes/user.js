@@ -41,9 +41,9 @@ const applyFollowRouter = (app, diContainer) => {
     const router = express.Router();
     const userService = diContainer.resolve(DI_NAMES.userService);
 
-    router.post('/user/id/:followingid/follow', async (req, res, next) => {
+    router.post('/user/id/:followingId/follow', async (req, res, next) => {
         try {
-            const userId = req.params.followingid;
+            const userId = req.params.followingId;
             const followerId = res.locals.user.id;
             await userService.follow(followerId, userId);
             res.status(200).send();
@@ -59,9 +59,9 @@ const applyUnfollowRouter = (app, diContainer) => {
     const router = express.Router();
     const userService = diContainer.resolve(DI_NAMES.userService);
 
-    router.delete('/user/id/:followingid/follow', async (req, res, next) => {
+    router.delete('/user/id/:followingId/follow', async (req, res, next) => {
         try {
-            const userId = req.params.followingid;
+            const userId = req.params.followingId;
             const followerId = res.locals.user.id;
             await userService.unfollow(followerId, userId);
             res.status(200).send();
