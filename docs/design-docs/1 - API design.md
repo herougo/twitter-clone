@@ -33,7 +33,7 @@ Questions
 
 ```
 POST /channel
-GET /channel/fullFeed
+GET /channel
 POST /message
 GET /channel/:channelid/messages
 POST /notification/:notificationid/read
