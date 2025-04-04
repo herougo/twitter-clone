@@ -9,7 +9,6 @@ const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
-const endpoint = '/message/fullFeed';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -25,7 +24,7 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe(`GET ${endpoint}/:channelId endpoint`, () => {
+describe(`GET /channel/:channelId/messages endpoint`, () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
@@ -33,11 +32,12 @@ describe(`GET ${endpoint}/:channelId endpoint`, () => {
     });
 
     const sendToEndpoint = async (param, token) => {
+        const endpoint = `/channel/${param}/messages`;
         if (!token) {
-            return await request(app).get(`${endpoint}/${param}`).send();
+            return await request(app).get(endpoint).send();
         }
         return await request(app)
-            .get(`${endpoint}/${param}`)
+            .get(endpoint)
             .set('Authorization', `Bearer ${token}`)
             .send();
     };

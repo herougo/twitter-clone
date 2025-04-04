@@ -6,10 +6,10 @@ const applyMessageRouter = (app, diContainer) => {
     const router = express.Router();
     const messageService = diContainer.resolve(DI_NAMES.messageService);
 
-    router.post('/send', async (req, res, next) => {
+    router.post('/message', async (req, res, next) => {
         try {
             const content = req.body.content;
-            const authorId = req.body.authorId;
+            const authorId = res.locals.user.id;
             const channelId = req.body.channelId;
             const sendResult = await messageService.sendMessage(
                 {content, authorId, channelId}
@@ -20,7 +20,7 @@ const applyMessageRouter = (app, diContainer) => {
         }
     });
 
-    router.get('/fullFeed/:channelId', async (req, res, next) => {
+    router.get('/channel/:channelId/messages', async (req, res, next) => {
         try {
             const channelId = req.params.channelId;
             const fullFeedResult = await messageService.fullFeed(channelId);
@@ -30,7 +30,7 @@ const applyMessageRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/message", requireLoggedIn, router);
+    app.use("/", requireLoggedIn, router);
 }
 
 module.exports = {

@@ -9,7 +9,7 @@ const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
-const endpoint = '/message/send';
+const endpoint = '/message';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -45,7 +45,6 @@ describe(`POST ${endpoint} endpoint`, () => {
     test("Success", async () => {
         const response = await sendToEndpoint({
             content: 'Hello!',
-            authorId: DB_IDS.mainUser,
             channelId: DB_IDS.mainChannel
         }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(201);
@@ -55,7 +54,6 @@ describe(`POST ${endpoint} endpoint`, () => {
     test("Invalid authorId", async () => {
         const response = await sendToEndpoint({
             content: 'Hello!',
-            authorId: 'Invalid_user',
             channelId: DB_IDS.mainChannel
         }, USER_JWT_TOKENS.missing);
         expect(response.statusCode).toBe(400);
@@ -67,7 +65,6 @@ describe(`POST ${endpoint} endpoint`, () => {
     test("Invalid channelId", async () => {
         const response = await sendToEndpoint({
             content: 'Hello!',
-            authorId: DB_IDS.mainUser,
             channelId: 'invalid_channel'
         }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
@@ -79,7 +76,6 @@ describe(`POST ${endpoint} endpoint`, () => {
     test("Author not in channel", async () => {
         const response = await sendToEndpoint({
             content: 'Can I say something?',
-            authorId: DB_IDS.anotherUser,
             channelId: DB_IDS.mainChannel
         }, USER_JWT_TOKENS.another);
         expect(response.statusCode).toBe(400);
@@ -90,7 +86,6 @@ describe(`POST ${endpoint} endpoint`, () => {
 
     test("Missing content", async () => {
         const response = await sendToEndpoint({
-            authorId: DB_IDS.mainUser,
             channelId: DB_IDS.mainChannel
         }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
@@ -99,21 +94,9 @@ describe(`POST ${endpoint} endpoint`, () => {
         );
     });
 
-    test("Missing authorId", async () => {
-        const response = await sendToEndpoint({
-            content: 'Hello!',
-            channelId: DB_IDS.mainChannel
-        }, USER_JWT_TOKENS.main);
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual(
-            "Missing authorId"
-        );
-    });
-
     test("Missing channelId", async () => {
         const response = await sendToEndpoint({
-            content: 'Hello!',
-            authorId: DB_IDS.mainUser
+            content: 'Hello!'
         }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual(
@@ -124,7 +107,6 @@ describe(`POST ${endpoint} endpoint`, () => {
     test("No JWT token", async () => {
         const response = await sendToEndpoint({
             content: 'Hello!',
-            authorId: DB_IDS.mainUser,
             channelId: DB_IDS.mainChannel
         });
         expect(response.statusCode).toBe(401);

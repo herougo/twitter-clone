@@ -35,21 +35,21 @@ Questions
 POST /channel
 GET /channel
 POST /message
-GET /channel/:channelid/messages
+GET /channel/:channelId/messages
 POST /notification/:notificationid/read
 POST /post
-POST /post/:postid/like
-POST /post/:postid/dislike
-DELETE /post/:postid/like
-DELETE /post/:postid/dislike
+POST /post/:postId/like
+POST /post/:postId/dislike
+DELETE /post/:postId/like
+DELETE /post/:postId/dislike
 GET /user/name/:username/post
-GET /user/id/:userid/post/feed
+GET /user/id/:userId/post/feed
 GET /post/:postId
 GET /user/name/:username/profile
 POST /signup
 POST /login
-POST /user/id/:followingid/follow
-DELETE /user/id/:followingid/follow
+POST /user/id/:followingId/follow
+DELETE /user/id/:followingId/follow
 ```
 
 Other Changes
