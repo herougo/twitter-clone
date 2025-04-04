@@ -5,6 +5,7 @@ const createMockLogger = require("../../../utils/mocks/mockLogger");
 const mongoose = require("mongoose");
 const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 const { DB_IDS } = require("../../../utils/database/ids");
+const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
@@ -30,61 +31,83 @@ describe("POST /post/create endpoint", () => {
         await populateDatabase(diContainer);
     });
 
+    const sendToEndpoint = async (payload, token) => {
+        if (!token) {
+            return await request(app)
+                .post('/post/create')
+                .send(payload);
+        }
+
+        return await request(app)
+            .post('/post/create')
+            .set('Authorization', `Bearer ${token}`)
+            .send(payload);
+    };
+
     test("Success (no parent)", async () => {
-        const response = await request(app).post('/post/create').send({
+        const response = await sendToEndpoint({
             authorId: DB_IDS.mainUser,
             content: "Cats are cool",
             replyToId: null
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(201);
         expect("id" in response.body).toEqual(true);
     });
 
     test("Success (has parent)", async () => {
-        const response = await request(app).post('/post/create').send({
+        const response = await sendToEndpoint({
             authorId: DB_IDS.mainUser,
             content: "Cats are cool",
             replyToId: DB_IDS.mainPost
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(201);
         expect("id" in response.body).toEqual(true);
     });
 
     test("Invalid User", async () => {
-        const response = await request(app).post('/post/create').send({
+        const response = await sendToEndpoint({
             authorId: DB_IDS.missingUser,
             content: "Cats are cool",
             replyToId: null
-        });
+        }, USER_JWT_TOKENS.missing);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Invalid author");
     });
 
     test("Invalid ReplyTo", async () => {
-        const response = await request(app).post('/post/create').send({
+        const response = await sendToEndpoint({
             authorId: DB_IDS.mainUser,
             content: "Cats are cool",
             replyToId: DB_IDS.missingPost
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Invalid parent post");
     });
 
     test("Missing authorId", async () => {
-        const response = await request(app).post('/post/create').send({
+        const response = await sendToEndpoint({
             content: 'I like cats',
             replyToId: DB_IDS.mainPost
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Missing authorId");
     });
 
     test("Missing content", async () => {
-        const response = await request(app).post('/post/create').send({
+        const response = await sendToEndpoint({
             authorId: DB_IDS.mainUser,
             replyToId: DB_IDS.mainPost
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Missing content");
+    });
+
+    test("No JWT token", async () => {
+        const response = await sendToEndpoint({
+            authorId: DB_IDS.mainUser,
+            content: "Cats are cool",
+            replyToId: null
+        });
+        expect(response.statusCode).toBe(401);
     });
 });

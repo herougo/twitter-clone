@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 const { DB_IDS } = require("../../../utils/database/ids");
 const { sanitizePaths } = require("../../../utils/sanitization");
+const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
@@ -32,16 +33,22 @@ describe("GET /post/byUsername/:username endpoint", () => {
         await populateDatabase(diContainer);
     });
 
-    const sendToEndpoint = async (param, loggedInUserId) => {
-        let fullEndpoint = `${endpoint}/${param}`;
-        if (loggedInUserId) {
-            fullEndpoint += `?loggedInUserId=${loggedInUserId}`;
+    const sendToEndpoint = async (param, token) => {
+        const fullEndpoint = `${endpoint}/${param}`;
+        if (!token) {
+            return await request(app)
+                .get(fullEndpoint)
+                .send();
         }
-        return await request(app).get(fullEndpoint).send();
+
+        return await request(app)
+            .get(fullEndpoint)
+            .set('Authorization', `Bearer ${token}`)
+            .send();
     };
 
     test("Success", async () => {
-        const response = await sendToEndpoint('username', DB_IDS.mainUser);
+        const response = await sendToEndpoint('username', USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(200);
         const sanitizedBody = response.body.map(
             post => sanitizePaths(post, ['createdDate', 'replyTo.createdDate'], '')
@@ -50,7 +57,7 @@ describe("GET /post/byUsername/:username endpoint", () => {
     });
 
     test("Success (follower)", async () => {
-        const response = await sendToEndpoint('follower', DB_IDS.mainUser);
+        const response = await sendToEndpoint('follower', USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(200);
         const sanitizedBody = response.body.map(
             post => sanitizePaths(post, ['createdDate', 'replyTo.createdDate'], '')
@@ -59,20 +66,19 @@ describe("GET /post/byUsername/:username endpoint", () => {
     });
 
     test("Invalid User", async () => {
-        const response = await sendToEndpoint('missingUser', DB_IDS.mainUser);
+        const response = await sendToEndpoint('missingUser', USER_JWT_TOKENS.missing);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetPosts: Invalid user");
     });
 
-    test("Missing loggedInUserId", async () => {
-        const response = await sendToEndpoint('username');
+    test("Missing User", async () => {
+        const response = await sendToEndpoint('', USER_JWT_TOKENS.missing);
         expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("GetPosts: Missing loggedInUserId");
+        expect(response.body.errors.message).toEqual("GetPosts: Invalid user");
     });
 
-    test("Missing User", async () => {
-        const response = await sendToEndpoint('');
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("GetPost: Missing loggedInUserId");
+    test("No JWT token", async () => {
+        const response = await sendToEndpoint('username');
+        expect(response.statusCode).toBe(401);
     });
 });

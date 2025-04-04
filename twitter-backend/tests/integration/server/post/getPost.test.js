@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 const { DB_IDS } = require("../../../utils/database/ids");
 const { sanitizePaths } = require("../../../utils/sanitization");
+const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
@@ -32,12 +33,18 @@ describe("GET /post/:postId endpoint", () => {
         await populateDatabase(diContainer);
     });
 
-    const sendToEndpoint = async (param, loggedInUserId) => {
-        let fullEndpoint = `${endpoint}/${param}`;
-        if (loggedInUserId) {
-            fullEndpoint += `?loggedInUserId=${loggedInUserId}`;
+    const sendToEndpoint = async (param, token) => {
+        const fullEndpoint = `${endpoint}/${param}`;
+        if (!token) {
+            return await request(app)
+                .get(fullEndpoint)
+                .send();
         }
-        return await request(app).get(fullEndpoint).send();
+
+        return await request(app)
+            .get(fullEndpoint)
+            .set('Authorization', `Bearer ${token}`)
+            .send();
     };
 
     const sanitizePost = (post) => {
@@ -56,33 +63,32 @@ describe("GET /post/:postId endpoint", () => {
     };
 
     test("Success (with reply)", async () => {
-        const response = await sendToEndpoint(DB_IDS.mainPost, DB_IDS.mainUser);
+        const response = await sendToEndpoint(DB_IDS.mainPost, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(200);
         const sanitizedBody = sanitizeBody(response.body);
         expect(sanitizedBody).toMatchSnapshot();
     });
 
     test("Success (without reply)", async () => {
-        const response = await sendToEndpoint(DB_IDS.mainReply, DB_IDS.mainUser);
+        const response = await sendToEndpoint(DB_IDS.mainReply, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(200);
         const sanitizedBody = sanitizeBody(response.body);
         expect(sanitizedBody).toMatchSnapshot();
     });
 
     test("Invalid PostId", async () => {
-        const response = await sendToEndpoint(DB_IDS.missingPost, DB_IDS.mainUser);
+        const response = await sendToEndpoint(DB_IDS.missingPost, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetPost: Invalid postId");
     });
 
-    test("Missing loggedInUserId", async () => {
-        const response = await sendToEndpoint(DB_IDS.mainPost);
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("GetPost: Missing loggedInUserId");
+    test("Missing postId", async () => {
+        const response = await sendToEndpoint('', USER_JWT_TOKENS.main);
+        expect(response.statusCode).toBe(404);
     });
 
-    test("Missing postId", async () => {
-        const response = await sendToEndpoint('');
-        expect(response.statusCode).toBe(404);
+    test("No JWT token", async () => {
+        const response = await sendToEndpoint(DB_IDS.mainReply);
+        expect(response.statusCode).toBe(401);
     });
 });

@@ -5,6 +5,7 @@ const createMockLogger = require("../../../utils/mocks/mockLogger");
 const mongoose = require("mongoose");
 const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 const { DB_IDS } = require("../../../utils/database/ids");
+const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
@@ -32,64 +33,120 @@ describe("POST /post/like endpoint", () => {
         await populateDatabase(diContainer);
     });
 
+    const sendToEndpoint = async (endpoint, payload, token) => {
+        if (!token) {
+            return await request(app)
+                .post(endpoint)
+                .send(payload);
+        }
+
+        return await request(app)
+            .post(endpoint)
+            .set('Authorization', `Bearer ${token}`)
+            .send(payload);
+    };
+
     test("Success (no previous engagement)", async () => {
-        const response = await request(app).post(endPoint).send({
-            userFromId: DB_IDS.mainUser,
-            postId: DB_IDS.mainPost
-        });
+        const response = await sendToEndpoint(
+            endPoint,
+            {
+                userFromId: DB_IDS.mainUser,
+                postId: DB_IDS.mainPost
+            },
+            USER_JWT_TOKENS.main
+        );
         expect(response.statusCode).toBe(200);
     });
 
     test("Success (previous engagement)", async () => {
-        const response = await request(app).post(otherEndPoint).send({
-            userFromId: DB_IDS.mainUser,
-            postId: DB_IDS.mainPost
-        });
+        const response = await sendToEndpoint(
+            otherEndPoint,
+            {
+                userFromId: DB_IDS.mainUser,
+                postId: DB_IDS.mainPost
+            },
+            USER_JWT_TOKENS.main
+        );
         expect(response.statusCode).toBe(200);
-        const response2 = await request(app).post(endPoint).send({
-            userFromId: DB_IDS.mainUser,
-            postId: DB_IDS.mainPost
-        });
+        const response2 = await sendToEndpoint(
+            endPoint,
+            {
+                userFromId: DB_IDS.mainUser,
+                postId: DB_IDS.mainPost
+            },
+            USER_JWT_TOKENS.main
+        );
         expect(response2.statusCode).toBe(200);
         // TODO: check database for notifications and correct like/dislike data
     });
 
     test("Invalid User", async () => {
-        const response = await request(app).post(endPoint).send({
-            userFromId: DB_IDS.missingUser,
-            postId: DB_IDS.mainPost
-        });
+        const response = await sendToEndpoint(
+            endPoint,
+            {
+                userFromId: DB_IDS.missingUser,
+                postId: DB_IDS.mainPost
+            },
+            USER_JWT_TOKENS.missing
+        );
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Invalid userFromId");
     });
 
     test("Already liked", async () => {
-        const response = await request(app).post(endPoint).send({
-            userFromId: DB_IDS.mainUser,
-            postId: DB_IDS.mainPost
-        });
+        const response = await sendToEndpoint(
+            endPoint,
+            {
+                userFromId: DB_IDS.mainUser,
+                postId: DB_IDS.mainPost
+            },
+            USER_JWT_TOKENS.main
+        );
         expect(response.statusCode).toBe(200);
-        const response2 = await request(app).post(endPoint).send({
-            userFromId: DB_IDS.mainUser,
-            postId: DB_IDS.mainPost
-        });
+        const response2 = await sendToEndpoint(
+            endPoint,
+            {
+                userFromId: DB_IDS.mainUser,
+                postId: DB_IDS.mainPost
+            },
+            USER_JWT_TOKENS.main
+        );
         expect(response2.statusCode).toBe(400);
         expect(response2.body.errors.message).toEqual("Tried to like a post which is already liked.");
     });
 
     test("Missing userFromId", async () => {
-        const response = await request(app).post(endPoint).send({
-            postId: DB_IDS.mainPost
-        });
+        const response = await sendToEndpoint(
+            endPoint,
+            {
+                postId: DB_IDS.mainPost
+            },
+            USER_JWT_TOKENS.main
+        );
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Missing userFromId");
     });
 
     test("Missing postId", async () => {
-        const response = await request(app).post(endPoint).send({
-            userFromId: DB_IDS.mainUser
-        });
+        const response = await sendToEndpoint(
+            endPoint,
+            {
+                userFromId: DB_IDS.mainUser
+            },
+            USER_JWT_TOKENS.main
+        );
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Missing postId");
+    });
+
+    test("No JWT token", async () => {
+        const response = await sendToEndpoint(
+            endPoint,
+            {
+                userFromId: DB_IDS.mainUser,
+                postId: DB_IDS.mainPost
+            }
+        );
+        expect(response.statusCode).toBe(401);
     });
 });
