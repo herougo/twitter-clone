@@ -77,7 +77,7 @@ const applyGetProfileRouter = (app, diContainer) => {
     const router = express.Router();
     const userService = diContainer.resolve(DI_NAMES.userService);
 
-    router.get('/:username', async (req, res, next) => {
+    router.get('/user/name/:username/profile', async (req, res, next) => {
         try {
             const username = req.params.username;
             const loggedInUserId = res.locals.user.id;
@@ -88,7 +88,7 @@ const applyGetProfileRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/profile", requireLoggedIn, router);
+    app.use("/", requireLoggedIn, router);
 }
 
 const applyUserRouters = (app, diContainer) => {

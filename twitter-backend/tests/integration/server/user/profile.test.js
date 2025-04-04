@@ -8,7 +8,6 @@ const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
-const endpoint = '/profile';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -35,7 +34,7 @@ describe("GET /profile/:username endpoint", () => {
     });
 
     const sendToEndpoint = async (param, token) => {
-        let fullEndpoint = `${endpoint}/${param}`;
+        let fullEndpoint = `/user/name/${param}/profile/`;
         if (!token) {
             return await request(app).get(fullEndpoint).send();
         }
