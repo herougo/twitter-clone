@@ -5,6 +5,7 @@ const createMockLogger = require("../../../utils/mocks/mockLogger");
 const mongoose = require("mongoose");
 const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 const { DB_IDS } = require("../../../utils/database/ids");
+const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
@@ -31,12 +32,18 @@ describe(`GET ${endpoint}/:channelId endpoint`, () => {
         await populateDatabase(diContainer);
     });
 
-    const sendToEndpoint = async (param) => {
-        return await request(app).get(`${endpoint}/${param}`).send();
+    const sendToEndpoint = async (param, token) => {
+        if (!token) {
+            return await request(app).get(`${endpoint}/${param}`).send();
+        }
+        return await request(app)
+            .get(`${endpoint}/${param}`)
+            .set('Authorization', `Bearer ${token}`)
+            .send();
     };
 
     test("Success", async () => {
-        const response = await sendToEndpoint(DB_IDS.mainChannel);
+        const response = await sendToEndpoint(DB_IDS.mainChannel, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(200);
         expect("messages" in response.body).toEqual(true);
         expect(response.body.messages.length).toEqual(1);
@@ -45,13 +52,18 @@ describe(`GET ${endpoint}/:channelId endpoint`, () => {
     });
 
     test("Invalid channelId", async () => {
-        const response = await sendToEndpoint("invalid_user");
+        const response = await sendToEndpoint("invalid_channel_id", USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Type cast failed for message");
     });
 
     test("Missing channelId", async () => {
-        const response = await sendToEndpoint('');
+        const response = await sendToEndpoint('', USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(404);
+    });
+
+    test("No JWT token", async () => {
+        const response = await sendToEndpoint(DB_IDS.mainChannel);
+        expect(response.statusCode).toBe(401);
     });
 });

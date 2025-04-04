@@ -5,6 +5,7 @@ const createMockLogger = require("../../../utils/mocks/mockLogger");
 const mongoose = require("mongoose");
 const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 const { DB_IDS } = require("../../../utils/database/ids");
+const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
@@ -31,22 +32,32 @@ describe(`POST ${endpoint} endpoint`, () => {
         await populateDatabase(diContainer);
     });
 
+    const sendToEndpoint = async (payload, token) => {
+        if (!token) {
+            return await request(app).post(endpoint).send(payload);
+        }
+        return await request(app)
+            .post(endpoint)
+            .set('Authorization', `Bearer ${token}`)
+            .send(payload);
+    };
+
     test("Success", async () => {
-        const response = await request(app).post(endpoint).send({
+        const response = await sendToEndpoint({
             content: 'Hello!',
             authorId: DB_IDS.mainUser,
             channelId: DB_IDS.mainChannel
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(201);
         expect("id" in response.body).toEqual(true);
     });
 
     test("Invalid authorId", async () => {
-        const response = await request(app).post(endpoint).send({
+        const response = await sendToEndpoint({
             content: 'Hello!',
             authorId: 'Invalid_user',
             channelId: DB_IDS.mainChannel
-        });
+        }, USER_JWT_TOKENS.missing);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual(
             "Author not in channel"
@@ -54,11 +65,11 @@ describe(`POST ${endpoint} endpoint`, () => {
     });
 
     test("Invalid channelId", async () => {
-        const response = await request(app).post(endpoint).send({
+        const response = await sendToEndpoint({
             content: 'Hello!',
             authorId: DB_IDS.mainUser,
             channelId: 'invalid_channel'
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual(
             "Type cast failed for channel"
@@ -66,11 +77,11 @@ describe(`POST ${endpoint} endpoint`, () => {
     });
 
     test("Author not in channel", async () => {
-        const response = await request(app).post(endpoint).send({
+        const response = await sendToEndpoint({
             content: 'Can I say something?',
             authorId: DB_IDS.anotherUser,
             channelId: DB_IDS.mainChannel
-        });
+        }, USER_JWT_TOKENS.another);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual(
             "Author not in channel"
@@ -78,10 +89,10 @@ describe(`POST ${endpoint} endpoint`, () => {
     });
 
     test("Missing content", async () => {
-        const response = await request(app).post(endpoint).send({
+        const response = await sendToEndpoint({
             authorId: DB_IDS.mainUser,
             channelId: DB_IDS.mainChannel
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual(
             "Missing content"
@@ -89,10 +100,10 @@ describe(`POST ${endpoint} endpoint`, () => {
     });
 
     test("Missing authorId", async () => {
-        const response = await request(app).post(endpoint).send({
+        const response = await sendToEndpoint({
             content: 'Hello!',
             channelId: DB_IDS.mainChannel
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual(
             "Missing authorId"
@@ -100,13 +111,22 @@ describe(`POST ${endpoint} endpoint`, () => {
     });
 
     test("Missing channelId", async () => {
-        const response = await request(app).post(endpoint).send({
+        const response = await sendToEndpoint({
             content: 'Hello!',
             authorId: DB_IDS.mainUser
-        });
+        }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual(
             "Missing channelId"
         );
+    });
+
+    test("No JWT token", async () => {
+        const response = await sendToEndpoint({
+            content: 'Hello!',
+            authorId: DB_IDS.mainUser,
+            channelId: DB_IDS.mainChannel
+        });
+        expect(response.statusCode).toBe(401);
     });
 });
