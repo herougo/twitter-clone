@@ -41,10 +41,10 @@ const applyFollowRouter = (app, diContainer) => {
     const router = express.Router();
     const userService = diContainer.resolve(DI_NAMES.userService);
 
-    router.post('/', async (req, res, next) => {
+    router.post('/user/id/:followingid/follow', async (req, res, next) => {
         try {
-            const userId = req.body.userId;
-            const followerId = req.body.followerId;
+            const userId = req.params.followingid;
+            const followerId = res.locals.user.id;
             await userService.follow(followerId, userId);
             res.status(200).send();
         } catch (e) {
@@ -52,17 +52,17 @@ const applyFollowRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/follow", requireLoggedIn, router);
+    app.use("/", requireLoggedIn, router);
 }
 
 const applyUnfollowRouter = (app, diContainer) => {
     const router = express.Router();
     const userService = diContainer.resolve(DI_NAMES.userService);
 
-    router.post('/', async (req, res, next) => {
+    router.delete('/user/id/:followingid/follow', async (req, res, next) => {
         try {
-            const userId = req.body.userId;
-            const followerId = req.body.followerId;
+            const userId = req.params.followingid;
+            const followerId = res.locals.user.id;
             await userService.unfollow(followerId, userId);
             res.status(200).send();
         } catch (e) {
@@ -70,7 +70,7 @@ const applyUnfollowRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/unfollow", requireLoggedIn, router);
+    app.use("/", requireLoggedIn, router);
 }
 
 const applyGetProfileRouter = (app, diContainer) => {

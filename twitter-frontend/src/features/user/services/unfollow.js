@@ -1,6 +1,5 @@
-const unfollow = async ({axiosFunction, payload}) => {
-    const {followerId, userId} = payload;
-    return await axiosFunction('post', {followerId, userId}, '/unfollow');
+const unfollow = async ({axiosFunction, userId}) => {
+    return await axiosFunction('delete', {}, `/user/id/${userId}/follow`);
 }
 
 export default unfollow;

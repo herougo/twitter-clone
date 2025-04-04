@@ -34,59 +34,54 @@ describe("POST /unfollow endpoint", () => {
         await populateDatabase(diContainer);
     });
 
-    const sendToEndpoint = async (payload, token) => {
+    const sendToEndpoint = async (userId, token) => {
         if (!token) {
             return await request(app)
-                .post('/unfollow')
-                .send(payload);
+                .delete(`/user/id/${userId}/follow`)
+                .send();
         }
 
         return await request(app)
-            .post('/unfollow')
+            .delete(`/user/id/${userId}/follow`)
             .set('Authorization', `Bearer ${token}`)
-            .send(payload);
+            .send();
     };
 
     test("Success", async () => {
-        const response = await sendToEndpoint({
-            followerId: DB_IDS.followerUser,
-            userId: DB_IDS.mainUser
-        }, USER_JWT_TOKENS.follower);
+        const response = await sendToEndpoint(
+            DB_IDS.mainUser, USER_JWT_TOKENS.follower
+        );
         expect(response.statusCode).toBe(200);
     });
 
     test("User not in DB", async () => {
-        const response = await sendToEndpoint({
-            followerId: DB_IDS.mainUser,
-            userId: DB_IDS.missingUser,
-        }, USER_JWT_TOKENS.main);
+        const response = await sendToEndpoint(
+            DB_IDS.missingUser, USER_JWT_TOKENS.main
+        );
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Unfollow: Invalid user");
     });
 
     test("Follower not in DB", async () => {
-        const response = await sendToEndpoint({
-            followerId: DB_IDS.missingUser,
-            userId: DB_IDS.mainUser,
-        }, USER_JWT_TOKENS.missing);
+        const response = await sendToEndpoint(
+            DB_IDS.mainUser, USER_JWT_TOKENS.missing
+        );
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Unfollow: Invalid follower");
     });
 
     test("Not already following", async () => {
-        const response = await sendToEndpoint({
-            followerId: DB_IDS.mainUser,
-            userId: DB_IDS.followerUser
-        }, USER_JWT_TOKENS.main);
+        const response = await sendToEndpoint(
+            DB_IDS.followerUser, USER_JWT_TOKENS.main
+        );
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Unfollow: Not already following");
     });
 
     test("No JWT token", async () => {
-        const response = await sendToEndpoint({
-            followerId: DB_IDS.followerUser,
-            userId: DB_IDS.mainUser
-        });
+        const response = await sendToEndpoint(
+            DB_IDS.mainUser
+        );
         expect(response.statusCode).toBe(401);
     });
 });

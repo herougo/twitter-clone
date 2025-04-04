@@ -20,13 +20,13 @@ const ProfilePageFollowButton = ({profileData}) => {
                 if (profileData.value.isFollowing) {
                     await unfollow({
                         axiosFunction: axiosWithHeader,
-                        payload: {followerId: user.id, userId: profileData.value.id}
+                        userId: profileData.value.id
                     });
                     newValue.numFollowers -= 1;
                 } else {
                     await follow({
                         axiosFunction: axiosWithHeader,
-                        payload: {followerId: user.id, userId: profileData.value.id}
+                        userId: profileData.value.id
                     });
                     newValue.numFollowers += 1;
                 }
