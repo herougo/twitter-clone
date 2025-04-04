@@ -8,6 +8,7 @@
     "test": "jest --runInBand --testPathPattern=tests",
     "test:unit": "jest --runInBand --testPathPattern=tests/unit",
     "test:integration": "jest --runInBand --testPathPattern=tests/integration",
+    "test:suite": "jest tests/integration/server/user/follow.test.js --runInBand",
     "test:one": "jest tests/integration/server/user/follow.test.js --runInBand -t Success"
   },
   "author": "",

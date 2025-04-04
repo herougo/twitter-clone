@@ -35,6 +35,12 @@ describe("POST /follow endpoint", () => {
     });
 
     const sendToEndpoint = async (payload, token) => {
+        if (!token) {
+            return await request(app)
+                .post('/follow')
+                .send(payload);
+        }
+
         return await request(app)
             .post('/follow')
             .set('Authorization', `Bearer ${token}`)
@@ -74,5 +80,13 @@ describe("POST /follow endpoint", () => {
         }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Follow: Already following");
+    });
+
+    test("No JWT token", async () => {
+        const response = await sendToEndpoint({
+            followerId: DB_IDS.mainUser,
+            userId: DB_IDS.followerUser
+        });
+        expect(response.statusCode).toBe(401);
     });
 });
