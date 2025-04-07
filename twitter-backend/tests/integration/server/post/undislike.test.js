@@ -9,8 +9,6 @@ const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
-const unEndPoint = '/post/undislike'
-const endPoint = '/post/dislike';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -26,42 +24,40 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("POST /post/undislike endpoint", () => {
+describe("DELETE /post/:postId/dislike endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
         await populateDatabase(diContainer);
     });
 
-    const sendToEndpoint = async (endpoint, payload, token) => {
-        if (!token) {
-            return await request(app)
-                .post(endpoint)
-                .send(payload);
+    const sendToEndpoint = async (create, postId, token) => {
+        const endpoint = `/post/${postId}/dislike`;
+        let result = request(app);
+
+        if (create) {
+            result = result.post(endpoint);
+        } else {
+            result = result.delete(endpoint);
         }
 
-        return await request(app)
-            .post(endpoint)
-            .set('Authorization', `Bearer ${token}`)
-            .send(payload);
+        if (token) {
+            result = result.set('Authorization', `Bearer ${token}`);
+        }
+
+        return await result.send();
     };
 
     test("Success", async () => {
         const response = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            },
+            true,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.main
         );
         expect(response.statusCode).toBe(200);
         const response2 = await sendToEndpoint(
-            unEndPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            },
+            false,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.main
         );
         expect(response2.statusCode).toBe(200);
@@ -70,11 +66,8 @@ describe("POST /post/undislike endpoint", () => {
 
     test("No engagement", async () => {
         const response = await sendToEndpoint(
-            unEndPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            },
+            false,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.main
         );
         expect(response.statusCode).toBe(400);
@@ -83,48 +76,18 @@ describe("POST /post/undislike endpoint", () => {
 
     test("Invalid User", async () => {
         const response = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.missingUser,
-                postId: DB_IDS.mainPost
-            },
+            false,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.missing
         );
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("Invalid userFromId");
     });
 
-    test("Missing userFromId", async () => {
-        const response = await sendToEndpoint(
-            endPoint,
-            {
-                postId: DB_IDS.mainPost
-            },
-            USER_JWT_TOKENS.missing
-        );
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("Missing userFromId");
-    });
-
-    test("Missing postId", async () => {
-        const response = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.mainUser
-            },
-            USER_JWT_TOKENS.main
-        );
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("Missing postId");
-    });
-
     test("No JWT token", async () => {
         const response = await sendToEndpoint(
-            unEndPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            }
+            false,
+            DB_IDS.mainPost
         );
         expect(response.statusCode).toBe(401);
     });

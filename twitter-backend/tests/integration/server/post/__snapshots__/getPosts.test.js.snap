@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GET /post/byUsername/:username endpoint Success (follower) 1`] = `
+exports[`GET /user/name/:username/post endpoint Success (follower) 1`] = `
 [
   {
     "author": {
@@ -26,7 +26,7 @@ exports[`GET /post/byUsername/:username endpoint Success (follower) 1`] = `
 ]
 `;
 
-exports[`GET /post/byUsername/:username endpoint Success 1`] = `
+exports[`GET /user/name/:username/post endpoint Success 1`] = `
 [
   {
     "author": {

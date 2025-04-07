@@ -13,7 +13,6 @@ const CreatePost = ({replyToId, onPostSuccess}) => {
         const response = await createPost({
             axiosFunction: axiosWithHeader,
             payload: {
-                authorId: user.id,
                 content,
                 replyToId: replyToId || null
             }

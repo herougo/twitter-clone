@@ -1,6 +1,5 @@
-const undislike = async ({axiosFunction, payload}) => {
-    const {userFromId, postId} = payload;
-    return await axiosFunction('post', {userFromId, postId}, '/post/undislike');
+const undislike = async ({axiosFunction, postId}) => {
+    return await axiosFunction('delete', {}, `/post/${postId}/dislike`);
 }
 
 export default undislike;

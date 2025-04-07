@@ -10,7 +10,6 @@ const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
-const endpoint = '/post/byUsername';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -26,7 +25,7 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("GET /post/byUsername/:username endpoint", () => {
+describe("GET /user/name/:username/post endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
@@ -34,7 +33,7 @@ describe("GET /post/byUsername/:username endpoint", () => {
     });
 
     const sendToEndpoint = async (param, token) => {
-        const fullEndpoint = `${endpoint}/${param}`;
+        const fullEndpoint = `/user/name/${param}/post`;
         if (!token) {
             return await request(app)
                 .get(fullEndpoint)
@@ -67,12 +66,6 @@ describe("GET /post/byUsername/:username endpoint", () => {
 
     test("Invalid User", async () => {
         const response = await sendToEndpoint('missingUser', USER_JWT_TOKENS.missing);
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("GetPosts: Invalid user");
-    });
-
-    test("Missing User", async () => {
-        const response = await sendToEndpoint('', USER_JWT_TOKENS.missing);
         expect(response.statusCode).toBe(400);
         expect(response.body.errors.message).toEqual("GetPosts: Invalid user");
     });

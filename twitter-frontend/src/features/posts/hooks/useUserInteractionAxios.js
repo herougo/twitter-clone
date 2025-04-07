@@ -35,11 +35,7 @@ const routeChangeOnDislike = (userInteraction) => {
 }
 
 const performLike = async ({axiosFunction, userFromId, post, setPost}) => {
-    const payload = {
-        userFromId,
-        postId: post.id
-    }
-    await like({axiosFunction, payload});
+    await like({axiosFunction, postId: post.id});
 
     const newPost = JSON.parse(JSON.stringify(post));
     newPost.numLikes += 1;
@@ -48,11 +44,7 @@ const performLike = async ({axiosFunction, userFromId, post, setPost}) => {
 }
 
 const performUnlike = async ({axiosFunction, userFromId, post, setPost}) => {
-    const payload = {
-        userFromId,
-        postId: post.id
-    }
-    await unlike({axiosFunction, payload});
+    await unlike({axiosFunction, postId: post.id});
 
     const newPost = JSON.parse(JSON.stringify(post));
     newPost.numLikes -= 1;
@@ -61,11 +53,7 @@ const performUnlike = async ({axiosFunction, userFromId, post, setPost}) => {
 }
 
 const performDislike = async ({axiosFunction, userFromId, post, setPost}) => {
-    const payload = {
-        userFromId,
-        postId: post.id
-    }
-    await dislike({axiosFunction, payload});
+    await dislike({axiosFunction, postId: post.id});
 
     const newPost = JSON.parse(JSON.stringify(post));
     newPost.numDislikes += 1;
@@ -74,11 +62,7 @@ const performDislike = async ({axiosFunction, userFromId, post, setPost}) => {
 }
 
 const performUndislike = async ({axiosFunction, userFromId, post, setPost}) => {
-    const payload = {
-        userFromId,
-        postId: post.id
-    }
-    await undislike({axiosFunction, payload});
+    await undislike({axiosFunction, postId: post.id});
 
     const newPost = JSON.parse(JSON.stringify(post));
     newPost.numDislikes -= 1;

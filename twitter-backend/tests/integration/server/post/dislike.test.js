@@ -9,8 +9,8 @@ const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
 
 let app;
 let diContainer;
-const endPoint = '/post/dislike';
-const otherEndPoint = '/post/like';
+const endPointSuffix = 'dislike';
+const otherEndPointSuffix = 'like';
 
 // run once before all suites in the file
 beforeAll(async () => {
@@ -26,33 +26,31 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("POST /post/dislike endpoint", () => {
+describe("POST /post/:postId/dislike endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
         await populateDatabase(diContainer);
     });
 
-    const sendToEndpoint = async (endpoint, payload, token) => {
+    const sendToEndpoint = async (endpointSuffix, postId, token) => {
+        const endpoint = `/post/${postId}/${endpointSuffix}`;
         if (!token) {
             return await request(app)
                 .post(endpoint)
-                .send(payload);
+                .send();
         }
 
         return await request(app)
             .post(endpoint)
             .set('Authorization', `Bearer ${token}`)
-            .send(payload);
+            .send();
     };
 
     test("Success (no previous engagement)", async () => {
         const response = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            },
+            endPointSuffix,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.main
         );
         expect(response.statusCode).toBe(200);
@@ -60,20 +58,14 @@ describe("POST /post/dislike endpoint", () => {
 
     test("Success (previous engagement)", async () => {
         const response = await sendToEndpoint(
-            otherEndPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            },
+            otherEndPointSuffix,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.main
         );
         expect(response.statusCode).toBe(200);
         const response2 = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            },
+            endPointSuffix,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.main
         );
         expect(response2.statusCode).toBe(200);
@@ -82,11 +74,8 @@ describe("POST /post/dislike endpoint", () => {
 
     test("Invalid User", async () => {
         const response = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.missingUser,
-                postId: DB_IDS.mainPost
-            },
+            endPointSuffix,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.missing
         );
         expect(response.statusCode).toBe(400);
@@ -95,57 +84,24 @@ describe("POST /post/dislike endpoint", () => {
 
     test("Already disliked", async () => {
         const response = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            },
+            endPointSuffix,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.main
         );
         expect(response.statusCode).toBe(200);
         const response2 = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            },
+            endPointSuffix,
+            DB_IDS.mainPost,
             USER_JWT_TOKENS.main
         );
         expect(response2.statusCode).toBe(400);
         expect(response2.body.errors.message).toEqual("Tried to dislike a post which is already disliked.");
     });
 
-    test("Missing userFromId", async () => {
-        const response = await sendToEndpoint(
-            endPoint,
-            {
-                postId: DB_IDS.mainPost
-            },
-            USER_JWT_TOKENS.main
-        );
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("Missing userFromId");
-    });
-
-    test("Missing postId", async () => {
-        const response = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.mainUser
-            },
-            USER_JWT_TOKENS.main
-        );
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("Missing postId");
-    });
-
     test("No JWT token", async () => {
         const response = await sendToEndpoint(
-            endPoint,
-            {
-                userFromId: DB_IDS.mainUser,
-                postId: DB_IDS.mainPost
-            }
+            endPointSuffix,
+            DB_IDS.mainPost,
         );
         expect(response.statusCode).toBe(401);
     });

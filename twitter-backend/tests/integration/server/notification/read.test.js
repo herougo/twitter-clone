@@ -25,7 +25,7 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("POST /notification/markAsRead endpoint", () => {
+describe("POST /notification/:notificationId/read endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);

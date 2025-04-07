@@ -24,7 +24,7 @@ afterAll(async () => {
     await mongoose.connection.close(); // neccessary to avoid a jest error
 });
 
-describe("POST /post/create endpoint", () => {
+describe("POST /post endpoint", () => {
     // run before each "test"
     beforeEach(async () => {
         await clearDatabase(diContainer);
@@ -34,19 +34,18 @@ describe("POST /post/create endpoint", () => {
     const sendToEndpoint = async (payload, token) => {
         if (!token) {
             return await request(app)
-                .post('/post/create')
+                .post('/post')
                 .send(payload);
         }
 
         return await request(app)
-            .post('/post/create')
+            .post('/post')
             .set('Authorization', `Bearer ${token}`)
             .send(payload);
     };
 
     test("Success (no parent)", async () => {
         const response = await sendToEndpoint({
-            authorId: DB_IDS.mainUser,
             content: "Cats are cool",
             replyToId: null
         }, USER_JWT_TOKENS.main);
@@ -56,7 +55,6 @@ describe("POST /post/create endpoint", () => {
 
     test("Success (has parent)", async () => {
         const response = await sendToEndpoint({
-            authorId: DB_IDS.mainUser,
             content: "Cats are cool",
             replyToId: DB_IDS.mainPost
         }, USER_JWT_TOKENS.main);
@@ -66,7 +64,6 @@ describe("POST /post/create endpoint", () => {
 
     test("Invalid User", async () => {
         const response = await sendToEndpoint({
-            authorId: DB_IDS.missingUser,
             content: "Cats are cool",
             replyToId: null
         }, USER_JWT_TOKENS.missing);
@@ -76,7 +73,6 @@ describe("POST /post/create endpoint", () => {
 
     test("Invalid ReplyTo", async () => {
         const response = await sendToEndpoint({
-            authorId: DB_IDS.mainUser,
             content: "Cats are cool",
             replyToId: DB_IDS.missingPost
         }, USER_JWT_TOKENS.main);
@@ -84,18 +80,8 @@ describe("POST /post/create endpoint", () => {
         expect(response.body.errors.message).toEqual("Invalid parent post");
     });
 
-    test("Missing authorId", async () => {
-        const response = await sendToEndpoint({
-            content: 'I like cats',
-            replyToId: DB_IDS.mainPost
-        }, USER_JWT_TOKENS.main);
-        expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("Missing authorId");
-    });
-
     test("Missing content", async () => {
         const response = await sendToEndpoint({
-            authorId: DB_IDS.mainUser,
             replyToId: DB_IDS.mainPost
         }, USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
@@ -104,7 +90,6 @@ describe("POST /post/create endpoint", () => {
 
     test("No JWT token", async () => {
         const response = await sendToEndpoint({
-            authorId: DB_IDS.mainUser,
             content: "Cats are cool",
             replyToId: null
         });

@@ -8,7 +8,7 @@ const usePostsAxios = (username) => {
     const { loading, error, value, setValue } = useAsyncAxiosWrapper(
         'get',
         {},
-        `/post/byUsername/${username}`,
+        `/user/name/${username}/post`,
         null,
         [username, user]
     );

@@ -6,9 +6,9 @@ const applyPostRouter = (app, diContainer) => {
     const router = express.Router();
     const postService = diContainer.resolve(DI_NAMES.postService);
 
-    router.post('/create', async (req, res, next) => {
+    router.post('/post', async (req, res, next) => {
         try {
-            const authorId = req.body.authorId;
+            const authorId = res.locals.user.id;
             const content = req.body.content;
             const replyToId = req.body.replyToId;
             const createResult = await postService.createPost({authorId, content, replyToId});
@@ -18,51 +18,51 @@ const applyPostRouter = (app, diContainer) => {
         }
     });
 
-    router.post('/like', async (req, res, next) => {
+    router.post('/post/:postId/like', async (req, res, next) => {
         try {
-            const userFromId = req.body.userFromId;
-            const postId = req.body.postId;
-            await postService.like(userFromId, postId);
+            const loggedInUserId = res.locals.user.id;
+            const postId = req.params.postId;
+            await postService.like(loggedInUserId, postId);
             res.status(200).send();
         } catch (e) {
             return next(e);
         }
     });
 
-    router.post('/dislike', async (req, res, next) => {
+    router.post('/post/:postId/dislike', async (req, res, next) => {
         try {
-            const userFromId = req.body.userFromId;
-            const postId = req.body.postId;
-            await postService.dislike(userFromId, postId);
+            const loggedInUserId = res.locals.user.id;
+            const postId = req.params.postId;
+            await postService.dislike(loggedInUserId, postId);
             res.status(200).send();
         } catch (e) {
             return next(e);
         }
     });
 
-    router.post('/unlike', async (req, res, next) => {
+    router.delete('/post/:postId/like', async (req, res, next) => {
         try {
-            const userFromId = req.body.userFromId;
-            const postId = req.body.postId;
-            await postService.unlike(userFromId, postId);
+            const loggedInUserId = res.locals.user.id;
+            const postId = req.params.postId;
+            await postService.unlike(loggedInUserId, postId);
             res.status(200).send();
         } catch (e) {
             return next(e);
         }
     });
 
-    router.post('/undislike', async (req, res, next) => {
+    router.delete('/post/:postId/dislike', async (req, res, next) => {
         try {
-            const userFromId = req.body.userFromId;
-            const postId = req.body.postId;
-            await postService.undislike(userFromId, postId);
+            const loggedInUserId = res.locals.user.id;
+            const postId = req.params.postId;
+            await postService.undislike(loggedInUserId, postId);
             res.status(200).send();
         } catch (e) {
             return next(e);
         }
     });
 
-    router.get('/byUsername/:username', async (req, res, next) => {
+    router.get('/user/name/:username/post', async (req, res, next) => {
         try {
             const username = req.params.username;
             const loggedInUserId = res.locals.user.id;
@@ -73,7 +73,7 @@ const applyPostRouter = (app, diContainer) => {
         }
     });
 
-    router.get('/:postId', async (req, res, next) => {
+    router.get('/post/:postId', async (req, res, next) => {
         try {
             const postId = req.params.postId;
             const loggedInUserId = res.locals.user.id;
@@ -84,7 +84,7 @@ const applyPostRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/post", requireLoggedIn, router);
+    app.use("/", requireLoggedIn, router);
 }
 
 module.exports = {
