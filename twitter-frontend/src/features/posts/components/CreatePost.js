@@ -18,6 +18,7 @@ const CreatePost = ({replyToId, onPostSuccess}) => {
             }
         });
         const newPost = response.data;
+        setContent('');
         if (onPostSuccess) {
             onPostSuccess(newPost);
         }
