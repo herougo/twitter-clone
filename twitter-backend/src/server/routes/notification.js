@@ -6,9 +6,9 @@ const applyNotificationRouter = (app, diContainer) => {
     const router = express.Router();
     const notificationService = diContainer.resolve(DI_NAMES.notificationService);
 
-    router.post('/markAsRead', async (req, res, next) => {
+    router.post('/notification/:notificationId/read', async (req, res, next) => {
         try {
-            const notificationId = req.body.notificationId;
+            const notificationId = req.params.notificationId;
             await notificationService.markAsRead(notificationId);
             res.status(200).send();
         } catch (e) {
@@ -16,7 +16,7 @@ const applyNotificationRouter = (app, diContainer) => {
         }
     });
 
-    app.use("/notification", requireLoggedIn, router);
+    app.use("/", requireLoggedIn, router);
 }
 
 module.exports = {
