@@ -73,6 +73,16 @@ const applyPostRouter = (app, diContainer) => {
         }
     });
 
+    router.get('/post/feed', async (req, res, next) => {
+        try {
+            const loggedInUserId = res.locals.user.id;
+            let result = await postService.getFullFeed(loggedInUserId);
+            res.status(200).json(result);
+        } catch (e) {
+            return next(e);
+        }
+    });
+
     router.get('/post/:postId', async (req, res, next) => {
         try {
             const postId = req.params.postId;

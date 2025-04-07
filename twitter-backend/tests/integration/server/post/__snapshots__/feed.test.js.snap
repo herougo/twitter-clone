@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GET /post/feed endpoint Success (follower) 1`] = `
+[
+  {
+    "author": {
+      "name": "hi there",
+      "username": "username",
+    },
+    "content": "I like dogs.",
+    "createdDate": "",
+    "id": "675351d698452e4fadc376c3",
+    "numDislikes": 0,
+    "numLikes": 0,
+    "userInteraction": "",
+  },
+]
+`;

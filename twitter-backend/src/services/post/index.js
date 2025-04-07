@@ -212,6 +212,29 @@ class PostService {
             )
         };
     }
+
+    async getFullFeed(loggedInUserId) {
+        if (!loggedInUserId) {
+            throw new BadRequestError("GetPosts: Missing loggedInUserId");
+        }
+
+        const user = await catchAndTransformMongooseError(
+            this.userRepository.findById(loggedInUserId),
+            this.logger,
+            "user"
+        );
+        if (!user) {
+            throw new BadRequestError("GetPosts: Invalid user");
+        }
+
+        const posts = await catchAndTransformMongooseError(
+            this.postRepository.getFullFeed(user),
+            this.logger,
+            "post"
+        );
+
+        return posts.map(post => this.transformPost(post, post.author, loggedInUserId));
+    }
 }
 
 module.exports = PostService

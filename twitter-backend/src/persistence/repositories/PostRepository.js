@@ -92,6 +92,17 @@ class  PostRepository {
         post.dislikes.remove(userId);
         await post.save();
     }
+
+    async getFullFeed(user) {
+        const followingIds = user.following;
+
+        const filter = { author: { $in: followingIds } };
+        let result = await Post.find(filter).populate('replyTo').sort({createdAt: -1});
+        result = await this.userRepository.populate(result, { path: 'author' });
+        result = await this.userRepository.populate(result, { path: 'replyTo.author' });
+        
+        return result;
+    }
 }
 
 module.exports = PostRepository;
