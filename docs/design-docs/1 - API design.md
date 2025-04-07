@@ -36,7 +36,7 @@ POST /channel
 GET /channel
 POST /message
 GET /channel/:channelId/messages
-POST /notification/:notificationid/read
+POST /notification/:notificationId/read
 POST /post
 POST /post/:postId/like
 POST /post/:postId/dislike
