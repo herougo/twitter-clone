@@ -1,5 +1,5 @@
 import HomePageContent from './content/home/HomePageContent';
-import MessagePageContent from './content/messages/MessagePageContent';
+import MessagePageContent from './content/messages/history/MessagePageContent';
 import MessagesPageContent from './content/messages/MessagesPageContent';
 import NewMessagePageContent from './content/messages/NewMessagePageContent';
 import NotificationsPageContent from './content/notifications/NotificationsPageContent';

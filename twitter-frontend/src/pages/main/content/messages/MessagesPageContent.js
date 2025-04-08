@@ -1,10 +1,11 @@
 import React from 'react';
 import './MessagesPageContent.css';
+import MessagePageContent from './history/MessagePageContent';
 
 const MessagesPageContent = () => {
     return (
         <div>
-            Messages
+            <MessagePageContent />
         </div>
     );
 }

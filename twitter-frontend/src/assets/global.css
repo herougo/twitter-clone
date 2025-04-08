@@ -120,6 +120,11 @@ h3 {
 
     --clr-post-grey-text: var(--clr-neutral-400);
 
+    --clr-message-from-other-background: var(--clr-neutral-300);
+    --clr-message-from-other-text: var(--clr-neutral-1000);
+    --clr-message-from-you-background: var(--clr-primary-500);
+    --clr-message-from-you-text: var(--clr-neutral-100);
+
     /* Font sizes */
     --fs-left-nav-text: 1.5rem;
 

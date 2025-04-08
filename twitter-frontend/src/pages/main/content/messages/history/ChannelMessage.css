@@ -1,0 +1,15 @@
+.channel-message {
+    margin-top: 0.5rem;
+    color: var(--clr-message-from-other-text);
+    background-color: var(--clr-message-from-other-background);
+    border-radius: 0.4rem;
+    padding: 0.25rem;
+    align-self: flex-start;
+    max-width: 80%;
+}
+
+.channel-message--from-you {
+    color: var(--clr-message-from-you-text);
+    background-color: var(--clr-message-from-you-background);
+    align-self: flex-end;
+}
