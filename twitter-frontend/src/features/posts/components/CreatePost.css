@@ -31,6 +31,7 @@
 }
 
 .create-post__textarea {
+    vertical-align: bottom; /* prevents extra invisible bottom margin */
     margin-top: 10px;
     margin-bottom: 10px;
     resize: none;

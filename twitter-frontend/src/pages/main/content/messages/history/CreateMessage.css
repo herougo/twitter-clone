@@ -1,0 +1,41 @@
+.create-message {
+    width: 100%;
+    background-color: var(--clr-dark-background);
+    display: flex;
+    flex-direction: row;
+}
+
+.create-message__left-column {
+    flex: 1 0;
+    padding-left: 10px;
+}
+
+.create-message__content {
+    width: 100%;
+}
+
+.create-message__textarea {
+    vertical-align: bottom; /* prevents extra invisible bottom margin */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    resize: none;
+    background-color: transparent;
+    color: var(--clr-color);
+    border: none;
+    width: 100%;
+}
+
+.create-message__right-column {
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+
+.create-message__buttons {
+
+}
+
+.create-message__send-btn {
+    vertical-align: bottom;  /* prevents invisible bottom margin from SVG */
+}

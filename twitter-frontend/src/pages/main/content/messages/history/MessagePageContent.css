@@ -1,4 +1,16 @@
 .message-page-content {
     display: flex;
     flex-direction: column;
+    height: 100%;
+}
+
+.message-page-content__messages {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+    overflow-y: auto;
+}
+
+.message-page-content__create {
+    
 }

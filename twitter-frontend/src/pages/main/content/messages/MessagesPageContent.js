@@ -4,7 +4,7 @@ import MessagePageContent from './history/MessagePageContent';
 
 const MessagesPageContent = () => {
     return (
-        <div>
+        <div className='messages-page-content'>
             <MessagePageContent />
         </div>
     );
