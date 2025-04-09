@@ -11,14 +11,22 @@ const CreateMessage = ({onSendMessageSuccess}) => {
         setContent('');
     };
 
+    const maxHeightFn = (window) => {
+         // 40% of window minus 20px for the CreateMessage padding and minus
+         // 10px for the main-content margin
+        return 0.4 * window.height - 30;
+    }
+
     return (
         <div className='create-message'>
             <div className='create-message__left-column'>
                 <div className='create-message__content'>
                     <GrowingTextArea
+                        maxHeightFn={maxHeightFn}
+                        content={content}
+                        setContent={setContent}
+                        
                         className='create-message__textarea'
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
                         spellcheck="false"
                         maxLength="1000"
                         placeholder="Create your message"

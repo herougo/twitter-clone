@@ -1,8 +1,8 @@
 .main-content {
-    padding-left: 0.5rem;
-    padding-top: 0.5rem;
-    padding-right: calc(max(max(100% - 992px, 0px) / 2, 1rem));
-    padding-bottom: 0.5rem;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: calc(max(max(100% - 992px, 0px) / 2, 20px));
+    padding-bottom: 10px;
     flex: 1 0;
     overflow-y: auto;
 }
