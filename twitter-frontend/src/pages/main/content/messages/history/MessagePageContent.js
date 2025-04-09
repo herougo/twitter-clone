@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './MessagePageContent.css';
 import ChannelMessage from './ChannelMessage';
 import CreateMessage from './CreateMessage';
+import MessageRecipientInfo from './MessageRecipientInfo';
 
 const messagesData = [
     {
@@ -39,18 +40,21 @@ const MessagePageContent = () => {
 
     return (
         <div className='message-page-content'>
-            <div className='message-page-content__messages'>
-                {
-                    messages.map(
-                        message => (
-                            <ChannelMessage
-                                key={message.id}
-                                isFromYou={message.isFromYou}>
-                                {message.content}
-                            </ChannelMessage>
+            <div className='message-page-content__content'>
+                <MessageRecipientInfo />
+                <div className='message-page-content__messages'>
+                    {
+                        messages.map(
+                            message => (
+                                <ChannelMessage
+                                    key={message.id}
+                                    isFromYou={message.isFromYou}>
+                                    {message.content}
+                                </ChannelMessage>
+                            )
                         )
-                    )
-                }
+                    }
+                </div>
             </div>
             <div className='message-page-content__create'>
                 <CreateMessage onSendMessageSuccess={onSendMessageSuccess}/>

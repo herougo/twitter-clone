@@ -131,6 +131,8 @@ h3 {
     /* Sizes */
     --sz-profile-bg-height: 9rem;
     --sz-profile-pic-height: 6rem;
+
+    --sz-message-recipient-info-pic-height: 5rem;
 }
 
 /*******************************

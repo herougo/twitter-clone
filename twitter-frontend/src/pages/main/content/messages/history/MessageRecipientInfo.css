@@ -1,0 +1,35 @@
+.message-page-content__recipient-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message-page-content__profile-pic {
+    height: var(--sz-message-recipient-info-pic-height);
+    background-color: red;
+    width: var(--sz-message-recipient-info-pic-height);
+    background-color: blue;
+    border-radius: 50%;
+}
+
+.message-page-content__name {
+    margin-top: 0.3rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    justify-content: center;
+    display: flex;
+}
+
+.message-page-content__name > span {
+    text-align: center;
+}
+
+.message-page-content__username {
+    font-size: 1rem;
+    justify-content: center;
+    display: flex;
+}
+
+.message-page-content__username > span {
+    text-align: center;
+}
