@@ -49,6 +49,7 @@ const CreatePost = ({replyToId, onPostSuccess}) => {
                     <button
                         className='btn create-post__submit-btn'
                         onClick={submitPost}
+                        disabled={content.trim() === ''}
                     >
                         Post
                     </button>
