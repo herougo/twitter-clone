@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const { populateDatabase, clearDatabase } = require("../../../utils/database/changeContents");
 const { DB_IDS } = require("../../../utils/database/ids");
 const { USER_JWT_TOKENS } = require("../../../utils/database/userData");
+const { sanitizePaths } = require("../../../utils/sanitization");
 
 let app;
 let diContainer;
@@ -47,20 +48,20 @@ describe(`GET ${endpoint} endpoint`, () => {
         const response = await sendToEndpoint(USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(200);
         expect("channels" in response.body).toEqual(true);
-        expect(response.body.channels.length).toEqual(1);
-        expect(response.body.channels[0].id).toEqual(DB_IDS.mainChannel);
-        expect(response.body.users.length).toEqual(1);
-        expect(response.body.users[0].id).toEqual(DB_IDS.followerUser);
+        const sanitizedChannels = response.body.channels.map(
+            channel => sanitizePaths(channel, ['lastMessageSentAt'], '')
+        );
+        expect(sanitizedChannels).toMatchSnapshot();
     });
 
     test("Success (1 follower channel)", async () => {
         const response = await sendToEndpoint(USER_JWT_TOKENS.follower);
         expect(response.statusCode).toBe(200);
         expect("channels" in response.body).toEqual(true);
-        expect(response.body.channels.length).toEqual(1);
-        expect(response.body.channels[0].id).toEqual(DB_IDS.mainChannel);
-        expect(response.body.users.length).toEqual(1);
-        expect(response.body.users[0].id).toEqual(DB_IDS.mainUser);
+        const sanitizedChannels = response.body.channels.map(
+            channel => sanitizePaths(channel, ['lastMessageSentAt'], '')
+        );
+        expect(sanitizedChannels).toMatchSnapshot();
     });
 
     test("Success (empty)", async () => {
@@ -68,7 +69,6 @@ describe(`GET ${endpoint} endpoint`, () => {
         expect(response.statusCode).toBe(200);
         expect("channels" in response.body).toEqual(true);
         expect(response.body.channels.length).toEqual(0);
-        expect(response.body.users.length).toEqual(0);
     });
 
     test("No JWT token", async () => {

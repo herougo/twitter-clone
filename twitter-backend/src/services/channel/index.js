@@ -87,10 +87,14 @@ class ChannelService {
         const userIds = channelObjectArray.map(channel => channel.userId);
         const correspondingUsers = await this.userRepository.findByIds(userIds);
 
-        return {
-            channels: channelObjectArray,
-            users: this._usersToObjectArray(correspondingUsers)
+        for (let i = 0; i < channelObjectArray.length; i++) {
+            channelObjectArray[i].username = correspondingUsers[i].username;
+            channelObjectArray[i].name = (
+                `${correspondingUsers[i].firstName} ${correspondingUsers[i].lastName}`
+            );
         }
+
+        return { channels: channelObjectArray };
     }
 }
 

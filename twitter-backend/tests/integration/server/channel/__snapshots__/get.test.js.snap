@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GET /channel endpoint Success (1 follower channel) 1`] = `
+[
+  {
+    "id": "675351d698452e4fadc37613",
+    "lastMessage": "675351d698452e4fadc37614",
+    "lastMessageSentAt": "",
+    "name": "hi there",
+    "userId": "675351d698452e4fadc376be",
+    "username": "username",
+  },
+]
+`;
+
+exports[`GET /channel endpoint Success (1 main channel) 1`] = `
+[
+  {
+    "id": "675351d698452e4fadc37613",
+    "lastMessage": "675351d698452e4fadc37614",
+    "lastMessageSentAt": "",
+    "name": "hello you",
+    "userId": "675351d698452e4fadc376c1",
+    "username": "follower",
+  },
+]
+`;
