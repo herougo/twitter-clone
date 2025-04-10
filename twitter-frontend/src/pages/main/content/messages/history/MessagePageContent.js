@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './MessagePageContent.css';
 import ChannelMessage from './ChannelMessage';
 import CreateMessage from './CreateMessage';
@@ -55,6 +55,8 @@ const groupMessagesByDate = (messages) => {
 
 const MessagePageContent = () => {
     const [messages, setMessages] = useState(messagesData);
+    const messageContentRef = useRef(null);
+    const [scrollDownNeeded, setScrollDownNeeded] = useState(false);
 
     const onSendMessageSuccess = (message) => {
         setMessages([...messages, {
@@ -63,13 +65,22 @@ const MessagePageContent = () => {
             createdAt: '2025-04-07T21:12:32.069+00:00',
             content: message.content
         }]);
+        setScrollDownNeeded(true);
     }
+
+    useEffect(() => {
+        // scroll down whenever the message history changes
+        if (messageContentRef.current && scrollDownNeeded) {
+            messageContentRef.current.scrollTop = messageContentRef.current.scrollHeight;
+            setScrollDownNeeded(false);
+        }
+    }, [scrollDownNeeded]);
 
     const {messageDates, messageGroups} = groupMessagesByDate(messages);
 
     return (
         <div className='message-page-content'>
-            <div className='message-page-content__content'>
+            <div className='message-page-content__content' ref={messageContentRef}>
                 <MessageRecipientInfo />
                 <div className='message-page-content__messages'>
                     {
