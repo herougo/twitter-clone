@@ -21,8 +21,8 @@
 
 .message-channel__profile-pic {
     background-color: red;
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     background-color: blue;
     border-radius: 50%;
 }
@@ -30,6 +30,7 @@
 .message-channel__right-column-top {
     display: flex;
     flex-wrap: wrap;
+    height: 1.7rem;
 }
 
 .message-channel__name {
@@ -49,4 +50,5 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    height: 1.7rem;
 }
