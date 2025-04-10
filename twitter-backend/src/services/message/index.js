@@ -65,8 +65,7 @@ class MessageService {
             "message"
         );
         return {
-            messages: this._messagesToObjectArray(messages),
-            channelId: channelId
+            messages: this._messagesToObjectArray(messages)
         };
     }
 }

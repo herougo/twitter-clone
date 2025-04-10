@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './CreateMessage.css';
 import { BiSend } from 'react-icons/bi';
 import GrowingTextArea from '../../../../../components/utility/GrowingTextArea';
+import UserContext from '../../../../../context/UserContext';
+import sendMessage from './services/sendMessage';
+import useAxiosWrapper from '../../../../../hooks/useAxiosWrapper';
 
-const CreateMessage = ({onSendMessageSuccess}) => {
+const CreateMessage = ({channelId, onSendMessageSuccess}) => {
+    const {user, setUser} = useContext(UserContext);
     const [content, setContent] = useState('');
+    const {axiosWithHeader} = useAxiosWrapper();
 
-    const sendMessage = async () => {
-        onSendMessageSuccess({content: content});
+    const sendMessageAndHandle = async () => {
+        const response = await sendMessage({
+            axiosFunction: axiosWithHeader,
+            payload: {content, channelId}
+        });
+        const message = {
+            content,
+            authorId: user.id,
+            createdAt: response.data.createdAt,
+            id: response.data.id
+        };
+        onSendMessageSuccess(message);
         setContent('');
     };
 
@@ -39,7 +54,7 @@ const CreateMessage = ({onSendMessageSuccess}) => {
                 <div className='create-message__buttons'>
                     <button
                         className='btn create-message__send-btn'
-                        onClick={sendMessage}
+                        onClick={sendMessageAndHandle}
                         disabled={content.trim() === ''}
                     >
                         <BiSend></BiSend>

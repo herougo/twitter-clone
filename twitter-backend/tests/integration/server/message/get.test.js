@@ -48,7 +48,6 @@ describe(`GET /channel/:channelId/messages endpoint`, () => {
         expect("messages" in response.body).toEqual(true);
         expect(response.body.messages.length).toEqual(1);
         expect(response.body.messages[0].id).toEqual(DB_IDS.mainMessage);
-        expect(response.body.channelId).toEqual(DB_IDS.mainChannel);
     });
 
     test("Invalid channelId", async () => {

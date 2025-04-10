@@ -10,7 +10,7 @@ class MessageRepository {
     }
 
     async findByChannelId(channelId) {
-        return await Message.find({channel: channelId});
+        return await Message.find({channel: channelId}).sort({createdAt: 1});
     }
 
     async _create(data) {
