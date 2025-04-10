@@ -11,7 +11,7 @@ const MessagePageContent = () => {
     const params = useParams();
     const channelId = params.id;
     const messageContentRef = useRef(null);
-    const [scrollDownNeeded, setScrollDownNeeded] = useState(false);
+    const [scrollDownNeeded, setScrollDownNeeded] = useState(true);
     const messageData = useGetMessages(channelId);
 
     const onSendMessageSuccess = (message) => {
@@ -21,11 +21,11 @@ const MessagePageContent = () => {
 
     useEffect(() => {
         // scroll down whenever the message history changes
-        if (messageContentRef.current && scrollDownNeeded) {
+        if (messageContentRef.current && !messageData.loading && scrollDownNeeded) {
             messageContentRef.current.scrollTop = messageContentRef.current.scrollHeight;
             setScrollDownNeeded(false);
         }
-    }, [scrollDownNeeded]);
+    }, [scrollDownNeeded, messageData]);
 
     return (
         <div className='message-page-content'>
