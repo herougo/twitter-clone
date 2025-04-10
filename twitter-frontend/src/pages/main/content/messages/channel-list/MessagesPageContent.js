@@ -1,27 +1,14 @@
 import React from 'react';
 import './MessagesPageContent.css';
 import { FiPlusSquare } from 'react-icons/fi';
-import MessageChannel from './MessageChannel';
 import { useNavigate } from 'react-router-dom';
-
-const channelData = [
-    {
-        id: 0,
-        username: 'username',
-        name: 'Username Password',
-        lastMessage: 'Hi there you awesome person!'
-    },
-    {
-        id: 1,
-        username: 'u',
-        name: 'U P',
-        lastMessage: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-    }
-];
+import useChannelGet from './hooks/useChannelGet';
+import MessageChannels from './MessageChannels';
 
 
 const MessagesPageContent = () => {
     const navigate = useNavigate();
+    const channelData = useChannelGet();
 
     const newMessageOnClick = () => {
         navigate('/messages/new');
@@ -43,13 +30,7 @@ const MessagesPageContent = () => {
                     </button>
                 </div>
             </div>
-            <div className='messages-page-content__channels'>
-                {
-                    channelData.map(
-                        channel => <MessageChannel channel={channel}/>
-                    )
-                }
-            </div>
+            <MessageChannels channelData={channelData}></MessageChannels>
         </div>
     );
 }
