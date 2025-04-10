@@ -40,6 +40,7 @@ const CreateMessage = ({onSendMessageSuccess}) => {
                     <button
                         className='btn create-message__send-btn'
                         onClick={sendMessage}
+                        disabled={content.trim() === ''}
                     >
                         <BiSend></BiSend>
                     </button>
