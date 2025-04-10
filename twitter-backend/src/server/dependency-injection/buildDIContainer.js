@@ -28,7 +28,7 @@ const buildDIContainer = (customDependenciesMap) => {
     ));
     const channelRepository = container.register(DI_NAMES.channelRepository, new ChannelRepository());
     const channelService = container.register(DI_NAMES.channelService, new ChannelService(
-        {logger, channelRepository}
+        {logger, channelRepository, userRepository}
     ));
     const messageRepository = container.register(
         DI_NAMES.messageRepository,

@@ -2,9 +2,10 @@ const { catchAndTransformMongooseError } = require("../../server/handlers");
 const { BadRequestError } = require("../../utils/errors/expressErrors");
 
 class ChannelService {
-    constructor({logger, channelRepository}) {
+    constructor({logger, channelRepository, userRepository}) {
         this.logger = logger;
         this.channelRepository = channelRepository;
+        this.userRepository = userRepository;
     }
     
     async _createChannel(createData) {
@@ -45,14 +46,27 @@ class ChannelService {
         return { id: newChannel._id };
     }
 
-    _channelsToObjectArray(channels) {
+    _channelsToObjectArray(userId, channels) {
         const result = [];
         for (const channel of channels) {
+            const otherUserId = channel.users[1 - channel.users.indexOf(userId)];
             result.push({
                 id: channel._id,
-                userIds: channel.users,
+                userId: otherUserId,
                 lastMessage: channel.lastMessage,
                 lastMessageSentAt: channel.lastMessageSentAt
+            });
+        }
+        return result;
+    }
+
+    _usersToObjectArray(users) {
+        const result = [];
+        for (const user of users) {
+            result.push({
+                id: user._id,
+                username: user.username,
+                name: `${user.firstName} ${user.lastName}`
             });
         }
         return result;
@@ -68,7 +82,15 @@ class ChannelService {
             this.logger,
             "channel"
         );
-        return { channels: this._channelsToObjectArray(channels) };
+
+        const channelObjectArray = this._channelsToObjectArray(userId, channels);
+        const userIds = channelObjectArray.map(channel => channel.userId);
+        const correspondingUsers = await this.userRepository.findByIds(userIds);
+
+        return {
+            channels: channelObjectArray,
+            users: this._usersToObjectArray(correspondingUsers)
+        }
     }
 }
 

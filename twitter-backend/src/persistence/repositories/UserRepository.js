@@ -9,6 +9,15 @@ class UserRepository {
         return await User.findById(id);
     }
 
+    async findByIds(ids) {
+        const users = await User.find({'_id': { $in: ids } });
+        const idToUser = {};
+        for (let user of users) {
+            idToUser[user._id] = user;
+        }
+        return ids.map(id => idToUser[id]);
+    }
+
     async create(userData) {
         return await User.create(userData);
     }

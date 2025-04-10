@@ -157,7 +157,7 @@ class UserService {
         }
         
         return {
-            id: user.id,
+            id: user._id,
             username: user.username,
             name: `${user.firstName} ${user.lastName}`,
             numFollowing: user.following?.length || 0,

@@ -49,6 +49,8 @@ describe(`GET ${endpoint} endpoint`, () => {
         expect("channels" in response.body).toEqual(true);
         expect(response.body.channels.length).toEqual(1);
         expect(response.body.channels[0].id).toEqual(DB_IDS.mainChannel);
+        expect(response.body.users.length).toEqual(1);
+        expect(response.body.users[0].id).toEqual(DB_IDS.followerUser);
     });
 
     test("Success (1 follower channel)", async () => {
@@ -57,6 +59,8 @@ describe(`GET ${endpoint} endpoint`, () => {
         expect("channels" in response.body).toEqual(true);
         expect(response.body.channels.length).toEqual(1);
         expect(response.body.channels[0].id).toEqual(DB_IDS.mainChannel);
+        expect(response.body.users.length).toEqual(1);
+        expect(response.body.users[0].id).toEqual(DB_IDS.mainUser);
     });
 
     test("Success (empty)", async () => {
@@ -64,6 +68,7 @@ describe(`GET ${endpoint} endpoint`, () => {
         expect(response.statusCode).toBe(200);
         expect("channels" in response.body).toEqual(true);
         expect(response.body.channels.length).toEqual(0);
+        expect(response.body.users.length).toEqual(0);
     });
 
     test("No JWT token", async () => {

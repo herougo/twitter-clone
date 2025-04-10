@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GET /profile/:username endpoint Success 1`] = `
+exports[`GET /user/name/:username/profile/ endpoint Success 1`] = `
 {
   "id": "675351d698452e4fadc376be",
   "isFollowing": false,
@@ -11,7 +11,7 @@ exports[`GET /profile/:username endpoint Success 1`] = `
 }
 `;
 
-exports[`GET /profile/:username endpoint Success isFollowing 1`] = `
+exports[`GET /user/name/:username/profile/ endpoint Success isFollowing 1`] = `
 {
   "id": "675351d698452e4fadc376be",
   "isFollowing": true,
