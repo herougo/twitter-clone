@@ -4,6 +4,7 @@ import ChannelMessage from './ChannelMessage';
 import CreateMessage from './CreateMessage';
 import MessageRecipientInfo from './MessageRecipientInfo';
 import humanReadableDate from '../../../../../utils/humanReadableDate';
+import { useParams } from 'react-router-dom';
 
 const messagesData = [
     {
@@ -54,6 +55,8 @@ const groupMessagesByDate = (messages) => {
 };
 
 const MessagePageContent = () => {
+    const params = useParams();
+    const channelId = params.id;
     const [messages, setMessages] = useState(messagesData);
     const messageContentRef = useRef(null);
     const [scrollDownNeeded, setScrollDownNeeded] = useState(false);

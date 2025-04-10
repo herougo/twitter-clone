@@ -1,0 +1,8 @@
+.message-channel {
+    background-color: var(--clr-left-nav-background);
+    border-left: 2px solid var(--clr-border);
+    border-right: 2px solid var(--clr-border);
+    border-bottom: 2px solid var(--clr-border);
+    display: flex;
+    flex-direction: row;
+}

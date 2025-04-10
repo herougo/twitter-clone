@@ -120,6 +120,8 @@ h3 {
 
     --clr-post-grey-text: var(--clr-neutral-400);
 
+    --clr-border: gray;
+
     --clr-message-from-other-background: var(--clr-neutral-300);
     --clr-message-from-other-text: var(--clr-neutral-1000);
     --clr-message-from-you-background: var(--clr-primary-500);

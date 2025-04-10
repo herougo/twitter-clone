@@ -1,6 +1,6 @@
 .post {
     background-color: var(--clr-left-nav-background);
-    border: 2px solid gray;
+    border: 2px solid var(--clr-border);
     display: flex;
     flex-direction: row;
 }

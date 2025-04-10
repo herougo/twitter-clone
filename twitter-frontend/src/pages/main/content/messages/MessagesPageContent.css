@@ -1,3 +1,25 @@
 .messages-page-content {
     height: 100%;
 }
+
+.messages-page-content__top-bar {
+    background-color: var(--clr-dark-background);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px;
+    border-bottom: 2px solid var(--clr-border);
+}
+
+.messages-page-content__top-bar-left-column {
+    display: flex;
+    align-items: center;
+}
+
+.messages-page-content__top-bar-right-column {
+
+}
+
+.messages-page-content__new-message-btn {
+    vertical-align: bottom; /* prevents extra invisible bottom margin */
+}
