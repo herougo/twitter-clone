@@ -5,7 +5,6 @@ class ChannelService {
     constructor({logger, channelRepository, userRepository}) {
         this.logger = logger;
         this.channelRepository = channelRepository;
-        this.userRepository = userRepository;
     }
     
     async _createChannel(createData) {
@@ -83,18 +82,7 @@ class ChannelService {
             "channel"
         );
 
-        const channelObjectArray = this._channelsToObjectArray(userId, channels);
-        const userIds = channelObjectArray.map(channel => channel.userId);
-        const correspondingUsers = await this.userRepository.findByIds(userIds);
-
-        for (let i = 0; i < channelObjectArray.length; i++) {
-            channelObjectArray[i].username = correspondingUsers[i].username;
-            channelObjectArray[i].name = (
-                `${correspondingUsers[i].firstName} ${correspondingUsers[i].lastName}`
-            );
-        }
-
-        return { channels: channelObjectArray };
+        return this._channelsToObjectArray(userId, channels);
     }
 }
 

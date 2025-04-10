@@ -166,6 +166,14 @@ class UserService {
         };
     }
 
+    _userToMinimal(user) {
+        return {
+            id: user._id,
+            username: user.username,
+            name: `${user.firstName} ${user.lastName}`
+        };
+    }
+
     async getByIdMinimal(userId) {
         if (!userId) {
             throw new BadRequestError("getById: Missing userId");
@@ -180,11 +188,20 @@ class UserService {
             throw new BadRequestError("getById: Invalid user");
         }
 
-        return {
-            id: user._id,
-            username: user.username,
-            name: `${user.firstName} ${user.lastName}`
-        };
+        return this._userToMinimal(user);
+    }
+
+    async getByIdsMinimal(userIds) {
+        const users = await catchAndTransformMongooseError(
+            this.userRepository.findByIds(userIds),
+            this.logger,
+            "user"
+        );
+        if (users.length !== userIds.length) {
+            throw new BadRequestError("getById: Invalid userIds");
+        }
+
+        return users.map(this._userToMinimal);
     }
 }
 
