@@ -7,7 +7,7 @@ const MessageChannels = ({channelData}) => {
     }
 
     if (channelData.error) {
-        return <div>{channelData.error}</div>
+        return <div>{channelData.error.toString()}</div>
     }
 
     return (
