@@ -5,4 +5,48 @@
     border-bottom: 2px solid var(--clr-border);
     display: flex;
     flex-direction: row;
+    cursor: pointer;
+}
+
+.message-channel__left-column {
+    width: var(--sz-message-channel-left-column-width);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-channel__right-column {
+    width: calc(100% - var(--sz-message-channel-left-column-width));
+}
+
+.message-channel__profile-pic {
+    background-color: red;
+    width: 2rem;
+    height: 2rem;
+    background-color: blue;
+    border-radius: 50%;
+}
+
+.message-channel__right-column-top {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.message-channel__name {
+    color: var(--clr-primary);
+    margin-right: 0.5rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.message-channel__username {
+    color: var(--clr-post-grey-text);
+    margin-right: 1rem;
+    text-decoration: none;
+}
+
+.message-channel__last-message {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }

@@ -4,6 +4,21 @@ import { FiPlusSquare } from 'react-icons/fi';
 import MessageChannel from './MessageChannel';
 import { useNavigate } from 'react-router-dom';
 
+const channelData = [
+    {
+        id: 0,
+        username: 'username',
+        name: 'Username Password',
+        lastMessage: 'Hi there you awesome person!'
+    },
+    {
+        id: 1,
+        username: 'u',
+        name: 'U P',
+        lastMessage: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    }
+];
+
 
 const MessagesPageContent = () => {
     const navigate = useNavigate();
@@ -29,15 +44,11 @@ const MessagesPageContent = () => {
                 </div>
             </div>
             <div className='messages-page-content__channels'>
-                <MessageChannel
-                    channel={{id: 0}}
-                />
-                <MessageChannel
-                    channel={{id: 1}}
-                />
-                <MessageChannel
-                    channel={{id: 2}}
-                />
+                {
+                    channelData.map(
+                        channel => <MessageChannel channel={channel}/>
+                    )
+                }
             </div>
         </div>
     );
