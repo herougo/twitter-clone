@@ -29,7 +29,7 @@ const MessageChannel = (props) => {
                     </div>
                 </div>
                 <div className='message-channel__last-message'>
-                    <span>{channel.lastMessage}</span>
+                    <span>{channel.lastMessageContent}</span>
                 </div>
             </div>
         </div>

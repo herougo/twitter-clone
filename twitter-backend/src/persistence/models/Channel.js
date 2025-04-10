@@ -16,6 +16,10 @@ const ChannelSchema = new mongoose.Schema(
             ref: 'Message',
             default: null
         },
+        lastMessageContent: {
+            type: String,
+            default: null
+        },
         lastMessageSentAt: {
             type : Date,
             default: null

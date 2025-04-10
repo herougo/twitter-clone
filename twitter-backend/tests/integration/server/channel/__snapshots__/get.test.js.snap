@@ -4,7 +4,7 @@ exports[`GET /channel endpoint Success (1 follower channel) 1`] = `
 [
   {
     "id": "675351d698452e4fadc37613",
-    "lastMessage": "675351d698452e4fadc37614",
+    "lastMessageContent": "Hello friend!",
     "lastMessageSentAt": "",
     "name": "hi there",
     "userId": "675351d698452e4fadc376be",
@@ -17,7 +17,7 @@ exports[`GET /channel endpoint Success (1 main channel) 1`] = `
 [
   {
     "id": "675351d698452e4fadc37613",
-    "lastMessage": "675351d698452e4fadc37614",
+    "lastMessageContent": "Hello friend!",
     "lastMessageSentAt": "",
     "name": "hello you",
     "userId": "675351d698452e4fadc376c1",

@@ -53,7 +53,7 @@ class ChannelService {
             result.push({
                 id: channel._id,
                 userId: otherUserId,
-                lastMessage: channel.lastMessage,
+                lastMessageContent: channel.lastMessageContent,
                 lastMessageSentAt: channel.lastMessageSentAt
             });
         }

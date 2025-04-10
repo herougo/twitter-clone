@@ -30,6 +30,7 @@ class ChannelRepository {
 
     async addLastMessage(channel, message) {
         channel.lastMessage = message._id;
+        channel.lastMessageContent = message.content;
         channel.lastMessageSentAt = message.createdAt;
         await channel.save();
     }
