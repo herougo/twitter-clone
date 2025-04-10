@@ -53,7 +53,7 @@ describe(`GET /channel/:channelId/messages endpoint`, () => {
     test("Invalid channelId", async () => {
         const response = await sendToEndpoint("invalid_channel_id", USER_JWT_TOKENS.main);
         expect(response.statusCode).toBe(400);
-        expect(response.body.errors.message).toEqual("Type cast failed for message");
+        expect(response.body.errors.message).toEqual("Type cast failed for channel");
     });
 
     test("Missing channelId", async () => {

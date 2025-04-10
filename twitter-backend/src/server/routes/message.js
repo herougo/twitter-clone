@@ -5,6 +5,7 @@ const requireLoggedIn = require('../middleware/requireLoggedIn');
 const applyMessageRouter = (app, diContainer) => {
     const router = express.Router();
     const messageService = diContainer.resolve(DI_NAMES.messageService);
+    const userService = diContainer.resolve(DI_NAMES.userService);
 
     router.post('/message', async (req, res, next) => {
         try {
@@ -23,8 +24,11 @@ const applyMessageRouter = (app, diContainer) => {
     router.get('/channel/:channelId/messages', async (req, res, next) => {
         try {
             const channelId = req.params.channelId;
-            const fullFeedResult = await messageService.fullFeed(channelId);
-            res.status(200).json(fullFeedResult);
+            const loggedInUserId = res.locals.user.id;
+            const {messages, otherUserId} = await messageService.fullFeed(channelId, loggedInUserId);
+            const user = await userService.getByIdMinimal(otherUserId);
+            const result = {messages, user};
+            res.status(200).json(result);
         } catch (e) {
             return next(e);
         }

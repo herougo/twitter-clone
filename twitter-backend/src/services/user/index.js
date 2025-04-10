@@ -165,6 +165,27 @@ class UserService {
             isFollowing
         };
     }
+
+    async getByIdMinimal(userId) {
+        if (!userId) {
+            throw new BadRequestError("getById: Missing userId");
+        }
+
+        const user = await catchAndTransformMongooseError(
+            this.userRepository.findById(userId),
+            this.logger,
+            "user"
+        );
+        if (!user) {
+            throw new BadRequestError("getById: Invalid user");
+        }
+
+        return {
+            id: user._id,
+            username: user.username,
+            name: `${user.firstName} ${user.lastName}`
+        };
+    }
 }
 
 module.exports = UserService;

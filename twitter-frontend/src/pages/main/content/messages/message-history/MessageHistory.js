@@ -29,12 +29,8 @@ const groupMessagesByDate = (messages) => {
 const MessageHistory = ({messageData}) => {
     const {user, setUser} = useContext(UserContext);
 
-    if (messageData.loading) {
-        return <div>Loading</div>;
-    }
-
-    if (messageData.error) {
-        return <div>{messageData.error.toString()}</div>;
+    if (messageData.loading || messageData.error) {
+        return <div className='message-page-content__messages'></div>;
     }
 
     const {messageDates, messageGroups} = groupMessagesByDate(messageData.value.messages);

@@ -54,18 +54,32 @@ class MessageService {
         return result;
     }
 
-    async fullFeed(channelId) {
+    async fullFeed(channelId, loggedInUserId) {
         if (!channelId) {
             throw new BadRequestError('Missing channelId');
         }
+
+        const channel = await catchAndTransformMongooseError(
+            this.channelRepository.findById(channelId),
+            this.logger,
+            "channel"
+        );
+
+        const userIndex = channel.users.indexOf(loggedInUserId);
+        if (userIndex === -1) {
+            throw new BadRequestError('User not in channel');
+        }
+        const otherUserId = channel.users[1 - userIndex];
 
         const messages = await catchAndTransformMongooseError(
             this.messageRepository.findByChannelId(channelId),
             this.logger,
             "message"
         );
+
         return {
-            messages: this._messagesToObjectArray(messages)
+            messages: this._messagesToObjectArray(messages),
+            otherUserId 
         };
     }
 }

@@ -30,7 +30,7 @@ const MessagePageContent = () => {
     return (
         <div className='message-page-content'>
             <div className='message-page-content__content' ref={messageContentRef}>
-                <MessageRecipientInfo />
+                <MessageRecipientInfo messageData={messageData}/>
                 <MessageHistory messageData={messageData} />
             </div>
             <div className='message-page-content__create'>
