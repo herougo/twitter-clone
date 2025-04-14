@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require('morgan');
 const CONFIG = require("../../config");
 const authenticateJWT = require("./authenticateJWT");
+const applyServerStorageMiddleware = require("./serverStorage");
 
 const applyMiddleware = (app, diContainer) => {
     // transforms req.body from string to json if json data is passed and
@@ -29,6 +30,8 @@ const applyMiddleware = (app, diContainer) => {
     // prints e.g. "GET / 404 139 - 7.136 ms
     // commented out to avoid spamming in tests
     // app.use(morgan('tiny'));
+
+    applyServerStorageMiddleware(app, diContainer);
 }
 
 module.exports = applyMiddleware;
