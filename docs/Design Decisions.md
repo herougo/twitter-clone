@@ -29,3 +29,7 @@ Challenges
     app.use("/", router);
 
     ```
+
+5) How to handle profile picture use?
+
+    - Solution: save on server for now using special middleware, folder structure, and multer

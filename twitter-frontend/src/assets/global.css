@@ -213,3 +213,11 @@ h3 {
 .clickable {
     cursor: pointer;
 }
+
+.circular-pic {
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

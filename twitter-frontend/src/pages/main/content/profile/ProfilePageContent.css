@@ -5,7 +5,6 @@
 
 .profile-page-content__profile-pic-parent-div {
     height: calc(0.5 * var(--sz-profile-pic-height));
-    background-color: red;
     width: calc(
         var(--sz-profile-pic-height) +
         min(
@@ -23,7 +22,6 @@
     top: calc(-0.5 * var(--sz-profile-pic-height));
     width: var(--sz-profile-pic-height);
     background-color: blue;
-    border-radius: 50%;
 }
 
 .profile-page-content__background-footer {

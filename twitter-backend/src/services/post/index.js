@@ -125,6 +125,7 @@ class PostService {
 
     transformAuthor(author) {
         return {
+            id: author._id,
             name: `${author.firstName} ${author.lastName}`,
             username: author.username
         }

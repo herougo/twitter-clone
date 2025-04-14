@@ -5,6 +5,7 @@ import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
 import { USER_INTERACTION } from '../../../utils/enums';
 import useUserInteractionAxios from '../hooks/useUserInteractionAxios';
 import { useNavigate } from 'react-router-dom';
+import CONFIG from '../../../lib/config';
 
 const Post = ({post, setPost, clickable}) => {
     const { id, author, content, numLikes, numDislikes, userInteraction, createdDate } = post;
@@ -66,7 +67,9 @@ const Post = ({post, setPost, clickable}) => {
             <div className='post__left-column'>
                 <div>
                     <a href={`/profile/${authorUsername}`} onClick={(e) => e.stopPropagation()}>
-                        <div className='post__icon'></div>
+                        <div className='post__icon circular-pic'>
+                            <img src={`${CONFIG.backendBaseURL}/uploads/avatars/${author.id}.jpg`}></img>
+                        </div>
                     </a>
                 </div>
             </div>

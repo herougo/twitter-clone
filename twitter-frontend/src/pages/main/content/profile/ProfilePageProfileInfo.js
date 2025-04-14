@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import UserContext from '../../../../context/UserContext';
 import ProfilePageFollowButton from './ProfilePageFollowButton';
+import CONFIG from '../../../../lib/config';
 
 const ProfilePageProfileInfo = ({username, data}) => {
     const {user, setUser} = useContext(UserContext);
@@ -25,8 +26,8 @@ const ProfilePageProfileInfo = ({username, data}) => {
             </div>
             <div className='profile-page-content__background-footer'>
                 <div className='profile-page-content__profile-pic-parent-div'>
-                    <div className='profile-page-content__profile-pic'>
-                        <img/>
+                    <div className='profile-page-content__profile-pic circular-pic'>
+                        <img src={`${CONFIG.backendBaseURL}/uploads/avatars/${data.value.id}.jpg`}/>
                     </div>
                 </div>
                 <div>

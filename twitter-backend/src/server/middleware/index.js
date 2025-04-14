@@ -29,7 +29,7 @@ const applyMiddleware = (app, diContainer) => {
     // app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
     // prints e.g. "GET / 404 139 - 7.136 ms
     // commented out to avoid spamming in tests
-    // app.use(morgan('tiny'));
+    app.use(morgan('tiny'));
 
     applyServerStorageMiddleware(app, diContainer);
 }
