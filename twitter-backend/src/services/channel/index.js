@@ -65,7 +65,8 @@ class ChannelService {
             result.push({
                 id: user._id,
                 username: user.username,
-                name: `${user.firstName} ${user.lastName}`
+                name: `${user.firstName} ${user.lastName}`,
+                profilePicPath: user.profilePicPath
             });
         }
         return result;

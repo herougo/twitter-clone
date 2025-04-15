@@ -162,7 +162,8 @@ class UserService {
             name: `${user.firstName} ${user.lastName}`,
             numFollowing: user.following?.length || 0,
             numFollowers: user.followers?.length || 0,
-            isFollowing
+            isFollowing,
+            profilePicPath: user.profilePicPath
         };
     }
 
@@ -170,7 +171,8 @@ class UserService {
         return {
             id: user._id,
             username: user.username,
-            name: `${user.firstName} ${user.lastName}`
+            name: `${user.firstName} ${user.lastName}`,
+            profilePicPath: user.profilePicPath
         };
     }
 

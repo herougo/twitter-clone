@@ -1,6 +1,7 @@
 import React from 'react';
 import './MessageChannel.css';
 import { useNavigate } from 'react-router-dom';
+import ProfilePicImg from '../../../../../components/utility/ProfilePicImg';
 
 const MessageChannel = (props) => {
     const channel = props.channel;
@@ -15,8 +16,8 @@ const MessageChannel = (props) => {
             onClick={onClick}
         >
             <div className='message-channel__left-column'>
-                <div className='message-channel__profile-pic'>
-                    <img/>
+                <div className='message-channel__profile-pic circular-pic'>
+                    <ProfilePicImg path={channel.profilePicPath} />
                 </div>
             </div>
             <div className='message-channel__right-column'>

@@ -28,6 +28,7 @@ const applyChannelRouter = (app, diContainer) => {
             for (let i = 0; i < channels.length; i++) {
                 channels[i].username = correspondingUsers[i].username;
                 channels[i].name = correspondingUsers[i].name;
+                channels[i].profilePicPath = correspondingUsers[i].profilePicPath;
             }
 
             res.status(200).json({channels});

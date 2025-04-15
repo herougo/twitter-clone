@@ -127,7 +127,8 @@ class PostService {
         return {
             id: author._id,
             name: `${author.firstName} ${author.lastName}`,
-            username: author.username
+            username: author.username,
+            profilePicPath: author.profilePicPath
         }
     }
 

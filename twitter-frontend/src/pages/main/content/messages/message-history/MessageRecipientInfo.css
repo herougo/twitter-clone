@@ -9,7 +9,6 @@
     background-color: red;
     width: var(--sz-message-recipient-info-pic-height);
     background-color: blue;
-    border-radius: 50%;
 }
 
 .message-page-content__name {

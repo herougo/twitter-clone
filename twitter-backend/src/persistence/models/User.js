@@ -17,7 +17,8 @@ const UserSchema = new mongoose.Schema(
         firstName: {type: String, required: true},
         lastName: {type: String, required: true},
         following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-        followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+        followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+        profilePicPath: {type: String, default: null}
     }
 );
 
