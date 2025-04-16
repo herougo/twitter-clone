@@ -4,7 +4,9 @@ exports[`GET /post/feed endpoint Success (follower) 1`] = `
 [
   {
     "author": {
+      "id": "675351d698452e4fadc376be",
       "name": "hi there",
+      "profilePicPath": null,
       "username": "username",
     },
     "content": "I like dogs.",

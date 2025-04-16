@@ -4,7 +4,9 @@ exports[`GET /post/:postId endpoint Success (with reply) 1`] = `
 {
   "post": {
     "author": {
+      "id": "675351d698452e4fadc376be",
       "name": "hi there",
+      "profilePicPath": null,
       "username": "username",
     },
     "content": "I like dogs.",
@@ -17,7 +19,9 @@ exports[`GET /post/:postId endpoint Success (with reply) 1`] = `
   "replies": [
     {
       "author": {
+        "id": "675351d698452e4fadc376c1",
         "name": "hello you",
+        "profilePicPath": null,
         "username": "follower",
       },
       "content": "Me too!",
@@ -35,7 +39,9 @@ exports[`GET /post/:postId endpoint Success (without reply) 1`] = `
 {
   "post": {
     "author": {
+      "id": "675351d698452e4fadc376c1",
       "name": "hello you",
+      "profilePicPath": null,
       "username": "follower",
     },
     "content": "Me too!",
@@ -45,7 +51,9 @@ exports[`GET /post/:postId endpoint Success (without reply) 1`] = `
     "numLikes": 0,
     "replyTo": {
       "author": {
+        "id": "675351d698452e4fadc376be",
         "name": "hi there",
+        "profilePicPath": null,
         "username": "username",
       },
       "content": "I like dogs.",

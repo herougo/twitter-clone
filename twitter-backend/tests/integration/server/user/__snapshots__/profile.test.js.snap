@@ -7,6 +7,7 @@ exports[`GET /user/name/:username/profile/ endpoint Success 1`] = `
   "name": "hi there",
   "numFollowers": 1,
   "numFollowing": 0,
+  "profilePicPath": null,
   "username": "username",
 }
 `;
@@ -18,6 +19,7 @@ exports[`GET /user/name/:username/profile/ endpoint Success isFollowing 1`] = `
   "name": "hi there",
   "numFollowers": 1,
   "numFollowing": 0,
+  "profilePicPath": null,
   "username": "username",
 }
 `;
