@@ -17,7 +17,6 @@
 }
 
 .profile-page-content__profile-pic {
-    height: var(--sz-profile-pic-height);
     position: relative;
     top: calc(-0.5 * var(--sz-profile-pic-height));
     width: var(--sz-profile-pic-height);

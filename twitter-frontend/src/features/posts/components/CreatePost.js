@@ -3,6 +3,7 @@ import './CreatePost.css';
 import createPost from '../services/createPost';
 import UserContext from '../../../context/UserContext';
 import useAxiosWrapper from '../../../hooks/useAxiosWrapper';
+import ProfilePicImg from '../../../components/utility/ProfilePicImg';
 
 const CreatePost = ({replyToId, onPostSuccess}) => {
     const [content, setContent] = useState('');
@@ -27,8 +28,8 @@ const CreatePost = ({replyToId, onPostSuccess}) => {
     return (
         <div className='create-post'>
             <div className='create-post__left-column'>
-                <div className='create-post__profile-pic'>
-
+                <div className='create-post__profile-pic circular-pic'>
+                    <img />
                 </div>
             </div>
             <div className='create-post__middle-column'>

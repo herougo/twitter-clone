@@ -5,9 +5,8 @@
 }
 
 .message-page-content__profile-pic {
-    height: var(--sz-message-recipient-info-pic-height);
     background-color: red;
-    width: var(--sz-message-recipient-info-pic-height);
+    width: var(--sz-message-recipient-info-pic-width);
     background-color: blue;
 }
 
