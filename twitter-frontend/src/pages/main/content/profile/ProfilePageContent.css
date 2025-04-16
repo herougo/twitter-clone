@@ -1,29 +1,30 @@
 .profile-page-content__background {
-    height: var(--sz-profile-bg-height);
+    width: 100%;
     background-color: grey;
+    aspect-ratio: 4/1;
 }
 
 .profile-page-content__profile-pic-parent-div {
-    height: calc(0.5 * var(--sz-profile-pic-height));
-    width: calc(
-        var(--sz-profile-pic-height) +
-        min(
-            0.25 * var(--sz-profile-pic-height),
-            (100% - var(--sz-profile-pic-height)) / 2
-        )
-    );
+    aspect-ratio: 2/1;
+    width: calc(min(
+        var(--sz-max-profile-pic-width),
+        40%
+    ));
+    margin-left: calc(0.25 * min(
+        var(--sz-max-profile-pic-width),
+        40%
+    ));
     display: flex;
     flex-direction: row-reverse;
     /* prevents stretching children to an undesired height
-       (overriding aspect ratio)
-    */
+       (overriding aspect ratio) */
     align-items: flex-start;
 }
 
 .profile-page-content__profile-pic {
     position: relative;
-    top: calc(-0.5 * var(--sz-profile-pic-height));
-    width: var(--sz-profile-pic-height);
+    top: -100%;
+    width: 100%;
     background-color: blue;
 }
 
@@ -31,6 +32,7 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .profile-page-content__side-btn {

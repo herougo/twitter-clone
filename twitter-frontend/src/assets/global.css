@@ -132,7 +132,7 @@ h3 {
 
     /* Sizes */
     --sz-profile-bg-height: 9rem;
-    --sz-profile-pic-height: 6rem;
+    --sz-max-profile-pic-width: 6rem;
 
     --sz-message-recipient-info-pic-width: 5rem;
     --sz-message-channel-left-column-width: 3.5rem;
@@ -216,7 +216,6 @@ h3 {
 
 .circular-pic {
     aspect-ratio: 1/1;
-    height: auto;
     border-radius: 50%;
     overflow: hidden;
     display: flex;

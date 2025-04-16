@@ -5,8 +5,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     /* prevents stretching children to an undesired height
-       (overriding aspect ratio)
-    */
+       (overriding aspect ratio) */
     align-items: flex-start;
 }
 
