@@ -19,6 +19,7 @@
     /* prevents stretching children to an undesired height
        (overriding aspect ratio) */
     align-items: flex-start;
+    min-height: 0; /* prevents content from breaking the aspect ratio */
 }
 
 .profile-page-content__profile-pic {

@@ -34,7 +34,12 @@ const WelcomePage = () => {
                 return;
             };
 
-            setUser({id: res.data.userId, username, token: res.data.token});
+            setUser({
+                id: res.data.userId,
+                username,
+                token: res.data.token,
+                profilePicPath: res.data.profilePicPath
+            });
             navigate('/');
         }
     }

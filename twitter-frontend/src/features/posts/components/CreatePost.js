@@ -29,7 +29,7 @@ const CreatePost = ({replyToId, onPostSuccess}) => {
         <div className='create-post'>
             <div className='create-post__left-column'>
                 <div className='create-post__profile-pic circular-pic'>
-                    <img />
+                    <ProfilePicImg path={user.profilePicPath} />
                 </div>
             </div>
             <div className='create-post__middle-column'>

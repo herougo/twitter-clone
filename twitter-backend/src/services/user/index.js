@@ -37,7 +37,7 @@ class UserService {
         const secretKey = CONFIG.jwtSecretKey;
         const token = jwt.sign(tokenPayload, secretKey);
         
-        return {userId: user.id, token};
+        return {userId: user.id, token, profilePicPath: user.profilePicPath};
     }
 
     async signUp(userData) {
