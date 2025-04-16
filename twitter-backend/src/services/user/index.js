@@ -163,7 +163,8 @@ class UserService {
             numFollowing: user.following?.length || 0,
             numFollowers: user.followers?.length || 0,
             isFollowing,
-            profilePicPath: user.profilePicPath
+            profilePicPath: user.profilePicPath,
+            backgroundPicPath: user.backgroundPicPath
         };
     }
 

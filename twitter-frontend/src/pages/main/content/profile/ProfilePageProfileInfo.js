@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import UserContext from '../../../../context/UserContext';
 import ProfilePageFollowButton from './ProfilePageFollowButton';
 import ProfilePicImg from '../../../../components/utility/ProfilePicImg';
+import ImgFromPath from '../../../../components/utility/ImgFromPath';
 
 
 const ProfilePageProfileInfo = ({username, data}) => {
@@ -23,7 +24,7 @@ const ProfilePageProfileInfo = ({username, data}) => {
     return (
         <div>
             <div className='profile-page-content__background'>
-                <img/>
+                <ImgFromPath path={data.value.backgroundPicPath}/>
             </div>
             <div className='profile-page-content__background-footer'>
                 <div className='profile-page-content__profile-pic-parent-div'>
