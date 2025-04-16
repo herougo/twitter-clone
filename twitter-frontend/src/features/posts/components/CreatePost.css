@@ -4,6 +4,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    /* prevents stretching children to an undesired height
+       (overriding aspect ratio)
+    */
+    align-items: flex-start;
 }
 
 .create-post__left-column {
