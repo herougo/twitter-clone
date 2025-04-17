@@ -4,7 +4,7 @@
   "description": "Backend for the twitter clone.",
   "main": "app.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node src/startServer.js",
     "test": "jest --runInBand --testPathPattern=tests",
     "test:unit": "jest --runInBand --testPathPattern=tests/unit",
     "test:integration": "jest --runInBand --testPathPattern=tests/integration",
