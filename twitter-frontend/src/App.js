@@ -6,11 +6,11 @@ import RouteCollection from './pages/RouteCollection';
 import UserContext from './context/UserContext';
 import SocketIOContext from './context/SocketIOContext';
 import useCookieUser from './hooks/useCookieUser';
-import SocketIOWrapper from './lib/socket-io/SocketIOWrapper';
+import useSocketIOWrapper from './hooks/useSocketIOWrapper';
 
 function App() {
     const {user, setUser} = useCookieUser();
-    const [socketWrapper, _] = useState(new SocketIOWrapper());
+    const socketWrapper = useSocketIOWrapper(user);
 
     return (
         <UserContext.Provider value={{user, setUser}}>
