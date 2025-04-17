@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './MessagePageContent.css';
 import CreateMessage from './CreateMessage';
 import MessageRecipientInfo from './MessageRecipientInfo';
 import { useParams } from 'react-router-dom';
 import useGetMessages from './hooks/useGetMessages';
 import MessageHistory from './MessageHistory';
+import SocketIOContext from '../../../../../context/SocketIOContext';
 
 
 const MessagePageContent = () => {
@@ -13,10 +14,12 @@ const MessagePageContent = () => {
     const messageContentRef = useRef(null);
     const [scrollDownNeeded, setScrollDownNeeded] = useState(true);
     const messageData = useGetMessages(channelId);
+    const socketWrapper = useContext(SocketIOContext);
 
     const onSendMessageSuccess = (message) => {
         messageData.addMessage(message);
         setScrollDownNeeded(true);
+        socketWrapper.emitNewMessage(message, messageData.value.user.id);
     }
 
     useEffect(() => {

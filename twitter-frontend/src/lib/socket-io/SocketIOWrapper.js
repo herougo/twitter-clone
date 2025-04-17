@@ -48,6 +48,10 @@ class SocketIOWrapper {
     _leaveUserRoom(userId) {
         this.socket.emit('leave-user-room', userId);
     }
+
+    emitNewMessage(message, receiver) {
+        this.socket.emit('new-message', message, receiver);
+    }
 }
 
 export default SocketIOWrapper;

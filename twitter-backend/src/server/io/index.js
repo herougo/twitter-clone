@@ -9,8 +9,11 @@ const applySocketIo = (io) => {
         socket.on('leave-user-room', (userId) => {
             socket.leave(userId);
             console.log(`Socket ${socket.id} left room ${userId}`);
-        })
-
+        });
+        socket.on('new-message', (message, receiver) => {
+            socket.to(receiver).emit('receive-message', message);
+            console.log(`${receiver} received message ${JSON.stringify(message)}`);
+        });
     });
 }
 
