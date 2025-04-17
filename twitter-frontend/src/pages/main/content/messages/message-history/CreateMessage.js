@@ -42,7 +42,7 @@ const CreateMessage = ({channelId, onSendMessageSuccess}) => {
                         setContent={setContent}
                         
                         className='create-message__textarea'
-                        spellcheck="false"
+                        spellCheck="false"
                         maxLength="1000"
                         placeholder="Create your message"
                     >

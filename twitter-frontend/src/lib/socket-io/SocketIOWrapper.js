@@ -31,7 +31,7 @@ class SocketIOWrapper {
                 throw new Error("How did the userRoom differ from the new userId?");
             }
         } else if (this.userRoom && !userId) {
-            this._leaveUserRoom(userId);
+            this._leaveUserRoom(this.userRoom);
             this.userRoom = null;
         } else if (!this.userRoom && userId) {
             this._joinUserRoom(userId);

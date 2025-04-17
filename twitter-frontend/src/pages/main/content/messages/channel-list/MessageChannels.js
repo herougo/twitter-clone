@@ -14,7 +14,7 @@ const MessageChannels = ({channelData}) => {
         <div className='messages-page-content__channels'>
             {
                 channelData.value.channels.map(
-                    (channel, ix) => <MessageChannel channel={channel}/>
+                    (channel, ix) => <MessageChannel key={channel.id} channel={channel}/>
                 )
             }
         </div>
