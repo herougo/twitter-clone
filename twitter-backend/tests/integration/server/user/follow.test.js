@@ -1,4 +1,4 @@
-const createApp = require("../../../../src/server/app");
+const createApp = require("../../../../src/server/createApp");
 const DI_NAMES = require("../../../../src/server/dependency-injection/names");
 const request = require('supertest');
 const createMockLogger = require("../../../utils/mocks/mockLogger");

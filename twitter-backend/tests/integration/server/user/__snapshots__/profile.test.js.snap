@@ -2,6 +2,7 @@
 
 exports[`GET /user/name/:username/profile/ endpoint Success 1`] = `
 {
+  "backgroundPicPath": null,
   "id": "675351d698452e4fadc376be",
   "isFollowing": false,
   "name": "hi there",
@@ -14,6 +15,7 @@ exports[`GET /user/name/:username/profile/ endpoint Success 1`] = `
 
 exports[`GET /user/name/:username/profile/ endpoint Success isFollowing 1`] = `
 {
+  "backgroundPicPath": null,
   "id": "675351d698452e4fadc376be",
   "isFollowing": true,
   "name": "hi there",
