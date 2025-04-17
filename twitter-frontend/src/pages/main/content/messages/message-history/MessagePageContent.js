@@ -16,10 +16,14 @@ const MessagePageContent = () => {
     const messageData = useGetMessages(channelId);
     const socketWrapper = useContext(SocketIOContext);
 
-    const onSendMessageSuccess = (message) => {
+    const addMessageToUI = (message) => {
         messageData.addMessage(message);
         setScrollDownNeeded(true);
+    };
+
+    const onSendMessageSuccess = (message) => {
         socketWrapper.emitNewMessage(message, messageData.value.user.id);
+        addMessageToUI(message);
     }
 
     useEffect(() => {
@@ -29,6 +33,13 @@ const MessagePageContent = () => {
             setScrollDownNeeded(false);
         }
     }, [scrollDownNeeded, messageData]);
+
+    useEffect(() => {
+        if (socketWrapper && messageData.value) {
+            socketWrapper.addOnReceiveMessageListener(addMessageToUI);
+            return () => socketWrapper.removeOnReceiveMessageListener();
+        }
+    }, [socketWrapper, messageData]);
 
     return (
         <div className='message-page-content'>

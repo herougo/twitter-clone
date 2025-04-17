@@ -4,7 +4,6 @@ const applySocketIo = (io) => {
         socket.on('join-user-room', (userId) => {
             socket.join(userId);
             console.log(`Socket ${socket.id} joined room ${userId}`);
-            socket.emit('connected');
         });
         socket.on('leave-user-room', (userId) => {
             socket.leave(userId);

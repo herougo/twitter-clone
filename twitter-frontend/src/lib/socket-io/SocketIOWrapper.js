@@ -6,6 +6,7 @@ class SocketIOWrapper {
         this.connected = false;
         this.userRoom = null;
         this.socket = null;
+        this.onReceiveMessageListener = null;
     }
 
     connect() {
@@ -14,7 +15,8 @@ class SocketIOWrapper {
     }
 
     setupSocket(socket) {
-        socket.on('connected', () => {
+        socket.on('connect', () => {
+            console.log('connected');
             this.connected = true;
         });
     }
@@ -51,6 +53,18 @@ class SocketIOWrapper {
 
     emitNewMessage(message, receiver) {
         this.socket.emit('new-message', message, receiver);
+    }
+
+    addOnReceiveMessageListener(addMessage) {
+        this.onReceiveMessageListener = (message) => {
+            addMessage(message);
+        };
+        this.socket.on('receive-message', this.onReceiveMessageListener);
+    }
+
+    removeOnReceiveMessageListener() {
+        this.socket.off('receive-message', this.onReceiveMessageListener);
+        this.onReceiveMessageListener = null;
     }
 }
 
