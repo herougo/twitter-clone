@@ -38,7 +38,7 @@ const CreatePost = ({replyToId, onPostSuccess}) => {
                         className='create-post__textarea'
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        spellcheck="false"
+                        spellCheck="false"
                         maxLength="300"
                     >
                         
