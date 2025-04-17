@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import MessageChannel from './MessageChannel';
+import SocketIOContext from '../../../../../context/SocketIOContext';
 
 const MessageChannels = ({channelData}) => {
+    const socketWrapper = useContext(SocketIOContext);
+
+    useEffect(() => {
+        if (socketWrapper && channelData.value) {
+            socketWrapper.addOnReceiveMessageListener(channelData.receiveRealtimeMessage);
+            return () => socketWrapper.removeOnReceiveMessageListener();
+        }
+    }, [socketWrapper, channelData.loading]);
+
     if (channelData.loading) {
         return <div>Loading</div>
     }

@@ -56,6 +56,10 @@ class SocketIOWrapper {
     }
 
     addOnReceiveMessageListener(addMessage) {
+        console.log('addOnReceiveMessageListener');
+        if (this.onReceiveMessageListener) {
+            throw new Error("why are there 2 onReceiveMessage listeners?");
+        }
         this.onReceiveMessageListener = (message) => {
             addMessage(message);
         };
@@ -63,6 +67,7 @@ class SocketIOWrapper {
     }
 
     removeOnReceiveMessageListener() {
+        console.log('removeOnReceiveMessageListener');
         this.socket.off('receive-message', this.onReceiveMessageListener);
         this.onReceiveMessageListener = null;
     }

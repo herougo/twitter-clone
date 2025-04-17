@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './MessagesPageContent.css';
 import { FiPlusSquare } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import MessageChannels from './MessageChannels';
 const MessagesPageContent = () => {
     const navigate = useNavigate();
     const channelData = useChannelGet();
-
+    
     const newMessageOnClick = () => {
         navigate('/messages/new');
     }

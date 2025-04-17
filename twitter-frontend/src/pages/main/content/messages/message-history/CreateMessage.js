@@ -20,7 +20,8 @@ const CreateMessage = ({channelId, onSendMessageSuccess}) => {
             content,
             authorId: user.id,
             createdAt: response.data.createdAt,
-            id: response.data.id
+            id: response.data.id,
+            channelId: channelId
         };
         onSendMessageSuccess(message);
         setContent('');
