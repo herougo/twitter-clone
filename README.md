@@ -37,4 +37,4 @@ Backend testing is done with supertest.
 
 [View Screenshots Instead](https://github.com/herougo/twitter-clone/blob/main/demo/screenshot/README.md)
 
-<video src='https://raw.githubusercontent.com/herougo/twitter-clone/refs/heads/main/demo/twitter-demo-v3.mp4' width=180/>
+![Twitter Clone Video Demo](https://raw.githubusercontent.com/herougo/twitter-clone/refs/heads/main/demo/twitter-demo-v3.gif)
