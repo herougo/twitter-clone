@@ -32,3 +32,9 @@ I wanted to build a full-stack application from scratch and twitter caught my ey
 ## Testing / Quality Assurance
 
 Backend testing is done with supertest.
+
+## Demo
+
+[View Screenshots Instead](https://github.com/herougo/twitter-clone/blob/main/demo/screenshot/README.md)
+
+![Twitter Clone Demo Video](https://raw.githubusercontent.com/herougo/twitter-clone/refs/heads/main/demo/twitter-demo-v3.mp4)
