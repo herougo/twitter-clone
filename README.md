@@ -33,7 +33,7 @@ I wanted to build a full-stack application from scratch and twitter caught my ey
 
 Backend testing is done with supertest.
 
-## Video Demo
+## Video Demo (2:12)
 
 [View Screenshots Instead](https://github.com/herougo/twitter-clone/blob/main/demo/screenshot/README.md)
 
